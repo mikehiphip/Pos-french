@@ -25,13 +25,13 @@ if ($list_role) {
     </a>
     <div class="side-nav__devider my-6"></div>
     <ul>
-        <li>
+        {{-- <li>
             <a href="side-menu-light-calendar.html" class="side-menu side-menu--active">
                 <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
                 <div class="side-menu__title"> Dashboard </div>
             </a>
         </li>
-        
+         --}}
         @php
             $menu = \App\Models\Backend\MenuModel::where(['position' => 'main', 'status' => 'on'])
                 ->orderBy('sort')

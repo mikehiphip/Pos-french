@@ -14,8 +14,8 @@
             const url = '{{@$url}}';
             $(function() {
                   Swal.fire({
-                        title: "สำเร็จ",
-                        text: "ระบบได้ทำการบันทึกข้อมูลเรียบร้อย",
+                        title: "Success",
+                        text: "The system has successfully recorded the data.",
                         icon: "success",
                         allowOutsideClick: false,
                   }).then((result) => {

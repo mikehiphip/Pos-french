@@ -16,10 +16,10 @@ class CreateTbFoodTable extends Migration
         Schema::create('tb_food', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('cat_id')->nullable();
+            $table->string("img",100)->nullable();
             $table->string("name",100)->nullable();
             $table->string("color",100)->nullable();
             $table->string("price",100)->nullable();
-            $table->integer('sort')->nullable();
             $table->enum("status",['on','off'])->nullable();
             $table->datetime('created_at')->nullable();
             $table->datetime('updated_at')->nullable();
