@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Backend;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FoodModel extends Model
+class EmployeeInfoModel extends Model
 {
     use HasFactory;
-    protected $table = 'tb_food';
+    protected $table = 'tb_info';
     protected $primaryKey = 'id';
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';

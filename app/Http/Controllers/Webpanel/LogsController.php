@@ -41,7 +41,7 @@ class LogsController extends Controller
         $data->updated = date('Y-m-d H:i:s');
         if ($data->save()) {
             $message = "Emax_V02 \n เกิดข้อผิดพลาดทางด้านโปรแกรม (Code:$data->id) \n Log ที่ได้รับแจ้ง : $error_log \n Website Link : $error_url \n บรรทัดที่มีปัญหา : $error_line";
-            $token = 'VLIKpqfuzOykq8xE9bfNum98l4H43cq4ilFk1mftY7d';
+            $token = 'IAxg9dYb1ndBe05pIAKDYuA6GDigDxX8Qa16wNiMJRw';
             LogsController::send_line($message, $token);
             return $data->id;
         }

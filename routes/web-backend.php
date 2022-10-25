@@ -34,6 +34,33 @@ Route::group(['middleware' => ['Webpanel']], function () {
             Route::post('/{id}/edit', [Webpanel\FoodController::class, 'update'])->where(['id' => '[0-9]+']);
             Route::get('/destroy/{id}', [Webpanel\FoodController::class, 'destroy']);
         });
+        Route::prefix('customer')->group(function () {
+            Route::get('/', [Webpanel\CustomerController::class, 'index']);
+            Route::post('/datatable', [Webpanel\CustomerController::class, 'datatable']);
+            Route::get('/add', [Webpanel\CustomerController::class, 'add']);
+            Route::post('/add', [Webpanel\CustomerController::class, 'insert']);
+            Route::get('/{id}/edit', [Webpanel\CustomerController::class, 'edit'])->where(['id' => '[0-9]+']);
+            Route::post('/{id}/edit', [Webpanel\CustomerController::class, 'update'])->where(['id' => '[0-9]+']);
+            Route::get('/destroy/{id}', [Webpanel\CustomerController::class, 'destroy']);
+        });
+        Route::prefix('info')->group(function () {
+            Route::get('/', [Webpanel\InfoController::class, 'index']);
+            Route::post('/datatable', [Webpanel\InfoController::class, 'datatable']);
+            Route::get('/add', [Webpanel\InfoController::class, 'add']);
+            Route::post('/add', [Webpanel\InfoController::class, 'insert']);
+            Route::get('/{id}/edit', [Webpanel\InfoController::class, 'edit'])->where(['id' => '[0-9]+']);
+            Route::post('/{id}/edit', [Webpanel\InfoController::class, 'update'])->where(['id' => '[0-9]+']);
+            Route::get('/destroy/{id}', [Webpanel\InfoController::class, 'destroy']);
+        });
+        Route::prefix('department')->group(function () {
+            Route::get('/', [Webpanel\DepartmentController::class, 'index']);
+            Route::post('/datatable', [Webpanel\DepartmentController::class, 'datatable']);
+            Route::get('/add', [Webpanel\DepartmentController::class, 'add']);
+            Route::post('/add', [Webpanel\DepartmentController::class, 'insert']);
+            Route::get('/{id}/edit', [Webpanel\DepartmentController::class, 'edit'])->where(['id' => '[0-9]+']);
+            Route::post('/{id}/edit', [Webpanel\DepartmentController::class, 'update'])->where(['id' => '[0-9]+']);
+            Route::get('/destroy/{id}', [Webpanel\DepartmentController::class, 'destroy']);
+        });
 
         Route::prefix('test-form')->group(function () {
             Route::get('/', [Webpanel\Test_formController::class, 'index']);

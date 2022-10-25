@@ -88,8 +88,8 @@
                                     </div>
                                 </div>
                                 <div class="text-right mt-5">
-                                    <a class="btn btn-sm btn-outline-secondary w-24 mr-1" href="{{url("$segment/$folder")}}">Cancel</a>
                                     <button type="button" onclick="check_add();" class="btn btn-sm btn-primary w-24">Save</button>
+                                    <a class="btn btn-sm btn-outline-secondary w-24 mr-1" href="{{url("$segment/$folder")}}">Cancel</a>
                                 </div>
                             </div>
                             <!-- END: Form Layout -->

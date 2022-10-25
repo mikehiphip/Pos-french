@@ -14,18 +14,17 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Backend\CategoryModel;
-use App\Models\Backend\FoodModel;
+use App\Models\Backend\DepartmentModel; 
+use App\Models\Backend\EmployeeInfoModel; 
 
-
-class FoodController extends Controller
+class InfoController extends Controller
 {
     protected $prefix = 'backend';
     protected $segment = 'webpanel';
-    protected $controller = 'food';
-    protected $folder = 'food';
-    protected $menu_id = '3';
-    protected $name_page = "Food lists";
+    protected $controller = 'info';
+    protected $folder = 'info';
+    protected $menu_id = '7';
+    protected $name_page = "Employee";
 
     public function auth_menu()
     {
@@ -36,38 +35,35 @@ class FoodController extends Controller
             'icon' => 'error'
         ]); 
     }
-
     public function datatable(Request $request){
 			
         $like = $request->Like;
-        $sTable = FoodModel::orderby('tb_food.id','desc')
-        ->leftjoin('tb_category','tb_food.cat_id','=','tb_category.id')
-        ->select('*','tb_category.id as cat_id','tb_food.id as f_id','tb_food.name as name','tb_category.name as cat_name','tb_food.status as status')
+        $sTable = EmployeeInfoModel::orderby('tb_info.id','asc')
+        ->leftjoin('tb_department','tb_info.de_id','=','tb_department.id')
+        ->select('*','tb_info.id as in_id')
         ->when($like, function ($query) use ($like) {
             if (@$like['name'] != "") {
-                $query->where('tb_food.name', 'like', '%' . $like['name'] . '%');
+                $query->where('tb_info.first_name', 'like', '%' . $like['name'] . '%');
+            }
+            if (@$like['name'] != "") {
+                $query->where('tb_info.last_name', 'like', '%' . $like['name'] . '%');
             }
         })
         ->get();
         $sQuery = DataTables::of($sTable);
         return $sQuery
         ->addIndexColumn()
-        ->addColumn('category', function($row) {
-        	return $row->cat_name;
-        })
-        ->addColumn('img', function($row) {
-        	return "<center><img src='$row->img' class='img-fluid' alt='' style='width:50%; height:auto;'></center>";
+        ->addColumn('name',function ($row){
+            return $row->first_name.' '.$row->last_name;
         })
         ->addColumn('action', function ($row) {
-        return "<a href='$this->segment/$this->folder/$row->f_id/edit' class='btn btn-sm btn-info' title='Edit'><i class='far fa-edit'></i></a>                                                
-            <a href='javascript:void(0);' class='btn btn-sm btn-danger' onclick='deleteItem($row->f_id)' title='Delete'><i class='far fa-trash-alt'></i></a>
+        return "<a href='$this->segment/$this->folder/$row->in_id/edit' class='btn btn-sm btn-info' title='Edit'><i class='far fa-edit'></i></a>                                                
+            <a href='javascript:void(0);' class='btn btn-sm btn-danger' onclick='deleteItem($row->in_id)' title='Delete'><i class='far fa-trash-alt'></i></a>
         ";
         })
-        ->rawColumns(['action','img'])
+        ->rawColumns(['action','name'])
         ->make(true);
     }
-  
-
     public function index(Request $request)
     {
         $menu_control = Helper::menu_active($this->menu_id);
@@ -80,44 +76,43 @@ class FoodController extends Controller
             'name_page' => $this->name_page,
         ]);
     }
-    
     public function add(Request $request)
     {
         $menu_control = Helper::menu_active($this->menu_id);
         if($menu_control){ if($menu_control->read  == "add") { return $this->auth_menu(); } } else { return $this->auth_menu();}
-        $cat = CategoryModel::where('status','on')->orderBy('sort','asc')->get();
+        $de = DepartmentModel::orderBy('id','asc')->get();
         return view("$this->prefix.pages.$this->folder.add", [
             'prefix' => $this->prefix,
             'folder' => $this->folder,
             'segment' => $this->segment,
             'name_page' => $this->name_page,
-            'category' => $cat,
+            'depart'  => $de,
         ]);
     }
     public function edit(Request $request,$id)
     {
         $menu_control = Helper::menu_active($this->menu_id);
         if($menu_control){ if($menu_control->read  == "edit") { return $this->auth_menu(); } } else { return $this->auth_menu();}
-        $food = FoodModel::where('tb_food.id',$id)
-        ->leftjoin('tb_category','tb_food.cat_id','=','tb_category.id')
-        ->select('*','tb_category.id as cat_id','tb_food.id as f_id','tb_food.name as name','tb_category.name as cat_name','tb_food.color as f_color')
+        $emp = EmployeeInfoModel::where('tb_info.id',$id)
+        ->leftjoin('tb_department','tb_info.de_id','=','tb_department.id')
+        ->select('*','tb_info.id as in_id')
         ->first();
-        $cat = CategoryModel::where('status','on')->orderBy('sort','asc')->get();
+        $de = DepartmentModel::orderBy('id','asc')->get();
         return view("$this->prefix.pages.$this->folder.edit", [
             'prefix' => $this->prefix,
             'folder' => $this->folder,
             'segment' => $this->segment,
             'name_page' => $this->name_page,
-            'category' => $cat,
-            'row'     => $food
+            'department'     => $de,
+            'row'          => $emp,
         ]);
     }
 
     public function destroy($id)
     {
-        $datas = FoodModel::find($id);
+        $datas = EmployeeInfoModel::find($id);
         if (@$datas) {
-            $query = FoodModel::destroy($datas->id);
+            $query = EmployeeInfoModel::destroy($datas->id);
         }
 
         if (@$query) {
@@ -139,46 +134,29 @@ class FoodController extends Controller
     public function store($request, $id = null)
     {
         try {
-            // dd($request->file('image'));
             DB::beginTransaction();
             if ($id == null) {
-                $data = new FoodModel();
+                $data = new EmployeeInfoModel();
                 $data->created_at = date('Y-m-d H:i:s');
                 $data->updated_at = date('Y-m-d H:i:s');
-                if (!empty($request->image)) {
-                    $path = 'upload/food';
-                    $img = $request->file('image');
-                    $name_new = 'upload/food/Food-' . date('YmdHis') . '.' . $img->getClientOriginalExtension();
-                    $save_path = $img->move(public_path($path), $name_new);
-    
-                    $data->img             = $name_new;
-                    $data->save();
-                } 
             } else {
-                // dd($request);
-                $data = FoodModel::find($id);
+                $data = EmployeeInfoModel::find($id);
                 $data->updated_at = date('Y-m-d H:i:s');
-                if (!empty($request->file('image'))) {
-                    //ลบรูปเก่าเพื่ออัพโหลดรูปใหม่แทน
-                    if (!empty($data->img)) {
-                        $path2 = 'public/upload/food/';
-                        @unlink($path2.$data->img);
-                    }
-                    $path = 'upload/food';
-                    $img = $request->file('image');
-                    $img_name = 'upload/food/food-' . date('YmdHis') . '.' . $img->getClientOriginalExtension();
-                    $save_path = $img->move(public_path($path), $img_name);
-                    $image = $img_name;
-
-                    $data->img          = $image;
-                    $data->save();
-                }
             }
-            $data->cat_id = $request->cat_id;
-            $data->name = $request->name;
-            $data->color = $request->color;
-            $data->status = $request->status;
-            $data->price = $request->price;
+            $data->de_id = $request->de_id;
+            $data->emp_code = $request->emp_code;
+            $data->first_name = $request->first_name;
+            $data->last_name = $request->last_name;
+            $data->nickname = $request->nickname;
+            $data->sex = $request->sex;
+            $data->age = $request->age;
+            $data->card_id = $request->card_id;
+            $data->birthday = $request->birthday;
+            $data->address = $request->address;
+            $data->phone = $request->phone;
+            $data->email = $request->email;
+            $data->time_in = $request->time_in;
+            $data->time_out = $request->time_out;
             // dd($data);
             if ($data->save()) {
                 DB::commit();
