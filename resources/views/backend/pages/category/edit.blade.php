@@ -43,13 +43,13 @@
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Name 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please input name category</span> 
                                         </label>
-                                        <input type="text" id="name" name="name" class="form-control w-full" placeholder="">
+                                        <input type="text" id="name" name="name" class="form-control w-full" value="{{$row->name}}">
                                         <span id="name_check" hidden class="text-danger" style="font-size:12px;">* Required, please input value</span>
                                     </div>
                                     <div class="col-span-4 lg:col-span-4">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Color button 
                                         </label>
-                                        <input type="text" id="color" name="color" class="form-control w-full" placeholder="">
+                                        <input type="text" id="color" name="color" class="form-control w-full" value="{{$row->color}}">
                                     </div>
                                 </div>
 
@@ -59,9 +59,8 @@
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Show in menu homepage bottom menu</span> 
                                         </label>
                                         <select class="form-control w-full" name="status_speical" id="status_speical">
-                                            <option value="" hidden>Please select</option>
-                                            <option value="on">on</option>
-                                            <option value="off">off</option>
+                                            <option value="on" @if($row->status_speical == 'on') selected @endif>on</option>
+                                            <option value="off" @if($row->status_speical == 'off') selected @endif>off</option>
                                         </select>
                                         <span id="status_speical_check" hidden class="text-danger" style="font-size:12px;">* Required, please input value</span>
                                     </div>
@@ -70,9 +69,8 @@
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Show in menu homepage</span> 
                                         </label>
                                         <select class="form-control w-full" name="status" id="status">
-                                            <option value="" hidden>Please select</option>
-                                            <option value="on">on</option>
-                                            <option value="off">off</option>
+                                            <option value="on" @if($row->status == 'on') selected @endif>on</option>
+                                            <option value="off" @if($row->status == 'off') selected @endif>off</option>
                                         </select>
                                         <span id="status_check" hidden class="text-danger" style="font-size:12px;">* Required, please input value</span>
                                     </div>

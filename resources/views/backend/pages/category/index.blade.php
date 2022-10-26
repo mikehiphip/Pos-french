@@ -29,7 +29,7 @@
             <!-- BEGIN: Content -->
             <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
                 <h2 class="text-lg font-medium mr-auto">
-                    Menu
+                    Category
                 </h2>
                 <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
                     <a href="{{ url("$segment/$folder/add") }}"><button type="button"
@@ -39,7 +39,7 @@
 
             <div class="intro-y box p-5 mt-5">
                 <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
-                    <div class="sm:flex items-center sm:mr-4">
+                    {{-- <div class="sm:flex items-center sm:mr-4">
                         <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Search</label>
                         <select id="search_choice" name="search_choice" class="myLike form-select w-full sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto">
                             <option value="" selected>All</option>
@@ -58,10 +58,10 @@
                             <option value=">=">>=</option>
                             <option value="!=">!=</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-                        <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Text</label>
-                        <input id="search_keyword" name="search_keyword" type="text" class="myLike form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" placeholder="Search value">
+                        <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Search</label>
+                        <input id="search_keyword" name="name" type="text"  class="myLike form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" placeholder="Name">
                     </div>
                     <div class="mt-2 xl:mt-0">
                         <button id="search_button" name="search_button" onclick="search_datatable()" type="button" class="btn btn-primary w-full sm:w-16">Search</button>
@@ -126,11 +126,13 @@
                 },
                 
                 columns:[
-                    {data: 'DT_RowIndex',    title :'<center>ลำดับ</center>',   width:'10%', hozAlign: "center", vertAlign:"middle"}, // 0
-                    {data: 'cargroup_name',   title :'<center>กลุ่มรถ</center>', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'47%',responsive:1}, // 1
-                    {data: 'created_at',    title :'<center>วันที่สร้าง</center>', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'13%',responsive:2}, // 2
-                    {data: 'status',    title :'<center>สถานะ</center>', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
-                    {data: 'action',    title :'<center>จัดการ</center>', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'20%'}, // 4
+                    {data: 'DT_RowIndex',    title :'No.',   width:'10%', hozAlign: "center", vertAlign:"middle"}, // 0
+                    {data: 'name',   title :'Category', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'15%',responsive:1}, // 1
+                    {data: 'color',    title :'Color', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 2
+                    {data: 'status',    title :'Status', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
+                    {data: 'status_speical',    title :'Status Speical', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
+                    {data: 'change_sort',    title :'Sort', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
+                    {data: 'action',    title :'Action', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 4
 
                     ],
             });
@@ -139,6 +141,59 @@
             });
             
         });
+        function search_datatable()
+        {
+            getdatatable();
+        }
+        function reset_datatable()
+        {
+            $('#search_choice').val(null),
+            $('#search_type').val("like"),
+            $('#search_keyword').val(null),
+            getdatatable();
+        }
+        function deleteItem(ids) {
+            const id = [ids];
+            if (id.length > 0) {
+                destroy(id)
+            }
+        }
+
+        function destroy(id) {
+            Swal.fire({
+                title: "Delete Data",
+                text: "Do you want to delete data?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(fullUrl + '/destroy/'+id)
+                        .then(response => response.json())
+                        .then(data => location.reload())
+                        .catch(error => {
+                            Swal.showValidationMessage(`Request failed: ${error}`)
+                        })
+                }
+            });
+        }
+        function changesort(id)
+        {
+            var sort = $('#sort_'+id).val();
+            $.ajax({
+                type: "post",
+                url: fullUrl+"/changesort",
+                data:{
+                    _token: "{{ csrf_token() }}",
+                    sort:sort,
+                    id:id
+                },
+                success:function(data)
+                {
+                    location.reload();
+                }
+            });
+        }
     </script>
     <!-- END: JS Assets-->
 </body>

@@ -21,8 +21,11 @@ Route::group(['middleware' => ['Webpanel']], function () {
             Route::get('/', [Webpanel\CategoryController::class, 'index']);
             Route::post('/datatable', [Webpanel\CategoryController::class, 'datatable']);
             Route::get('/add', [Webpanel\CategoryController::class, 'add']);
-            // POST
             Route::post('/add', [Webpanel\CategoryController::class, 'insert']);
+            Route::get('/{id}/edit', [Webpanel\CategoryController::class, 'edit'])->where(['id' => '[0-9]+']);
+            Route::post('/{id}/edit', [Webpanel\CategoryController::class, 'update'])->where(['id' => '[0-9]+']);
+            Route::get('/destroy/{id}', [Webpanel\CategoryController::class, 'destroy']);
+            Route::post('/changesort', [Webpanel\CategoryController::class, 'changesort'])->where(['id' => '[0-9]+']);
         });
 
         Route::prefix('food')->group(function () {

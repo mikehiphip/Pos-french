@@ -30,8 +30,8 @@ class CategoryController extends Controller
     {
         return view("$this->prefix.alert.alert",[
             'url'=> "webpanel",
-            'title' => "เกิดข้อผิดพลาด",
-            'text' => "คุณไม่ได้รับสิทธิ์ในการใช้เมนูนี้ ! ",
+            'title' => "Error Occurred",
+            'text' => "You are not authorized to use this menu! ",
             'icon' => 'error'
         ]); 
     }
@@ -39,41 +39,58 @@ class CategoryController extends Controller
     public function datatable(Request $request){
 			
         $like = $request->Like;
-        $sTable = CategoryModel::orderby('id','desc')
+        $sTable = CategoryModel::orderby('sort','asc')
         ->when($like, function ($query) use ($like) {
             if (@$like['name'] != "") {
-                $query->where('name_th', 'like', '%' . $like['name'] . '%');
-            }
-            if (@$like['email'] != "") {
-                $query->where('email', 'like', '%' . $like['email'] . '%');
-            }
-            if (@$like['tel'] != "") {
-                $query->where('tel', 'like', '%' . $like['tel'] . '%');
+                $query->where('name', 'like', '%' . $like['name'] . '%');
             }
         })
         ->get();
-        
         $sQuery = DataTables::of($sTable);
-        
         return $sQuery
         ->addIndexColumn()
-        ->editColumn('name', function($row) {
-        	return $row->name;
+        ->addColumn('color',function ($row){
+            return "<input type='color' value='$row->color' class='form-control' disabled >";
         })
-        ->editColumn('name_en', function($row) {
-        	return is_null($row->name_en) ? '-' : $row->name_en . ' ' . $row->lastname_en;
-        })
-        ->addColumn('updated_at', function($row) {
-        	return is_null($row->updated_at) ? '-' : $row->updated_at;
+        ->addColumn('change_sort', function ($row) {
+            $sorts = CategoryModel::orderby('sort')->get();
+
+            $html = "";
+            $html.='<select id="sort_'.$row->id.'" name="sort_'.$row->id.'" class="form-select w100" onchange="changesort('.$row->id.')">';
+            foreach($sorts as $s)
+            {
+                $select = '';
+                if($s->sort == $row->sort){ $select = 'selected'; }
+                $html.='<option value="'.$s->sort.'" '.$select.'>'.$s->sort.'</option>';
+            }
+            $html.='</select>';
+
+            $data = $html;
+            return $data;
         })
         ->addColumn('action', function ($row) {
         return "<a href='$this->segment/$this->folder/$row->id/edit' class='btn btn-sm btn-info' title='Edit'><i class='far fa-edit'></i></a>                                                
             <a href='javascript:void(0);' class='btn btn-sm btn-danger' onclick='deleteItem($row->id)' title='Delete'><i class='far fa-trash-alt'></i></a>
         ";
         })
+        ->rawColumns(['action','color','change_sort'])
         ->make(true);
     }
   
+    public function changesort(Request $request)
+    {
+        $data = CategoryModel::find($request->id);
+        $checksort = CategoryModel::where('id','!=',$data->id)->where('sort',$request->sort)->first();
+        if($checksort)
+        {
+            $new_sort = CategoryModel::where('sort',$request->sort)->first();
+            $new_sort->sort = $data->sort;
+            $new_sort->save();
+        }
+        $data->sort = $request->sort;
+        $data->save();
+    }
+
 
     public function index(Request $request)
     {
@@ -99,6 +116,34 @@ class CategoryController extends Controller
             'segment' => $this->segment,
             'name_page' => $this->name_page,
         ]);
+    }
+
+    public function edit(Request $request,$id)
+    {
+        $menu_control = Helper::menu_active($this->menu_id);
+        if($menu_control){ if($menu_control->read  == "edit") { return $this->auth_menu(); } } else { return $this->auth_menu();}
+        $cat = CategoryModel::find($id);
+        return view("$this->prefix.pages.$this->folder.edit", [
+            'prefix' => $this->prefix,
+            'folder' => $this->folder,
+            'segment' => $this->segment,
+            'name_page' => $this->name_page,
+            'row'     => $cat
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $datas = CategoryModel::find($id);
+        if (@$datas) {
+            $query = CategoryModel::destroy($datas->id);
+        }
+
+        if (@$query) {
+            return response()->json(true);
+        } else {
+            return response()->json(false);
+        }
     }
 
 
@@ -143,8 +188,8 @@ class CategoryController extends Controller
 
             return view("$this->prefix.alert.alert", [
                 'url' => $error_url,
-                'title' => "เกิดข้อผิดพลาดทางโปรแกรม",
-                'text' => "กรุณาแจ้งรหัส Code : $log_id ให้ทางผู้พัฒนาโปรแกรม ",
+                'title' => "A program error has occurred.",
+                'text' => "please inform the code : $log_id to the developer of the program ",
                 'icon' => 'error'
             ]);
         }
