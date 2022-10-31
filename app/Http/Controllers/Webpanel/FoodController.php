@@ -176,6 +176,7 @@ class FoodController extends Controller
             }
             $data->cat_id = $request->cat_id;
             $data->name = $request->name;
+            $data->name_abb = $request->name_abb;
             $data->color = $request->color;
             $data->status = $request->status;
             $data->price = $request->price;

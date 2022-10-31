@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTbFoodTable extends Migration
+class CreateTbOrderListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateTbFoodTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_food', function (Blueprint $table) {
+        Schema::create('tb_order_list', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('order_id');
             $table->integer('cat_id');
-            $table->string("img",255)->nullable();
-            $table->string("name",255)->nullable();
-            $table->string("name_abb",255)->nullable();
-            $table->string("color",255)->nullable();
-            $table->string("price",100)->nullable();
-            $table->enum("status",['on','off'])->nullable();
+            $table->integer('food_id');
+            $table->string("price",100);
+            $table->integer("qty");
+            $table->text("note")->nullable();
+            $table->integer("t")->nullable();
+            $table->string("m",100)->nullable();
             $table->datetime('created_at')->nullable();
             $table->datetime('updated_at')->nullable();
-            $table->datetime('deleted_at')->nullable();
         });
     }
 
@@ -35,6 +35,6 @@ class CreateTbFoodTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_food');
+        Schema::dropIfExists('tb_order_list');
     }
 }

@@ -29,11 +29,11 @@
             <!-- BEGIN: Content -->
             <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
                 <h2 class="text-lg font-medium mr-auto">
-                    Category
+                    Order Lists
                 </h2>
                 <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
                     <a href="{{ url("$segment/$folder/add") }}"><button type="button"
-                            class="btn btn-primary shadow-md mr-2">Add new category</button></a>
+                            class="btn btn-primary shadow-md mr-2">Add new food</button></a>
                 </div>
             </div>
 
@@ -61,7 +61,15 @@
                     </div> --}}
                     <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
                         <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Search</label>
-                        <input id="search_keyword" name="name" type="text"  class="myLike form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" placeholder="Name">
+                        <input id="search_keyword" name="name" type="text" class="myLike form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" placeholder="Name">
+                    </div>
+                    <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
+                        <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Start Date</label>
+                        <input id="search_stdate" name="start_date" type="date" class="myLike form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" >
+                    </div>
+                    <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
+                        <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">End Date</label>
+                        <input id="search_endate" name="end_date" type="date" class="myLike form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" >
                     </div>
                     <div class="mt-2 xl:mt-0">
                         <button id="search_button" name="search_button" onclick="search_datatable()" type="button" class="btn btn-primary w-full sm:w-16">Search</button>
@@ -111,7 +119,6 @@
                 iDisplayLength: 25,
                 ajax: {
                     url: fullUrl + "/datatable",
-                 
                     data: function(d) {
                         d.Like = {};
                         $('.myLike').each(function() {
@@ -126,14 +133,13 @@
                 },
                 
                 columns:[
-                    {data: 'DT_RowIndex',    title :'No.',   width:'5%', hozAlign: "center", vertAlign:"middle"}, // 0
-                    {data: 'color',    title :'Color', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 1
-                    {data: 'name',   title :'Category', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'15%',responsive:1}, // 2
-                    {data: 'status',    title :'Status', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
-                    {data: 'status_speical',    title :'Status Speical', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
-                    {data: 'change_sort',    title :'Sort', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
-                    {data: 'action',    title :'Action', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 4
-
+                    {data: 'DT_RowIndex',    title :'<center>No.</center>',   width:'5%', hozAlign: "center", vertAlign:"middle"}, // 0
+                    {data: 'prefix',    title :'Order Number', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 2
+                    {data: 'created_at',    title :'Date', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 2
+                    {data: 'name',    title :'Customer', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'20%',responsive:2}, // 2
+                    {data: 'company',    title :'Company', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'18%',responsive:2}, // 2
+                    {data: 'paid',    title :'Net', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'12%',responsive:2}, // 2
+                    {data: 'action',    title :'Action', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 5
                     ],
             });
             $('#search_button,#search_reset').on('click', function(e) {
@@ -174,23 +180,6 @@
                         .catch(error => {
                             Swal.showValidationMessage(`Request failed: ${error}`)
                         })
-                }
-            });
-        }
-        function changesort(id)
-        {
-            var sort = $('#sort_'+id).val();
-            $.ajax({
-                type: "post",
-                url: fullUrl+"/changesort",
-                data:{
-                    _token: "{{ csrf_token() }}",
-                    sort:sort,
-                    id:id
-                },
-                success:function(data)
-                {
-                    location.reload();
                 }
             });
         }

@@ -64,6 +64,15 @@ Route::group(['middleware' => ['Webpanel']], function () {
             Route::post('/{id}/edit', [Webpanel\DepartmentController::class, 'update'])->where(['id' => '[0-9]+']);
             Route::get('/destroy/{id}', [Webpanel\DepartmentController::class, 'destroy']);
         });
+        Route::prefix('order')->group(function () {
+            Route::get('/', [Webpanel\OrderController::class, 'index']);
+            Route::post('/datatable', [Webpanel\OrderController::class, 'datatable']);
+            Route::get('/add', [Webpanel\OrderController::class, 'add']);
+            Route::post('/add', [Webpanel\OrderController::class, 'insert']);
+            Route::get('/{id}/edit', [Webpanel\OrderController::class, 'edit'])->where(['id' => '[0-9]+']);
+            Route::post('/{id}/edit', [Webpanel\OrderController::class, 'update'])->where(['id' => '[0-9]+']);
+            Route::get('/destroy/{id}', [Webpanel\OrderController::class, 'destroy']);
+        });
 
         Route::prefix('test-form')->group(function () {
             Route::get('/', [Webpanel\Test_formController::class, 'index']);

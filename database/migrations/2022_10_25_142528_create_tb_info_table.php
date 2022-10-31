@@ -17,9 +17,9 @@ class CreateTbInfoTable extends Migration
             $table->bigIncrements('id');
             $table->integer('de_id');
             $table->string("emp_code",100)->nullable();
-            $table->string("first_name",100)->nullable();
-            $table->string("last_name",100)->nullable();
-            $table->string("nickname",100)->nullable();
+            $table->string("first_name",255)->nullable();
+            $table->string("last_name",255)->nullable();
+            $table->string("nickname",255)->nullable();
             $table->string("sex",100)->nullable();
             $table->string("age",100)->nullable();
             $table->string("card_id",100)->nullable();
