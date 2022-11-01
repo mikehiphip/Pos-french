@@ -63,7 +63,7 @@ class OrderController extends Controller
         return $sQuery
         ->addIndexColumn()
         ->addColumn('created_at', function ($row) {
-            $data = date('d-m-Y', strtotime('+543 Years', strtotime($row->o_created)));
+            $data = date('d-m-Y', strtotime($row->o_created));
             return $data;
         })
         ->addColumn('paid', function ($row) {
@@ -71,7 +71,7 @@ class OrderController extends Controller
             return $data;
         })
         ->addColumn('action', function ($row) {
-        return "<a href='$this->segment/$this->folder/$row->o_id/edit' class='btn btn-sm btn-info' title='Edit'><i class='far fa-edit'></i></a>                                                
+        return "<a href='$this->segment/$this->folder/$row->o_id' class='btn btn-sm btn-info' title='View'><i class='far fa-eye'></i></a>                                                
             <a href='javascript:void(0);' class='btn btn-sm btn-danger' onclick='deleteItem($row->o_id)' title='Delete'><i class='far fa-trash-alt'></i></a>
         ";
         })
@@ -84,7 +84,6 @@ class OrderController extends Controller
     {
         $menu_control = Helper::menu_active($this->menu_id);
         if($menu_control){ if($menu_control->read  == "off") { return $this->auth_menu(); } } else { return $this->auth_menu();}
-        
         return view("$this->prefix.pages.$this->folder.index", [
             'prefix' => $this->prefix,
             'folder' => $this->folder,
@@ -92,36 +91,45 @@ class OrderController extends Controller
             'name_page' => $this->name_page,
         ]);
     }
-    
-    public function add(Request $request)
+
+    public function datatable_view(Request $request,$id)
     {
-        $menu_control = Helper::menu_active($this->menu_id);
-        if($menu_control){ if($menu_control->read  == "add") { return $this->auth_menu(); } } else { return $this->auth_menu();}
-        $cat = CategoryModel::where('status','on')->orderBy('sort','asc')->get();
-        return view("$this->prefix.pages.$this->folder.add", [
-            'prefix' => $this->prefix,
-            'folder' => $this->folder,
-            'segment' => $this->segment,
-            'name_page' => $this->name_page,
-            'category' => $cat,
-        ]);
+        $sTable = OrderModel::orderby('tb_order.id','desc')
+        ->where('tb_order.id',$id)
+        ->leftjoin('tb_order_list','tb_order.id','=','tb_order_list.order_id')
+        ->leftjoin('tb_food','tb_order_list.food_id','=','tb_food.id')
+        ->leftjoin('tb_category','tb_order_list.cat_id','=','tb_category.id')
+        ->select('*','tb_order.id as o_id','tb_order.created_at as o_created')
+        ->get();
+        $sQuery = DataTables::of($sTable);
+        return $sQuery
+        ->addIndexColumn()
+        ->addColumn('img', function ($row) {
+            $data = "<img src='$row->img' width='30%' >";
+            return $data;
+        })
+        ->rawColumns(['img','created_at','paid'])
+        ->make(true);
     }
-    public function edit(Request $request,$id)
+
+    public function view(Request $request,$id)
     {
         $menu_control = Helper::menu_active($this->menu_id);
-        if($menu_control){ if($menu_control->read  == "edit") { return $this->auth_menu(); } } else { return $this->auth_menu();}
-        $food = FoodModel::where('tb_food.id',$id)
-        ->leftjoin('tb_category','tb_food.cat_id','=','tb_category.id')
-        ->select('*','tb_category.id as cat_id','tb_food.id as f_id','tb_food.name as name','tb_category.name as cat_name','tb_food.color as f_color')
-        ->first();
-        $cat = CategoryModel::where('status','on')->orderBy('sort','asc')->get();
+        if($menu_control){ if($menu_control->read  == "read") { return $this->auth_menu(); } } else { return $this->auth_menu();}
+        $order =  OrderModel::where('tb_order.id',$id)
+        ->leftjoin('tb_customer','tb_order.cus_id','=','tb_customer.id')
+        ->leftjoin('tb_order_list','tb_order.id','=','tb_order_list.order_id')
+        ->leftjoin('tb_food','tb_order_list.food_id','=','tb_food.id')
+        ->leftjoin('tb_category','tb_order_list.cat_id','=','tb_category.id')
+        ->select('*','tb_order.id as o_id','tb_order.created_at as o_created','tb_food.name as fname','tb_category.name as cat_name','tb_customer.name as cus_name')
+        ->get();
         return view("$this->prefix.pages.$this->folder.edit", [
             'prefix' => $this->prefix,
             'folder' => $this->folder,
             'segment' => $this->segment,
             'name_page' => $this->name_page,
-            'category' => $cat,
-            'row'     => $food
+            'row'       => $order,
+            'id'        => $id,
         ]);
     }
 

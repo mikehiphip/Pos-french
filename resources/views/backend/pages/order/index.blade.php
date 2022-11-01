@@ -31,10 +31,10 @@
                 <h2 class="text-lg font-medium mr-auto">
                     Order Lists
                 </h2>
-                <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+                {{-- <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
                     <a href="{{ url("$segment/$folder/add") }}"><button type="button"
                             class="btn btn-primary shadow-md mr-2">Add new food</button></a>
-                </div>
+                </div> --}}
             </div>
 
             <div class="intro-y box p-5 mt-5">
@@ -64,11 +64,11 @@
                         <input id="search_keyword" name="name" type="text" class="myLike form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" placeholder="Name">
                     </div>
                     <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-                        <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Start Date</label>
+                        <label class="flex-none xl:w-auto xl:flex-initial mr-2">Start Date</label>
                         <input id="search_stdate" name="start_date" type="date" class="myLike form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" >
                     </div>
                     <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-                        <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">End Date</label>
+                        <label class="flex-none xl:w-auto xl:flex-initial mr-2">End Date</label>
                         <input id="search_endate" name="end_date" type="date" class="myLike form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" >
                     </div>
                     <div class="mt-2 xl:mt-0">
@@ -79,19 +79,8 @@
                 <table id="data-table" class="table nowrap " style=" width: 100%;"></table>
             </div>
             <!-- END: Content -->
-            
-        </div>
-
-    </div>
-
-    <div id="show_modal" class="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-body p-10 text-center"> This is totally awesome superlarge modal! </div>
-            </div>
         </div>
     </div>
-    <!-- End Modal -->
     
     <!-- BEGIN: JS Assets-->
     
@@ -134,11 +123,12 @@
                 
                 columns:[
                     {data: 'DT_RowIndex',    title :'<center>No.</center>',   width:'5%', hozAlign: "center", vertAlign:"middle"}, // 0
-                    {data: 'prefix',    title :'Order Number', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 2
-                    {data: 'created_at',    title :'Date', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 2
-                    {data: 'name',    title :'Customer', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'20%',responsive:2}, // 2
-                    {data: 'company',    title :'Company', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'18%',responsive:2}, // 2
-                    {data: 'paid',    title :'Net', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'12%',responsive:2}, // 2
+                    {data: 'prefix',    title :'Order No.', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 2
+                    {data: 'created_at',    title :'Date', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'15%',responsive:2}, // 2
+                    {data: 'name',    title :'Customer', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'15%',responsive:2}, // 2
+                    {data: 'company',    title :'Company', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 2
+                    {data: 'discount',    title :'Discount', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 2
+                    {data: 'paid',    title :'Net', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 2
                     {data: 'action',    title :'Action', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 5
                     ],
             });

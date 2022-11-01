@@ -25,81 +25,54 @@
 
 
                 <!-- BEGIN: Content -->
-                <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-                    <h2 class="text-lg font-medium mr-auto">
-                        Form Data
-                    </h2>
-                </div>
-
-                <form id="menuForm" method="post" action="" enctype="multipart/form-data">
-                @csrf
                     <div class="grid grid-cols-12 gap-6 mt-5">
                         <div class="intro-y col-span-12 lg:col-span-10">
                             <!-- BEGIN: Form Layout -->
                             <div class="intro-y box p-5">
-                                <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
-                                    <div class="col-span-8 lg:col-span-6">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary">Image</label>
-                                        <img src="@if($row->img == null){{url("noimage.jpg")}} @else {{url($row->img)}} @endif" class="img-thumbnail" id="preview">
-                                    </div><br>
-                                    <div class="col-span-12 lg:col-span-12">
-                                        <div class="col-span-6 lg:col-span-6">
-                                            <input type="file" name="image" id="image">
-                                        </div>
-                                    </div>
-                                </div><br>
-                                <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
-                                    <div class="col-span-4 lg:col-span-4">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Category 
-                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please select category</span> 
-                                        </label>
-                                        <select class="form-control w-full" name="cat_id" id="category" required>
-                                            @foreach ($category as $cat)
-                                            <option value="{{$cat->id}}" @if($row->cat_id == $cat->id ) selected @endif>{{$cat->name}}</option>
+                                <label class="form-label w-full flex flex-col sm:flex-row"><b>Order Number : </b> {{$row[0]->prefix}} </label>
+                                 <label class="form-label w-full flex flex-col sm:flex-row"> <b>Customer Name : </b> {{$row[0]->cus_name}}</label>
+                                 <label class="form-label w-full flex flex-col sm:flex-row"><b>Date : </b> {{date('d-m-Y H:i:s', strtotime($row[0]->o_created))}}</label> 
+                                 <hr>
+                                 <div class="table-responsive">
+                                    <table class="table table-striped table-light" width="100%" >
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="text-center sorting_disabled" width="5%" >No.</th>
+                                                <th class="text-center sorting_disabled" width="25%" >Image</th>
+                                                <th class="text-center sorting_disabled" width="30%" >Detail</th>
+                                                <th class="text-center sorting_disabled"width="15%">Quantity</th>
+                                                <th class="text-center sorting_disabled"width="15%">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($row as $o => $order)
+                                            <tr>
+                                                <td class="text-center">{{$o+1}}</td>
+                                                <td class="text-center"><center><img src="{{$order->img}}" style="width:50%;"></center></td>
+                                                <td>
+                                                    Category : {{$order->cat_name}} <br>
+                                                    Food : {{$order->fname}}
+                                                </td>
+                                                <td class="text-center">{{number_format($order->qty,0)}}</td>
+                                                <td class="text-center">{{number_format($order->price,2)}}</td>
+                                            </tr>
                                             @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-span-8 lg:col-span-4">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Name Abbreviate </label>
-                                        <input type="text" id="name" name="name_abb" class="form-control w-full" value="{{$row->name_abb}}" required>
-                                    </div>
-                                    <div class="col-span-8 lg:col-span-4">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Name 
-                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please input name food</span> 
-                                        </label>
-                                        <input type="text" id="name" name="name" class="form-control w-full" value="{{$row->name}}" required>
-                                    </div>
+                                        </tbody>
+                                        <tr>
+                                            <td colspan="3" class="text-right"> <b>Total</b></td>
+                                            <td class="text-center"><b>{{number_format($order->total_qty,0)}}</b></td>
+                                            <td class="text-center"><b>{{number_format($order->total_price,2)}}</b></td>
+                                        </tr>
+                                    </table>
                                 </div>
-                                <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
-                                    <div class="col-span-4 lg:col-span-4">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Color </label>
-                                        <input type="text" id="color" name="color" class="form-control w-full" value="{{$row->f_color}}">
-                                    </div>
-                                    <div class="col-span-12 lg:col-span-4">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Price 
-                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please input price</span> 
-                                        </label>
-                                        <input type="text" id="price" name="price" class="form-control w-full" value="{{$row->price}}" required>
-                                    </div>
-                                    <div class="col-span-12 lg:col-span-4">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Status 
-                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Show in menu homepage</span> 
-                                        </label>
-                                        <select class="form-control w-full" name="status" id="status" required>
-                                            <option value="on" @if($row->status == "on" ) selected @endif>on</option>
-                                            <option value="off" @if($row->status == "off" ) selected @endif>off</option>
-                                        </select>
-                                    </div>
+                                <div class="text-left mt-5">
+                                    <a class="btn btn-sm btn-primary w-24 mr-1" href="{{url("$segment/$folder")}}">Back</a>
                                 </div>
-                                <div class="text-right mt-5">
-                                    <button type="button" onclick="check_add();" class="btn btn-sm btn-primary w-24">Save</button>
-                                    <a class="btn btn-sm btn-outline-secondary w-24 mr-1" href="{{url("$segment/$folder")}}">Cancel</a>
-                                </div>
+                                <input type="hidden" id="oid" value="{{$id}}">
                             </div>
                             <!-- END: Form Layout -->
                         </div>
                     </div>
-                </form>
                 <!-- END: Content -->
 
 
@@ -111,55 +84,55 @@
         @include("backend.layout.script")
 
         <script>
-        function check_add(){
-            var name = $('#name').val();
-            var status = $('#status').val();
-            var category = $('#category').val();
-            if (name == "" || status == "" || category == "" ) {
-                toastr.error('Please fill out the information completely.');
-                return false;
-            }
-            Swal.fire({
-                title: 'Verify the information',
-                text: "Please check the information completely. before saving",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Save',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        icon : 'warning',
-                        title: 'Please waiting. . .',
-                        html: 'The system is recording data.',
-                        timer: 1000,
-                        timerProgressBar: true,
-                        didOpen: () => {
-                            Swal.showLoading()
-                        },
-                        }).then((result) => {
-                        if (result.dismiss === Swal.DismissReason.timer) 
-                        {
-                            $('#menuForm').submit();
-                        }
-                    })
+        var id = $('#oid').val();
+        var fullUrl = ('webpanel/order/'+id);
+        console.log(fullUrl)
+        $(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            })
-        }
-        $("#image").on('change', function() {
-            var $this = $(this)
-            const input = $this[0];
-            const fileName = $this.val().split("\\").pop();
-            $this.siblings(".custom-file-label").addClass("selected").html(fileName)
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#preview').attr('src', e.target.result).fadeIn('fast');
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
+            });
+            oTable = $('#data-table').DataTable({
+                "sDom": "<'row'<'col-sm-12' tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
+                processing: true,
+                serverSide: true,
+                stateSave: true,
+                scroller: true,
+                scrollCollapse: true,
+                scrollX: true,
+                ordering: true,
+                bInfo: true,
+
+                // scrollY: '' + ($(window).height() - 370) + 'px',
+                iDisplayLength: 25,
+                ajax: {
+                    url: fullUrl + "/datatable-view",
+                    data: function(d) {
+                        d.Like = {};
+                        $('.myLike').each(function() {
+                            if ($.trim($(this).val()) && $.trim($(this).val()) != '0') {
+                                d.Like[$(this).attr('name')] = $.trim($(this)
+                                    .val());
+                            }
+                        });
+                        oData = d
+                    },
+                    method: 'POST'
+                },
+                
+                columns:[
+                    {data: 'DT_RowIndex',    title :'<center>No.</center>',   width:'5%', hozAlign: "center", vertAlign:"middle"}, // 0
+                    {data: 'img',    title :'Food', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'20%',responsive:2}, // 1
+                    {data: 'descript',    title :'Detail', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'20%',responsive:2}, // 2
+                    {data: 'qty',    title :'Quantity', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 3
+                    {data: 'price',    title :'Price', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 4
+                    ],
+            });
+            $('#search_button,#search_reset').on('click', function(e) {
+                oTable.draw();
+            });
+            
         });
         </script>
         <!-- END: JS Assets-->
