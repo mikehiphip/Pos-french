@@ -135,11 +135,11 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        $datas = FoodModel::find($id);
+        $datas = OrderModel::find($id);
         if (@$datas) {
-            $query = FoodModel::destroy($datas->id);
+            $query = OrderModel::destroy($datas->id);
+            $list = OrderListModel::where('order_id',$datas->id)->delete();
         }
-
         if (@$query) {
             return response()->json(true);
         } else {
