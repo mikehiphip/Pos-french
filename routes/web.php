@@ -39,9 +39,11 @@ use App\Http\Controllers\Frontend as Frontend;
 
 
 // Route
-Route::get('/', function () {
-    return redirect('/webpanel');
-});
+// Route::get('/', function () {
+//     return redirect('/webpanel');
+// });
+Route::get("/", [Frontend\HomeController::class, 'index']);
+Route::get("/menu", [Frontend\MenuController::class, 'index']);
 
 require('web-backend.php');
 
