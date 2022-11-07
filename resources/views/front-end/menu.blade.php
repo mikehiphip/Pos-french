@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>@include("$prefix.inc_header")</head>
+
 <body>
   @include("$prefix.inc_topmenu")
 
@@ -8,7 +9,7 @@
     <div class="form-menu">
         <div class="showmenu">
           <div class="btn-No-Ok">
-              <button class="no">Esc = cancel</button>
+              <button class="no" onclick="window.location.href='{{url('/')}}';">Esc = cancel</button>
               <button class="ok"><img src="frontend/images/icon menu/Check_ring1.svg">F12 ok</button>
           </div>
           <div class="All-Price">
@@ -77,7 +78,10 @@
                 <div class="btn-food">
                   <div class="menu-with-LR">
                     <div id="memuBtnContainer">
-                          <button class="btn active"> POTAGE</button>
+                      @foreach ($catagory as $c => $cat)
+                          <button class="btn" style="background-color:{{$cat->color}};"> {{strtoupper($cat->name)}}</button>
+                      @endforeach
+                          {{-- <button class="btn active"> POTAGE</button>
                           <button class="btn-yl" > ENTREE</button>
                           <button class="btn-y" > POULET</button>
                           <button class="btn-rl" > PORC</button>
@@ -93,7 +97,7 @@
                           <button class="btn" > LIVRAISON</button>
                           <button class="btn" > INGREDIENT</button>
                           <button class="btn" > DIVERS</button>
-                          <button class="btn" > SUPLMT</button>
+                          <button class="btn" > SUPLMT</button> --}}
                       </div>
                       <div class="btn-service">
                         <button class="service"><img class="img-fluid" src="frontend/images/icon menu/move_up1.png"></button>
@@ -174,13 +178,20 @@ for (var i = 0; i < btns.length; i++) {
 <!-- Active Menu -->
 <script>
 var btnContainer = document.getElementById("menucontainer");
-var btns = menuContainer.getElementsByClassName("menu");
+var btns = btnContainer.getElementsByClassName("menu");
 for (var i = 0; i < btns.length; i++) {
   btns[i].addEventListener("click", function(){
     var current = document.getElementsByClassName("active");
     current[0].className = current[0].className.replace(" active", "");
     this.className += " active";
   });
+}
+
+var test = document.getElementsByClassName('btn');
+document.addEventListener("click", myFunction)
+function myFunction() {
+  test.className += " active";
+  console.log(test)
 }
 </script>
 

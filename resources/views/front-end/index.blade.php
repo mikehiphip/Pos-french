@@ -178,10 +178,11 @@
                     <table class="table">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col" class="code"><button>Code</button></th>
+                                <th scope="col" class="code"><button>Code</button>
+                                    
                                 <th scope="col">Description
                                     <input type="search" id="menusearch" name="search" class="Msearch">
-                                    <button><img class="serachimg" width="14px" src="frontend/images/icon index/search.png"></button>
+                                    <button><img class="serachimg" width="14px" src="frontend/images/icon index/search.png"></button></th> 
                                 </th>
                                 <th scope="col" class="pq"><button>Price</button></th>
                                 <th scope="col" class="pq"><button>Qty</button></th>
