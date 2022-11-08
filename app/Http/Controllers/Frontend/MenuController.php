@@ -25,7 +25,10 @@ class MenuController extends Controller
         return view("$this->prefix.menu",[
             'prefix' => $this->prefix,
             'catagory'  => $cat,
-            'food' => $food,
+            'food' => json_encode($food),
         ]);
+    }
+    public function get_food(Request $request , $id){
+        
     }
 }

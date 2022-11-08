@@ -39,25 +39,13 @@
             <button class="move"><img class="a-drop img-fluid" src="frontend/images/icon menu/move_up1.png"></button>
           </div>
           <div class="showmenu-table">
-              <table class="table">
-                  <tbody>
-                      <tr>
+              <table class="table" id="show_list" >
+                      {{-- <tr>
                           <th scope="row">1.0</th>
-                          <td colspan="1" class="table-active">Potage Poulet coco
-           </td>
+                          <td colspan="1" class="table-active">Potage Poulet coco</td>
                           <td class="price">8.00</td>
-                      </tr>
-                      <tr>
-                          <th scope="row">4.0</th>
-                          <td colspan="1" class="table-color">Boissons</td>
-                          <td class="price">12.00</td>
-                      </tr>
-                      <tr>
-                          <th scope="row">1.0</th>
-                          <td colspan="1" class="table-ord">potage Crevettes Itronnell</td>
-                          <td class="price">8.00</td>
-                      </tr>
-                  </tbody>
+                      </tr> --}}
+                      
               </table>
           </div>
             <div class="show-price">
@@ -79,25 +67,8 @@
                   <div class="menu-with-LR">
                     <div id="memuBtnContainer">
                       @foreach ($catagory as $c => $cat)
-                          <button class="btn" style="background-color:{{$cat->color}};"> {{strtoupper($cat->name)}}</button>
+                          <button class="btn" id="btn_{{$c}}" style="background-color:{{$cat->color}};" onclick="btn_click({{$c}},{{$cat->id}},'{{$cat->name}}')"> {{strtoupper($cat->name)}}</button>
                       @endforeach
-                          {{-- <button class="btn active"> POTAGE</button>
-                          <button class="btn-yl" > ENTREE</button>
-                          <button class="btn-y" > POULET</button>
-                          <button class="btn-rl" > PORC</button>
-                          <button class="btn-r" > BOEUF</button>
-                          <button class="btn-p" >CREVETTE</button>
-                          <button class="btn-p" > COMPOSAN</button>
-                          <button class="btn" > CANARD</button>
-                          <button class="btn" > RIZ SAUTE</button>
-                          <button class="btn-c" > NOUUILLES</button>
-                          <button class="btn-g" > VEGETARIE</button>
-                          <button class="btn-b" > BOISSONS</button>
-                          <button class="btn-p" > DESSERTS</button>
-                          <button class="btn" > LIVRAISON</button>
-                          <button class="btn" > INGREDIENT</button>
-                          <button class="btn" > DIVERS</button>
-                          <button class="btn" > SUPLMT</button> --}}
                       </div>
                       <div class="btn-service">
                         <button class="service"><img class="img-fluid" src="frontend/images/icon menu/move_up1.png"></button>
@@ -124,28 +95,21 @@
                       </div>
                     </div>
                     <div id="menucontainer">
-                        <div class="menu active">
-                            <div class="card-menu">
-                              <img class="img-fluid" src="frontend/images/icon index/food1.png">
-                              <p>POTAGEPOULET<br>COCO</p>
-                            </div>
-                            <div class="price"><p>Price:8.00</p></div>
-                        </div>
-                        <div class="menu2">
+                        {{-- <div class="menu2 active">
                           <div class="card-menu">
                               <img class="img-fluid" src="frontend/images/icon index/food1.png">
                               <p>POTAGE<br>CREVETTES<br>ITRONNELL</p>
                           </div>
                           <div class="price"><p>Price:8.00</p></div>
                         </div>
-                        <div class="menu">
+                        <div class="menu active">
                           <div class="card-menu">
                               <img class="img-fluid" src="frontend/images/icon index/food1.png">
                               <p>POTAGE<br>RAVIOLIS</p>
                           </div>
                           <div class="price"><p>Price:8.00</p></div>
                         </div>
-                        <div class="menu3">
+                        <div class="menu3 active">
                           <div class="card-menu">
                             <div class="bg-cr-menu">
                               <img class="img-fluid" src="frontend/images/icon menu/Drink1.png">
@@ -153,7 +117,7 @@
                               <p>BOISSONS</p>
                           </div>
                           <div class="price"><p>Price:3.00</p></div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -174,7 +138,42 @@ for (var i = 0; i < btns.length; i++) {
   });
 }
 </script> -->
-
+<?php  
+    echo "<script>";
+    echo "var food = $food";
+    echo "</script>";
+?>
+<script type="text/javascript">
+  var old_btn = '';
+  var old_menu = '';
+  var cate = '';
+  var get_food ;
+  function btn_click(id,cid,name){
+    cate = name;
+    get_food = food.filter(x=>x.cat_id == cid);
+    if(old_btn != ''){
+      $("#"+old_btn).removeClass("active");
+    }
+    var data = '';
+      for(x =0 ; x < get_food.length ; x++) {
+        data = data+"<div class='menu' id='m_act"+get_food[x].id+"' onclick='menu_click("+get_food[x].id+")' style='background-color:"+get_food[x].color+";'><div class='card-menu' ><img class='img-fluid' src='"+get_food[x].img+"'><p>"+get_food[x].name+"</p></div><div class='price'><p>Price:"+get_food[x].price+"</p></div></div>" ;
+      }
+    document.getElementById("menucontainer").innerHTML = data;
+    document.getElementById("btn_"+id).classList.add('active');
+    old_btn = 'btn_'+id;
+    old_menu = ''; 
+  }
+  function menu_click(fid){
+    var food_list = get_food.find(x=>x.id == fid);
+    if(old_menu != ''){
+      $("#"+old_menu).removeClass("active");
+    }
+    var list = "<tr><th scope='row' id='num"+fid+"'>1.00</th><td colspan='1' class='table-active' id='num_name"+fid+"' style='background-color:"+food_list.color+";'>"+cate+" "+food_list.name+"</td><td class='price' id='num_price"+fid+"'>"+food_list.price+"</td></tr>";
+    document.getElementById("m_act"+fid).classList.add('active');
+    $('#show_list').append(list);
+    old_menu = 'm_act'+fid;
+  }
+</script>
 <!-- Active Menu -->
 <script>
 var btnContainer = document.getElementById("menucontainer");
@@ -187,12 +186,6 @@ for (var i = 0; i < btns.length; i++) {
   });
 }
 
-var test = document.getElementsByClassName('btn');
-document.addEventListener("click", myFunction)
-function myFunction() {
-  test.className += " active";
-  console.log(test)
-}
 </script>
 
 
