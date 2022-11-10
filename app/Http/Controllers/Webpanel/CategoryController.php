@@ -15,6 +15,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Backend\CategoryModel;
+use App\Models\Backend\SubCategoryModel;
 
 
 class CategoryController extends Controller
@@ -73,8 +74,31 @@ class CategoryController extends Controller
             <a href='javascript:void(0);' class='btn btn-sm btn-danger' onclick='deleteItem($row->id)' title='Delete'><i class='far fa-trash-alt'></i></a>
         ";
         })
-        ->rawColumns(['action','color','change_sort'])
+        ->addColumn('action_name', function ($row) {
+            $secondary = \App\Models\Backend\SubCategoryModel::where('cate_id', $row->id)->get();
+            $data = "<span>$row->name</span>";
+            if (count($secondary) > 0) {
+                $data .= "
+                <button type='button' data-tw-toggle='modal' data-tw-target='#show_modal' class='ml-3 btn btn-primary' onclick='show_submenu($row->id);' type='button'><i class='far fa-list-alt'></i></button>";
+            }
+            return $data;
+        })
+        ->rawColumns(['action','color','change_sort','action_name'])
         ->make(true);
+    }
+
+    public function showsubcate(Request $request)
+    {
+        $data = CategoryModel::find($request->id);
+        $rows = SubCategoryModel::where('cate_id',$data->id)->get();
+        return view("$this->prefix.pages.$this->folder.show_subcate", [
+            'prefix' => $this->prefix,
+            'folder' => $this->folder,
+            'segment' => $this->segment,
+            'name_page' => $this->name_page,
+            'data' => $data,
+            'rows' => $rows,
+        ]);
     }
   
     public function changesort(Request $request)
@@ -109,12 +133,13 @@ class CategoryController extends Controller
     {
         $menu_control = Helper::menu_active($this->menu_id);
         if($menu_control){ if($menu_control->read  == "add") { return $this->auth_menu(); } } else { return $this->auth_menu();}
-        
+        $cat = CategoryModel::orderBy('id','asc')->get();
         return view("$this->prefix.pages.$this->folder.add", [
             'prefix' => $this->prefix,
             'folder' => $this->folder,
             'segment' => $this->segment,
             'name_page' => $this->name_page,
+            'category' => $cat,
         ]);
     }
 
@@ -123,12 +148,30 @@ class CategoryController extends Controller
         $menu_control = Helper::menu_active($this->menu_id);
         if($menu_control){ if($menu_control->read  == "edit") { return $this->auth_menu(); } } else { return $this->auth_menu();}
         $cat = CategoryModel::find($id);
+        $cat_data = CategoryModel::orderBy('id','asc')->get();
         return view("$this->prefix.pages.$this->folder.edit", [
             'prefix' => $this->prefix,
             'folder' => $this->folder,
             'segment' => $this->segment,
             'name_page' => $this->name_page,
-            'row'     => $cat
+            'row'     => $cat,
+            'category' => $cat_data,
+        ]);
+    }
+
+    public function edit_sub(Request $request,$id)
+    {
+        $menu_control = Helper::menu_active($this->menu_id);
+        if($menu_control){ if($menu_control->read  == "edit") { return $this->auth_menu(); } } else { return $this->auth_menu();}
+        $sub_cat = SubCategoryModel::find($id);
+        $cat_data = CategoryModel::orderBy('id','asc')->get();
+        return view("$this->prefix.pages.$this->folder.edit-sub", [
+            'prefix' => $this->prefix,
+            'folder' => $this->folder,
+            'segment' => $this->segment,
+            'name_page' => $this->name_page,
+            'row'     => $sub_cat,
+            'category' => $cat_data,
         ]);
     }
 
@@ -161,13 +204,26 @@ class CategoryController extends Controller
         try {
             DB::beginTransaction();
             if ($id == null) {
-                $data = new CategoryModel();
-                $data->created_at = date('Y-m-d H:i:s');
-                $data->updated_at = date('Y-m-d H:i:s');
-                $data->sort = CategoryModel::count() + 1;
+                if($request->position == 'main'){
+                    $data = new CategoryModel();
+                    $data->created_at = date('Y-m-d H:i:s');
+                    $data->updated_at = date('Y-m-d H:i:s');
+                    $data->sort = CategoryModel::count() + 1;
+                }else{
+                    $data = new SubCategoryModel();
+                    $data->cate_id = $request->cate_id;
+                    $data->created_at = date('Y-m-d H:i:s');
+                    $data->updated_at = date('Y-m-d H:i:s');
+                }
             } else {
-                $data = CategoryModel::find($id);
-                $data->updated_at = date('Y-m-d H:i:s');
+                if($request->position == 'main'){
+                    $data = CategoryModel::find($id);
+                    $data->updated_at = date('Y-m-d H:i:s');
+                }else{
+                    $data = SubCategoryModel::where('cate_id',$id)->first();
+                    $data->cate_id = $request->cate_id;
+                    $data->updated_at = date('Y-m-d H:i:s');
+                }
             }
             $data->name = $request->name;
             $data->color = $request->color;

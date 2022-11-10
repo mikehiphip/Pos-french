@@ -128,7 +128,7 @@
                 columns:[
                     {data: 'DT_RowIndex',    title :'No.',   width:'5%', hozAlign: "center", vertAlign:"middle"}, // 0
                     {data: 'color',    title :'Color', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 1
-                    {data: 'name',   title :'Category', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'15%',responsive:1}, // 2
+                    {data: 'action_name',   title :'Category', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'15%',responsive:1}, // 2
                     {data: 'status',    title :'Status', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
                     {data: 'status_speical',    title :'Status Speical', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
                     {data: 'change_sort',    title :'Sort', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
@@ -157,6 +157,23 @@
             if (id.length > 0) {
                 destroy(id)
             }
+        }
+
+        function show_submenu(id) {
+            $.ajax({
+                type: 'GET',
+                url: fullUrl + '/showsubcate',
+                data: {
+                    id:id,
+                },
+                dataType: 'html',
+                success: function(data) {
+                    // Add response in Modal body
+                    $('.modal-content').html(data);
+
+                    // $('#show_modal').modal('show');
+                }
+            });
         }
 
         function destroy(id) {
@@ -191,6 +208,33 @@
                 success:function(data)
                 {
                     location.reload();
+                }
+            });
+        }
+        
+        // sub
+        function deleteItem_sub(ids) {
+            const id = [ids];
+            if (id.length > 0) {
+                destroy_sub(id)
+            }
+        }
+
+        function destroy_sub(id) {
+            Swal.fire({
+                title: "ลบข้อมูล",
+                text: "คุณต้องการลบข้อมูลใช่หรือไม่?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return fetch(fullUrl + '/destroy_sub?id=' + id)
+                        .then(response => response.json())
+                        .then(data => location.reload())
+                        .catch(error => {
+                            Swal.showValidationMessage(`Request failed: ${error}`)
+                        })
                 }
             });
         }

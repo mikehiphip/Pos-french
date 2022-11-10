@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>@include("$prefix.inc_header")
-</head>
+<head>@include("$prefix.inc_header")</head>
 <body>
-@include("$prefix.inc_topmenu")
+  @include("$prefix.inc_topmenu")
 
 <div class="container-fluid">
     <div class="form-menu">
@@ -11,8 +10,8 @@
         <div class="col-xl-4">
         <div class="showmenu">
           <div class="btn-No-Ok">
-              <button class="no" onclick="window.location.href='{{url('/')}}';">Esc = cancel</button>
-              <button class="ok"><img src="images/icon menu/Check_ring1.svg">F12 ok</button>
+              <button class="no">Esc = cancel</button>
+              <button class="ok"><img src="frontend/images/icon menu/Check_ring1.svg">F12 ok</button>
           </div>
           <div class="All-Price">
             <div class="price-btn">
@@ -29,16 +28,16 @@
               </div>
           </div>
           <div class="add-drop">
-              <button class="A-drop"><img class="a-drop img-fluid" src="images/icon menu/Add_2.svg"><br>Qty +1</button>
+              <button class="A-drop"><img class="a-drop img-fluid" src="frontend/images/icon menu/Add_2.svg"><br>Qty +1</button>
               <div class="remove-btn">
-                <button class="A-drop2"><img class="a-drop img-fluid" src="images/icon menu/Remove_3.svg"></button>
+                <button class="A-drop2"><img class="a-drop img-fluid" src="frontend/images/icon menu/Remove_3.svg"></button>
               </div>
-              <button class="A-drop"><img class="a-drop img-fluid" src="images/icon menu/Dell_4.svg"><br>Qty -1</button>
-              <button class="A-drop"><img class="a-drop img-fluid" src="images/icon menu/123_5.svg"><br>Qty +1</button>
-              <button class="A-drop"><img class="a-drop img-fluid" src="images/icon menu/Cancel_6.svg"><br>Qty -1</button>
+              <button class="A-drop"><img class="a-drop img-fluid" src="frontend/images/icon menu/Dell_4.svg"><br>Qty -1</button>
+              <button class="A-drop"><img class="a-drop img-fluid" src="frontend/images/icon menu/123_5.svg"><br>Qty +1</button>
+              <button class="A-drop"><img class="a-drop img-fluid" src="frontend/images/icon menu/Cancel_6.svg"><br>Qty -1</button>
           </div>
           <div class="Move-Up">
-            <button class="move"><img class="a-drop img-fluid" src="images/icon menu/move_up1.png"></button>
+            <button class="move"><img class="a-drop img-fluid" src="frontend/images/icon menu/move_up1.png"></button>
           </div>
           <div class="showmenu-table">
               <table class="table">
@@ -67,11 +66,11 @@
             </div>
             <div class="move-btn">
               <div class="move-UD">
-                <button><img class="a-drop img-fluid" src="images/icon menu/Arrow_drop_up_1.svg"><br>MOVE</button>
-                <button><img class="a-drop img-fluid" src="images/icon menu/Arrow_drop_up_2.svg"><br>MOVE</button>
+                <button><img class="a-drop img-fluid" src="frontend/images/icon menu/Arrow_drop_up_1.svg"><br>MOVE</button>
+                <button><img class="a-drop img-fluid" src="frontend/images/icon menu/Arrow_drop_up_2.svg"><br>MOVE</button>
               </div>
               <div class="move-D">
-                <button><img class="a-drop img-fluid" src="images/icon menu/move_down2.svg"></button>
+                <button><img class="a-drop img-fluid" src="frontend/images/icon menu/move_down2.svg"></button>
               </div>
             </div>
         </div>
@@ -108,11 +107,11 @@
                 <div class="col-xl-2 p-0">
                   <div class="allbtn-service">
                   <div class="btn-service">
-                    <button class="service"><img class="img-fluid" src="images/icon menu/move_up1.png"></button>
+                    <button class="service"><img class="img-fluid" src="frontend/images/icon menu/move_up1.png"></button>
                     <button class="c">close</button>
-                    <button class="service"><img class="img-fluid" src="images/icon menu/Down_move.svg"></button>
+                    <button class="service"><img class="img-fluid" src="frontend/images/icon menu/Down_move.svg"></button>
                     <button class="service">service</button>
-                    <button class="service"><img class="img-fluid" src="images/icon menu/with.svg">with</button>
+                    <button class="service"><img class="img-fluid" src="frontend/images/icon menu/with.svg">with</button>
                     <button class="c">Mode Normal</button>
                   </div>
                   </div>
@@ -128,31 +127,31 @@
                     <button class="btn" >APEROS</button>
                 </div>
                 <div class="move-R">
-                    <button><img class="img-fluid" src="images/icon menu/left_move.svg"></button>
-                    <button><img class="img-fluid" src="images/icon menu/Right_move.svg"></button>
-                    <button><img class="img-fluid" src="images/icon menu/move_up1.png"></button>
-                    <button><img class="img-fluid" src="images/icon menu/Down_move.svg"></button>
+                    <button><img class="img-fluid" src="frontend/images/icon menu/left_move.svg"></button>
+                    <button><img class="img-fluid" src="frontend/images/icon menu/Right_move.svg"></button>
+                    <button><img class="img-fluid" src="frontend/images/icon menu/move_up1.png"></button>
+                    <button><img class="img-fluid" src="frontend/images/icon menu/Down_move.svg"></button>
                 </div>
               </div>
               <div class="allmenu">
               <div id="menucontainer">
                   <div class="menu active">
                       <div class="card-menu">
-                        <img class="img-fluid" src="images/icon index/food1.png">
+                        <img class="img-fluid" src="frontend/images/icon index/food1.png">
                         <p>POTAGEPOULET<br>COCO</p>
                       </div>
                       <div class="price"><p>Price:8.00</p></div>
                   </div>
                   <div class="menu2">
                     <div class="card-menu">
-                        <img class="img-fluid" src="images/icon index/food1.png">
+                        <img class="img-fluid" src="frontend/images/icon index/food1.png">
                         <p>POTAGE<br>CREVETTES<br>ITRONNELL</p>
                     </div>
                     <div class="price"><p>Price:8.00</p></div>
                   </div>
                   <div class="menu">
                     <div class="card-menu">
-                        <img class="img-fluid" src="images/icon index/food1.png">
+                        <img class="img-fluid" src="frontend/images/icon index/food1.png">
                         <p>POTAGE<br>RAVIOLIS</p>
                     </div>
                     <div class="price"><p>Price:8.00</p></div>
@@ -160,7 +159,25 @@
                   <div class="menu3">
                     <div class="card-menu">
                       <div class="bg-cr-menu">
-                        <img class="img-fluid" src="images/icon menu/Drink1.png">
+                        <img class="img-fluid" src="frontend/images/icon menu/Drink1.png">
+                      </div>
+                        <p>BOISSONS</p>
+                    </div>
+                    <div class="price"><p>Price:3.00</p></div>
+                  </div>
+                  <div class="menu ">
+                    <div class="card-menu">
+                      <div class="bg-cr-menu">
+                        <img class="img-fluid" src="frontend/images/icon menu/Drink1.png">
+                      </div>
+                        <p>BOISSONS</p>
+                    </div>
+                    <div class="price"><p>Price:3.00</p></div>
+                  </div>
+                  <div class="menu3 active">
+                    <div class="card-menu">
+                      <div class="bg-cr-menu">
+                        <img class="img-fluid" src="frontend/images/icon menu/Drink1.png">
                       </div>
                         <p>BOISSONS</p>
                     </div>
@@ -169,7 +186,7 @@
                   <div class="menu3">
                     <div class="card-menu">
                       <div class="bg-cr-menu">
-                        <img class="img-fluid" src="images/icon menu/Drink1.png">
+                        <img class="img-fluid" src="frontend/images/icon menu/Drink1.png">
                       </div>
                         <p>BOISSONS</p>
                     </div>
@@ -178,25 +195,7 @@
                   <div class="menu3">
                     <div class="card-menu">
                       <div class="bg-cr-menu">
-                        <img class="img-fluid" src="images/icon menu/Drink1.png">
-                      </div>
-                        <p>BOISSONS</p>
-                    </div>
-                    <div class="price"><p>Price:3.00</p></div>
-                  </div>
-                  <div class="menu3">
-                    <div class="card-menu">
-                      <div class="bg-cr-menu">
-                        <img class="img-fluid" src="images/icon menu/Drink1.png">
-                      </div>
-                        <p>BOISSONS</p>
-                    </div>
-                    <div class="price"><p>Price:3.00</p></div>
-                  </div>
-                  <div class="menu3">
-                    <div class="card-menu">
-                      <div class="bg-cr-menu">
-                        <img class="img-fluid" src="images/icon menu/Drink1.png">
+                        <img class="img-fluid" src="frontend/images/icon menu/Drink1.png">
                       </div>
                         <p>BOISSONS</p>
                     </div>
@@ -225,42 +224,7 @@ for (var i = 0; i < btns.length; i++) {
   });
 }
 </script> -->
-<?php  
-    echo "<script>";
-    echo "var food = $food";
-    echo "</script>";
-?>
-<script type="text/javascript">
-  var old_btn = '';
-  var old_menu = '';
-  var cate = '';
-  var get_food ;
-  function btn_click(id,cid,name){
-    cate = name;
-    get_food = food.filter(x=>x.cat_id == cid);
-    if(old_btn != ''){
-      $("#"+old_btn).removeClass("active");
-    }
-    var data = '';
-      for(x =0 ; x < get_food.length ; x++) {
-        data = data+"<div class='menu' id='m_act"+get_food[x].id+"' onclick='menu_click("+get_food[x].id+")' style='background-color:"+get_food[x].color+";'><div class='card-menu' ><img class='img-fluid' src='"+get_food[x].img+"'><p>"+get_food[x].name+"</p></div><div class='price'><p>Price:"+get_food[x].price+"</p></div></div>" ;
-      }
-    document.getElementById("menucontainer").innerHTML = data;
-    document.getElementById("btn_"+id).classList.add('active');
-    old_btn = 'btn_'+id;
-    old_menu = ''; 
-  }
-  function menu_click(fid){
-    var food_list = get_food.find(x=>x.id == fid);
-    if(old_menu != ''){
-      $("#"+old_menu).removeClass("active");
-    }
-    var list = "<tr><th scope='row' id='num"+fid+"'>1.00</th><td colspan='1' class='table-active' id='num_name"+fid+"' style='background-color:"+food_list.color+";'>"+cate+" "+food_list.name+"</td><td class='price' id='num_price"+fid+"'>"+food_list.price+"</td></tr>";
-    document.getElementById("m_act"+fid).classList.add('active');
-    $('#show_list').append(list);
-    old_menu = 'm_act'+fid;
-  }
-</script>
+
 <!-- Active Menu -->
 <script>
 var btnContainer = document.getElementById("menucontainer");

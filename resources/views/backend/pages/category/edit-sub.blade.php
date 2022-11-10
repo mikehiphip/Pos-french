@@ -46,17 +46,17 @@
                                         <select class="form-control w-full" name="position" id="position" onchange="Scate()">
                                             <option value="" hidden>Please select</option>
                                             <option value="main">Main Category</option>
-                                            <option value="sub">Sub Category</option>
+                                            <option value="sub" selected>Sub Category</option>
                                         </select>
                                     </div>
                                     <div class="col-span-12 lg:col-span-6">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> It a sub-cate of the category: 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please select value</span> 
                                         </label>
-                                        <select class="form-control w-full" name="cate_id" id="cate_id" disabled>
-                                            <option value="" hidden>Please select</option>
+                                        <select class="form-control w-full" name="cate_id" id="cate_id"  disabled>
+                                            <option value="" >Please select</option>
                                             @foreach ($category as $cate)
-                                            <option value="{{$cate->id}}">{{$cate->name}}</option>
+                                            <option value="{{$cate->id}}" @if($row->cate_id == $cate->id) selected @endif> {{$cate->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -66,13 +66,13 @@
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Name 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please input name category</span> 
                                         </label>
-                                        <input type="text" id="name" name="name" class="form-control w-full" placeholder="">
+                                        <input type="text" id="name" name="name" class="form-control w-full" value="{{$row->name}}">
                                         <span id="name_check" hidden class="text-danger" style="font-size:12px;">* Required, please input value</span>
                                     </div>
                                     <div class="col-span-4 lg:col-span-6">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Color button 
                                         </label>
-                                        <input type="text" id="color" name="color" class="form-control w-full" placeholder="">
+                                        <input type="text" id="color" name="color" class="form-control w-full" value="{{$row->color}}">
                                     </div>
                                 </div>
 
@@ -82,9 +82,8 @@
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Show in menu homepage bottom menu</span> 
                                         </label>
                                         <select class="form-control w-full" name="status_speical" id="status_speical">
-                                            <option value="" hidden>Please select</option>
-                                            <option value="on">on</option>
-                                            <option value="off">off</option>
+                                            <option value="on" @if($row->status_speical == 'on') selected @endif>on</option>
+                                            <option value="off" @if($row->status_speical == 'off') selected @endif>off</option>
                                         </select>
                                         <span id="status_speical_check" hidden class="text-danger" style="font-size:12px;">* Required, please input value</span>
                                     </div>
@@ -93,9 +92,8 @@
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Show in menu homepage</span> 
                                         </label>
                                         <select class="form-control w-full" name="status" id="status">
-                                            <option value="" hidden>Please select</option>
-                                            <option value="on">on</option>
-                                            <option value="off">off</option>
+                                            <option value="on" @if($row->status == 'on') selected @endif>on</option>
+                                            <option value="off" @if($row->status == 'off') selected @endif>off</option>
                                         </select>
                                         <span id="status_check" hidden class="text-danger" style="font-size:12px;">* Required, please input value</span>
                                     </div>
@@ -122,6 +120,13 @@
         <script>
             var name = $('#name').val();
             var position = $('#position').val();
+            if(position == 'main'){
+                $('#cate_id').prop('disabled', true);
+                // $('#cate_id').hide();
+                document.getElementById('cate_id').value = null;
+            }else{
+                $("#cate_id").prop('disabled', false);
+            }
             var cate = $('#cate_id').val();
             var status_speical = $('#status_speical').val();
             var status = $('#status').val();
@@ -129,8 +134,11 @@
                 position = $('#position').val();
                 if(position == 'sub'){
                     $("#cate_id").prop('disabled', false);
+                    // $('#cate_id').show();
                 }else{
                     $("#cate_id").prop('disabled', true);
+                    // $('#cate_id').hide();
+                    document.getElementById('cate_id').value = null;
                 }
             }
             function check_add(){
