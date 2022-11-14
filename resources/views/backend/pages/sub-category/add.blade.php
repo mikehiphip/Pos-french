@@ -38,41 +38,40 @@
                             <!-- BEGIN: Form Layout -->
                             <div class="intro-y box p-5">
 
-                                {{-- <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
-                                    <div class="col-span-12 lg:col-span-6">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Position 
-                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please select value</span> 
-                                        </label>
-                                        <select class="form-control w-full" name="position" id="position" onchange="Scate()">
+                                <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
+                                    <div class="col-span-12 lg:col-span-4">
+                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Position </label>
+                                        <input type="text" name="position" class="form-control w-full" value="Sub Category" readonly >
+                                        {{-- <select class="form-control w-full" name="position" id="position" onchange="Scate()">
                                             <option value="" hidden>Please select</option>
-                                            <option value="main" selected >Main Category</option>
+                                            <option value="main">Main Category</option>
                                             <option value="sub">Sub Category</option>
-                                        </select>
+                                        </select> --}}
                                     </div>
-                                    <div class="col-span-12 lg:col-span-6">
+                                    <div class="col-span-12 lg:col-span-8">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> It a sub-cate of the category: 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please select value</span> 
                                         </label>
-                                        <select class="form-control w-full" name="cate_id" id="cate_id" disabled>
-                                            <option value="" >Please select</option>
+                                        <select class="form-control w-full" name="cate_id" id="cate_id" >
+                                            <option value="" hidden>Please select</option>
                                             @foreach ($category as $cate)
                                             <option value="{{$cate->id}}">{{$cate->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
                                 <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
                                     <div class="col-span-8 lg:col-span-6">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Name 
-                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please input name category</span> 
+                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please input name sub category</span> 
                                         </label>
-                                        <input type="text" id="name" name="name" class="form-control w-full" value="{{$row->name}}">
+                                        <input type="text" id="name" name="name" class="form-control w-full" placeholder="">
                                         <span id="name_check" hidden class="text-danger" style="font-size:12px;">* Required, please input value</span>
                                     </div>
                                     <div class="col-span-4 lg:col-span-6">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Color button 
                                         </label>
-                                        <input type="text" id="color" name="color" class="form-control w-full" value="{{$row->color}}">
+                                        <input type="text" id="color" name="color" class="form-control w-full" placeholder="">
                                     </div>
                                 </div>
 
@@ -82,8 +81,9 @@
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Show in menu homepage bottom menu</span> 
                                         </label>
                                         <select class="form-control w-full" name="status_speical" id="status_speical">
-                                            <option value="on" @if($row->status_speical == 'on') selected @endif>on</option>
-                                            <option value="off" @if($row->status_speical == 'off') selected @endif>off</option>
+                                            <option value="" hidden>Please select</option>
+                                            <option value="on">on</option>
+                                            <option value="off">off</option>
                                         </select>
                                         <span id="status_speical_check" hidden class="text-danger" style="font-size:12px;">* Required, please input value</span>
                                     </div>
@@ -92,8 +92,9 @@
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Show in menu homepage</span> 
                                         </label>
                                         <select class="form-control w-full" name="status" id="status">
-                                            <option value="on" @if($row->status == 'on') selected @endif>on</option>
-                                            <option value="off" @if($row->status == 'off') selected @endif>off</option>
+                                            <option value="" hidden>Please select</option>
+                                            <option value="on">on</option>
+                                            <option value="off">off</option>
                                         </select>
                                         <span id="status_check" hidden class="text-danger" style="font-size:12px;">* Required, please input value</span>
                                     </div>
@@ -147,7 +148,7 @@
              cate = $('#cate_id').val();
              status_speical = $('#status_speical').val();
              status = $('#status').val();
-            if (name == "" || status_speical == "" || status == "" || position == "" || cate == "" ) {
+            if (name == "" || status_speical == "" || status == "" ||  cate == "" ) {
                 toastr.error('Please fill out the information completely.');
                 return false;
             }

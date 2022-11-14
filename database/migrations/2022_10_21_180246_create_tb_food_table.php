@@ -16,6 +16,7 @@ class CreateTbFoodTable extends Migration
         Schema::create('tb_food', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('cat_id');
+            $table->integer('sub_id')->nullable();
             $table->string("img",255)->nullable();
             $table->string("name",255)->nullable();
             $table->string("name_abb",255)->nullable();

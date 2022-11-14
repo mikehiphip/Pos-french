@@ -39,24 +39,22 @@
                             <div class="intro-y box p-5">
 
                                 <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
-                                    <div class="col-span-12 lg:col-span-6">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Position 
-                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please select value</span> 
-                                        </label>
-                                        <select class="form-control w-full" name="position" id="position" onchange="Scate()">
+                                    <div class="col-span-12 lg:col-span-4">
+                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Position</label>
+                                        <input type="text" name="position" class="form-control w-full" value="Sub Category" readonly >
+                                        {{-- <select class="form-control w-full" name="position" id="position" onchange="Scate()">
                                             <option value="" hidden>Please select</option>
-                                            <option value="main">Main Category</option>
-                                            <option value="sub" selected>Sub Category</option>
-                                        </select>
+                                            <option value="main" selected >Main Category</option>
+                                            <option value="sub">Sub Category</option>
+                                        </select> --}}
                                     </div>
-                                    <div class="col-span-12 lg:col-span-6">
+                                    <div class="col-span-12 lg:col-span-8">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> It a sub-cate of the category: 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please select value</span> 
                                         </label>
-                                        <select class="form-control w-full" name="cate_id" id="cate_id"  disabled>
-                                            <option value="" >Please select</option>
+                                        <select class="form-control w-full" name="cate_id" id="cate_id" >
                                             @foreach ($category as $cate)
-                                            <option value="{{$cate->id}}" @if($row->cate_id == $cate->id) selected @endif> {{$cate->name}}</option>
+                                            <option value="{{$cate->id}}" @if($row->cate_id == $cate->id) selected @endif>{{$cate->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

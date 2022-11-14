@@ -15,6 +15,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Backend\CategoryModel;
+use App\Models\Backend\SubCategoryModel;
 use App\Models\Backend\FoodModel;
 
 
@@ -42,7 +43,8 @@ class FoodController extends Controller
         $like = $request->Like;
         $sTable = FoodModel::orderby('tb_food.id','desc')
         ->leftjoin('tb_category','tb_food.cat_id','=','tb_category.id')
-        ->select('*','tb_category.id as cat_id','tb_food.id as f_id','tb_food.name as name','tb_category.name as cat_name','tb_food.status as status')
+        ->leftjoin('tb_sub_category','tb_food.sub_id','=','tb_sub_category.id')
+        ->select('*','tb_category.id as cat_id','tb_food.id as f_id','tb_food.name as name','tb_category.name as cat_name','tb_food.status as status','tb_sub_category.id as subid','tb_sub_category.name as sub_name')
         ->when($like, function ($query) use ($like) {
             if (@$like['name'] != "") {
                 $query->where('tb_food.name', 'like', '%' . $like['name'] . '%');
@@ -55,6 +57,14 @@ class FoodController extends Controller
         ->addColumn('category', function($row) {
         	return $row->cat_name;
         })
+        ->addColumn('subcategory', function($row) {
+            if($row->sub_id == null){
+                return "No data";
+            }else{
+                return $row->sub_name;
+            }
+        	
+        })
         ->addColumn('img', function($row) {
         	return "<center><img src='$row->img' class='img-fluid' alt='' style='width:50%; height:auto;'></center>";
         })
@@ -63,7 +73,7 @@ class FoodController extends Controller
             <a href='javascript:void(0);' class='btn btn-sm btn-danger' onclick='deleteItem($row->f_id)' title='Delete'><i class='far fa-trash-alt'></i></a>
         ";
         })
-        ->rawColumns(['action','img'])
+        ->rawColumns(['action','img','subcategory'])
         ->make(true);
     }
   
@@ -86,12 +96,14 @@ class FoodController extends Controller
         $menu_control = Helper::menu_active($this->menu_id);
         if($menu_control){ if($menu_control->read  == "add") { return $this->auth_menu(); } } else { return $this->auth_menu();}
         $cat = CategoryModel::where('status','on')->orderBy('sort','asc')->get();
+        $sub = SubCategoryModel::where('status','on')->orderBy('id','asc')->get();
         return view("$this->prefix.pages.$this->folder.add", [
             'prefix' => $this->prefix,
             'folder' => $this->folder,
             'segment' => $this->segment,
             'name_page' => $this->name_page,
-            'category' => $cat,
+            'cate' => $cat,
+            'row' =>json_encode($sub),
         ]);
     }
     public function edit(Request $request,$id)
@@ -100,16 +112,19 @@ class FoodController extends Controller
         if($menu_control){ if($menu_control->read  == "edit") { return $this->auth_menu(); } } else { return $this->auth_menu();}
         $food = FoodModel::where('tb_food.id',$id)
         ->leftjoin('tb_category','tb_food.cat_id','=','tb_category.id')
-        ->select('*','tb_category.id as cat_id','tb_food.id as f_id','tb_food.name as name','tb_category.name as cat_name','tb_food.color as f_color')
+        ->leftjoin('tb_sub_category','tb_food.sub_id','=','tb_sub_category.id')
+        ->select('*','tb_category.id as cat_id','tb_food.id as f_id','tb_food.name as name','tb_category.name as cat_name','tb_food.color as f_color','tb_sub_category.id as sub_id')
         ->first();
         $cat = CategoryModel::where('status','on')->orderBy('sort','asc')->get();
+        $sub = SubCategoryModel::where('status','on')->orderBy('id','asc')->get();
         return view("$this->prefix.pages.$this->folder.edit", [
             'prefix' => $this->prefix,
             'folder' => $this->folder,
             'segment' => $this->segment,
             'name_page' => $this->name_page,
-            'category' => $cat,
-            'row'     => $food
+            'cate' => $cat,
+            'row'     => $food,
+            'rows' =>json_encode($sub),
         ]);
     }
 
@@ -139,12 +154,16 @@ class FoodController extends Controller
     public function store($request, $id = null)
     {
         try {
+            $cate = $request->cat_id;
+            // dd($request);
             // dd($request->file('image'));
             DB::beginTransaction();
             if ($id == null) {
                 $data = new FoodModel();
                 $data->created_at = date('Y-m-d H:i:s');
                 $data->updated_at = date('Y-m-d H:i:s');
+                $data->cat_id = $cate;
+                $data->sub_id = $request->sub_id;
                 if (!empty($request->image)) {
                     $path = 'upload/food';
                     $img = $request->file('image');
@@ -155,9 +174,11 @@ class FoodController extends Controller
                     $data->save();
                 } 
             } else {
-                // dd($request);
+               
                 $data = FoodModel::find($id);
                 $data->updated_at = date('Y-m-d H:i:s');
+                $data->cat_id = $cate;
+                $data->sub_id = $request->sub_id;
                 if (!empty($request->file('image'))) {
                     //ลบรูปเก่าเพื่ออัพโหลดรูปใหม่แทน
                     if (!empty($data->img)) {
@@ -174,7 +195,6 @@ class FoodController extends Controller
                     $data->save();
                 }
             }
-            $data->cat_id = $request->cat_id;
             $data->name = $request->name;
             $data->name_abb = $request->name_abb;
             $data->color = $request->color;

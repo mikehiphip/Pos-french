@@ -20,15 +20,22 @@ Route::group(['middleware' => ['Webpanel']], function () {
         Route::prefix('category')->group(function () {
             Route::get('/', [Webpanel\CategoryController::class, 'index']);
             Route::get('/showsubcate', [Webpanel\CategoryController::class, 'showsubcate']);
-            Route::get('/destroy_sub', [Webpanel\CategoryController::class, 'destroy_sub']);
             Route::post('/datatable', [Webpanel\CategoryController::class, 'datatable']);
             Route::get('/add', [Webpanel\CategoryController::class, 'add']);
             Route::post('/add', [Webpanel\CategoryController::class, 'insert']);
             Route::get('/{id}/edit', [Webpanel\CategoryController::class, 'edit'])->where(['id' => '[0-9]+']);
-            Route::get('/{id}/edit-sub', [Webpanel\CategoryController::class, 'edit_sub'])->where(['id' => '[0-9]+']);
             Route::post('/{id}/edit', [Webpanel\CategoryController::class, 'update'])->where(['id' => '[0-9]+']);
             Route::get('/destroy/{id}', [Webpanel\CategoryController::class, 'destroy']);
             Route::post('/changesort', [Webpanel\CategoryController::class, 'changesort'])->where(['id' => '[0-9]+']);
+        });
+        Route::prefix('sub-category')->group(function () {
+            Route::get('/', [Webpanel\SubCategoryController::class, 'index']);
+            Route::post('/datatable', [Webpanel\SubCategoryController::class, 'datatable']);
+            Route::get('/add', [Webpanel\SubCategoryController::class, 'add']);
+            Route::post('/add', [Webpanel\SubCategoryController::class, 'insert']);
+            Route::get('/{id}/edit', [Webpanel\SubCategoryController::class, 'edit'])->where(['id' => '[0-9]+']);
+            Route::post('/{id}/edit', [Webpanel\SubCategoryController::class, 'update'])->where(['id' => '[0-9]+']);
+            Route::get('/destroy/{id}', [Webpanel\SubCategoryController::class, 'destroy']);
         });
 
         Route::prefix('food')->group(function () {

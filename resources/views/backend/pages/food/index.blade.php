@@ -127,10 +127,11 @@
                 
                 columns:[
                     {data: 'DT_RowIndex',    title :'<center>No.</center>',   width:'5%', hozAlign: "center", vertAlign:"middle"}, // 0
-                    {data: 'img',   title :'<center>Image</center>', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'25%',responsive:1}, // 1
+                    {data: 'img',   title :'<center>Image</center>', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'15%',responsive:1}, // 1
                     {data: 'name',    title :'Name', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'15%',responsive:2}, // 2
                     {data: 'price',    title :'Price', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'15%',responsive:2}, // 3
-                    {data: 'category',    title :'Category', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'20%',responsive:2}, // 2
+                    {data: 'category',    title :'Category', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'15%',responsive:2}, // 2
+                    {data: 'subcategory',    title :'Subcategory', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'15%',responsive:2}, // 2
                     {data: 'status',    title :'Status', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'5%'}, // 4
                     {data: 'action',    title :'Action', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'20%'}, // 5
                     ],

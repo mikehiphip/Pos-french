@@ -29,11 +29,11 @@
             <!-- BEGIN: Content -->
             <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
                 <h2 class="text-lg font-medium mr-auto">
-                    Category
+                  Sub Category
                 </h2>
                 <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
                     <a href="{{ url("$segment/$folder/add") }}"><button type="button"
-                            class="btn btn-primary shadow-md mr-2">Add new category</button></a>
+                            class="btn btn-primary shadow-md mr-2">Add new sub category</button></a>
                 </div>
             </div>
 
@@ -77,7 +77,7 @@
     </div>
 
     <div id="show_modal" class="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body p-10 text-center"> This is totally awesome superlarge modal! </div>
             </div>
@@ -128,10 +128,10 @@
                 columns:[
                     {data: 'DT_RowIndex',    title :'No.',   width:'5%', hozAlign: "center", vertAlign:"middle"}, // 0
                     {data: 'color',    title :'Color', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 1
-                    {data: 'action_name',   title :'Category', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'15%',responsive:1}, // 2
-                    {data: 'status',    title :'Status', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
-                    {data: 'status_speical',    title :'Status Speical', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
-                    {data: 'change_sort',    title :'Sort', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
+                    {data: 'cat_name',   title :'Category', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'10%',responsive:1}, // 2
+                    {data: 'name',   title :'Sub Category', minWidth: 100, vertAlign:"middle" , formatter:"html",  width:'10%',responsive:1}, // 2
+                    {data: 'sub_status',    title :'Status', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
+                    {data: 'sub_spe',    title :'Status Speical', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 3
                     {data: 'action',    title :'Action', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 4
 
                     ],
@@ -159,22 +159,6 @@
             }
         }
 
-        function show_submenu(id) {
-            $.ajax({
-                type: 'GET',
-                url: fullUrl + '/showsubcate',
-                data: {
-                    id:id,
-                },
-                dataType: 'html',
-                success: function(data) {
-                    // Add response in Modal body
-                    $('.modal-content').html(data);
-
-                    // $('#show_modal').modal('show');
-                }
-            });
-        }
 
         function destroy(id) {
             Swal.fire({
@@ -194,50 +178,7 @@
                 }
             });
         }
-        function changesort(id)
-        {
-            var sort = $('#sort_'+id).val();
-            $.ajax({
-                type: "post",
-                url: fullUrl+"/changesort",
-                data:{
-                    _token: "{{ csrf_token() }}",
-                    sort:sort,
-                    id:id
-                },
-                success:function(data)
-                {
-                    location.reload();
-                }
-            });
-        }
-        
-        // sub
-        function deleteItem_sub(ids) {
-            const id = [ids];
-            if (id.length > 0) {
-                destroy_sub(id)
-            }
-        }
-
-        function destroy_sub(id) {
-            Swal.fire({
-                title: "ลบข้อมูล",
-                text: "คุณต้องการลบข้อมูลใช่หรือไม่?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                showLoaderOnConfirm: true,
-                preConfirm: () => {
-                    return fetch(fullUrl + '/destroy_sub?id=' + id)
-                        .then(response => response.json())
-                        .then(data => location.reload())
-                        .catch(error => {
-                            Swal.showValidationMessage(`Request failed: ${error}`)
-                        })
-                }
-            });
-        }
+       
     </script>
     <!-- END: JS Assets-->
 </body>

@@ -60,7 +60,7 @@
 
     <div class="row mt-2">
         <div class="col-12 text-end">
-            <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">ปิด</button>
+            <button type="button" class="btn btn-light me-1" data-tw-dismiss="modal">ปิด</button>
         </div>
     </div>
 

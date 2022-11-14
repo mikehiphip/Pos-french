@@ -34,7 +34,7 @@
                 <form id="menuForm" method="post" action="" enctype="multipart/form-data">
                 @csrf
                     <div class="grid grid-cols-12 gap-6 mt-5">
-                        <div class="intro-y col-span-12 lg:col-span-10">
+                        <div class="intro-y col-span-12 lg:col-span-8">
                             <!-- BEGIN: Form Layout -->
                             <div class="intro-y box p-5">
                                 <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
@@ -49,21 +49,29 @@
                                     </div>
                                 </div><br>
                                 <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
-                                    <div class="col-span-4 lg:col-span-4">
+                                    <div class="col-span-4 lg:col-span-6">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Category 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please select category</span> 
                                         </label>
-                                        <select class="form-control w-full" name="cat_id" id="category" required>
-                                            @foreach ($category as $cat)
-                                            <option value="{{$cat->id}}" @if($row->cat_id == $cat->id ) selected @endif>{{$cat->name}}</option>
+                                        <select class="form-control w-full" name="cat_id" id="categorys" required onchange="SubCate()">
+                                            <option value="" selected hidden>Please select</option>
+                                            @foreach ($cate as $cat)
+                                            <option value="{{$cat->id}}" @if($row->cat_id == $cat->id) selected @endif>{{$cat->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-span-8 lg:col-span-4">
+                                    <div class="col-span-4 lg:col-span-6">
+                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary">Subcategory </label>
+                                        <select class="form-control w-full" name="sub_id" id="subcategory" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
+                                    <div class="col-span-8 lg:col-span-6">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Name Abbreviate </label>
                                         <input type="text" id="name" name="name_abb" class="form-control w-full" value="{{$row->name_abb}}" required>
                                     </div>
-                                    <div class="col-span-8 lg:col-span-4">
+                                    <div class="col-span-8 lg:col-span-6">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Name 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please input name food</span> 
                                         </label>
@@ -109,12 +117,34 @@
        
         <!-- BEGIN: JS Assets-->
         @include("backend.layout.script")
-
+        <?php  
+        echo "<script>";
+        echo "var row = $rows";
+        echo "</script>";
+        ?>
         <script>
+            var get_cate ;
+            function SubCate(){
+                var cateid =  document.getElementById('categorys').value;
+                get_cate = row.filter(x=>x.cate_id == cateid) ;
+                var data = '';     
+                if(get_cate.length != 0 ){
+                    for(x =0 ; x < get_cate.length ; x++) {
+                        data = data+"<option value='' hidden selected>Please select</option>";
+                        data = data+ "<option value='"+get_cate[x].id+"' >"+get_cate[x].name+"</option>";
+                        $("#subcategory").prop('disabled', false);
+                    }
+                }else{
+                    data = data+ "<option value=''>No Subcategory</option>";
+                    document.getElementById('subcategory').value = null;
+                    $("#subcategory").prop('disabled', true);
+                }    
+            document.getElementById("subcategory").innerHTML = data;   
+        }
         function check_add(){
             var name = $('#name').val();
             var status = $('#status').val();
-            var category = $('#category').val();
+            var category = $('#categorys').val();
             if (name == "" || status == "" || category == "" ) {
                 toastr.error('Please fill out the information completely.');
                 return false;

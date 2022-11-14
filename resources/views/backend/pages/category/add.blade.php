@@ -38,7 +38,7 @@
                             <!-- BEGIN: Form Layout -->
                             <div class="intro-y box p-5">
 
-                                <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
+                                {{-- <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
                                     <div class="col-span-12 lg:col-span-6">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Position 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please select value</span> 
@@ -60,7 +60,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
                                     <div class="col-span-8 lg:col-span-6">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Name 
@@ -121,25 +121,13 @@
 
         <script>
             var name = $('#name').val();
-            var position = $('#position').val();
-            var cate = $('#cate_id').val();
             var status_speical = $('#status_speical').val();
             var status = $('#status').val();
-            function Scate(){
-                position = $('#position').val();
-                if(position == 'sub'){
-                    $("#cate_id").prop('disabled', false);
-                }else{
-                    $("#cate_id").prop('disabled', true);
-                }
-            }
             function check_add(){
              name = $('#name').val();
-             position = $('#position').val();
-             cate = $('#cate_id').val();
              status_speical = $('#status_speical').val();
              status = $('#status').val();
-            if (name == "" || status_speical == "" || status == "" || position == "" || cate == "" ) {
+            if (name == "" || status_speical == "" || status == "" ) {
                 toastr.error('Please fill out the information completely.');
                 return false;
             }
