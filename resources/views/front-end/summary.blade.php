@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><?php require('inc_header.php'); ?></head>
+<head>@include("$prefix.inc_header")</head>
 
-<script src="js/bootstrap.min.js"></script>
+<script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
 
 <body>
-<?php require('inc_topmenu.php'); ?>
+    @include("$prefix.inc_topmenu")
 
 <div class="container-fluid">
-<div class="form-Summary">
-    <div class="form-btn">
+    <div class="wrap-pad">
+    <div class="form-Summary">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+        <div class="form-btn">
         <input type="date" class="S-1"></input>
         <div class="show-N">
             <p>Personal</p>
@@ -35,8 +38,12 @@
             <button class="Sum-close">close <img class="img-fluid" src="images/icon modal/close3p.svg"></button>
         </div>
     </div>
+        </div>
+    </div>
     <div class="table-form-LR">
-        <div class="all-table-sum">
+        <div class="row">
+            <div class="col-xxl-10 col-xl-10 col-lg-9 col-md-9">
+            <div class="all-table-sum">
             <div class="table-sum">
                 <div class="head-table">
                     <p>Save login and pass</p>
@@ -463,8 +470,9 @@
                 </div>
             </div>
         </div>
-       
-        <div class="form-sum-R">
+            </div>
+            <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-3 ml-0">
+            <div class="form-sum-R">
             <div class="check-RSum">
                 <div class="ch-RSum">
                     <input type="checkbox">cash out</inptu>
@@ -518,6 +526,9 @@
                </div>
             </div>
         </div>
+            </div>
+        </div>
+    </div>
     </div>
     </div>
 </div>
@@ -527,7 +538,7 @@
 
 
 
-<?php require('inc_footer.php'); ?>
+@include("$prefix.inc_footer")
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

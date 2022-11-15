@@ -5,325 +5,344 @@
 <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
 
 <body>
-
     @include("$prefix.inc_topmenu")
 
 <div class="container-fluid">
+    <div class="wrap-pad">
     <div class="order-info">
-        <div class="info-leftbar">
-            <div class="input-top">
-                <img src="frontend/images/icon index/flat-color-icons_businessman.svg">
-                <div class="allinput-top">
-                    <input type="text" class="input1"></input>
-                    <input type="text" class="input2"></input>
-                    <input type="time" class="input3"></input>
-                    <button class="chang-item">A Employer</button>
-                    <input type="text" class="input4"></input>
-                    <input type="time" class="input5"></input>
-                </div>
-                <div class="allinput-top2">
-                    <button class="date"><img src="frontend/images/icon index/calendar.svg"></button>
-                    <button class="date"><img src="frontend/images/icon index/time.svg"></button>
-                </div>
-                <div class="allinput-top3">
-                    <input type="text" class="input8"></input>
-                    <input type="text" class="input9"></input>
-                    <button class="date">F2: Reprendre<br>this call</button>
-                </div>
-            </div>
-            <div class="tel-serve">
-                <p class="tel">Tel.</p>
-                <div class="check-s"><input type="checkbox" class="serve">serve</input></div>
-            </div>
-            <div class="allinput-middle">
-                <div class="input-middle2">
-                    <div class="middle-form">
-                        <input type="text" class="form1"></input><br>
-                        <input type="text" class="form2"></input><br>
-                        <input type="text" class="form3"></input><br>
-                    </div>
-                    <div class="middle-btn">
-                        <button class="add-btn">Add</button>
-                        <button class="add-btn" type="reset" value="Reset">Reset</button>
-                        <button class="add-btn">Tel Principle</button>
-                    </div>
-                </div>
-                <div class="input-middle2">
-                    <div class="status">
-                        <h4>Deliveryman</h4>
-                    </div>
-                    <div class="name-btn">
-                        <div class="name-info">
-                            <label for="name">Name</label>
-                            <input type="text" class="name1"></input><br>
-                            <label for="Company">Company</label>
-                            <input type="text" class="name2"></input>
+        <div class="row">
+            <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-9 p-0">
+                <div class="allinfo-leftbar">
+                <div class="info-leftbar">
+                    <div class="input-top">
+                        <img src="frontend/images/icon index/flat-color-icons_businessman.svg">
+                        <div class="allinput-top">
+                            <input type="text" class="input1"></input>
+                            <input type="text" class="input2"></input>
+                            <input type="time" class="input3"></input>
+                            <button class="chang-item">A Employer</button>
+                            <input type="text" class="input4"></input>
+                            <input type="time" class="input5"></input>
                         </div>
-                        <div class="btn-name">
-                            <div class="static">
-                                <label for="text">Static</label><br>
-                                <input type="text" class="Static" placeholder="0"></input>
+                        <div class="allinput-top2">
+                            <button class="date"><img src="frontend/images/icon index/calendar.svg"></button>
+                            <button class="date"><img src="frontend/images/icon index/time.svg"></button>
+                        </div>
+                        <div class="allinput-top3">
+                            <input type="text" class="input8"></input>
+                            <input type="text" class="input9"></input>
+                            <button class="date">F2: Reprendre<br>this call</button>
+                        </div>
+                    </div>
+                    <div class="tel-serve">
+                        <p class="tel">Tel.</p>
+                        <div class="check-s"><input type="checkbox" class="serve">serve</input></div>
+                    </div>
+                    <div class="allinput-middle">
+                        <div class="row">
+                            <div class="col-xxl-3 col-xl-3 col-lg-3">
+                            <div class="input-middle2">
+                            <div class="middle-form">
+                                <input type="text" class="form1"></input><br>
+                                <input type="text" class="form2"></input><br>
+                                <input type="text" class="form3"></input><br>
                             </div>
-                            <button class="f">F10</button>
-                            <button class="f">Save<br>Custome</button>
+                            <div class="middle-btn">
+                                <button class="add-btn">Add</button>
+                                <button class="add-btn" type="reset" value="Reset">Reset</button>
+                                <button class="add-btn">Tel Principle</button>
+                            </div>
+                        </div>
+                            </div>
+                            <div class="col-xxl-7 col-xl-7 col-lg-7 p-0">
+                            <div class="input-middle2">
+                            <div class="status">
+                                <h4>Deliveryman</h4>
+                            </div>
+                            <div class="name-btn">
+                                <div class="name-info">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="name1"></input><br>
+                                    <label for="Company">Company</label>
+                                    <input type="text" class="name2"></input>
+                                </div>
+                                <div class="btn-name">
+                                    <div class="static">
+                                        <label for="text">Static</label><br>
+                                        <input type="text" class="Static" placeholder="0"></input>
+                                    </div>
+                                    <button class="f">F10</button>
+                                    <button class="f">Save<br>Custome</button>
+                                </div>
+                            </div>
+                            <div class="N-Street">
+                                <label for="text" class="Same-t">N”</label>
+                                <input type="text" class="Same"></input>
+                                <label for="text">Street</label>
+                                <input type="text" class="Street"></input>
+                            </div>
+                            <div class="pc-city-maps">
+                                <label for="text" class="Same-t">PC</label>
+                                <input type="text" class="Same"></input>
+                                <label for="text">City</label>
+                                <input type="text" class="City"></input>
+                                <label for="text">Maps</label>
+                                <input type="text" class="Same-M"></input>
+                            </div>
+                            <div class="row-5">
+                                <label for="text">Build</label>
+                                <input type="text" class="Same"></input>
+                                <label for="text">Stairs</label>
+                                <input type="text" class="Same-r"></input>
+                                <label for="text" class="Floor">Floor</label>
+                                <input type="text" class="Same-r"></input>
+                                <label for="text"  class="Door">Door</label>
+                                <input type="text" class="Door"></input>
+                            </div>
+                            <div class="row-6">
+                                <label for="text" class="Code1">Code1</label>
+                                <input type="text" class="Same"></input>
+                                <label for="text" class="Code2">Code2</label>
+                                <input type="text" class="Same-r"></input>
+                                <label for="text" class="INTVW">Intvw</label>
+                                <input type="text" class="Same-r"></input>
+                                <label for="text" class="Time">Time</label>
+                                <input type="text" class="Same-r"></input>
+                            </div>
+                            <div class="row-7">
+                                <label for="text" class="Note">Note</label>
+                                <input type="text" class="Same-N"></input><br>
+                                <label for="text" class="Ordernote">Order note2</label>
+                                <input type="text" class="Same-r7"></input><br>
+                                <label for="text" class="Customerinfo">Customer info</label>
+                                <input type="text" class="Same-r7"></input><br>
+                                <label for="text" class="Customer-E">Customer email address</label>
+                                <input type="text" class="Cus-E"></input>
+                            </div>
+                            <div class="num-id">
+                                <div class="n0">
+                                    <p>Number</p>
+                                    <p>0</p>
+                                </div>
+                                <div class="n0">
+                                    <p>ID</p>
+                                    <p>0</p>
+                                </div>
+                                <div class="n0">
+                                    <p>Cart</p>
+                                    <p>0</p>
+                                </div>
+                                <div class="n0">
+                                    <p>Points</p>
+                                    <p>0</p>
+                                </div>
+                                <button class="f">Last time</button>
+                            </div>
+                        </div>
+                            </div>
+                            <div class="col-xxl-2 col-xl-2 col-lg-2">
+                            <div class="input-middle3">
+                            <select name="zone" id="zone">
+                                <option value="Zone1">Zone1</option>
+                                <option value="#">#</option>
+                                <option value="#">#</option>
+                                <option value="#">#</option>
+                            </select>
+                            <select name="zone" id="zone">
+                                <option value="#">CHQ</option>
+                                <option value="#">#</option>
+                                <option value="#">#</option>
+                                <option value="#">#</option>
+                            </select>
+                            <input type="text" class="Retrieve1" placeholder="Retrieve 0"></input>
+                            <button class="info1">+ / -</button>
+                            <button class="info">History</button>
+                        </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="N-Street">
-                        <label for="text" class="Same-t">N”</label>
-                        <input type="text" class="Same"></input>
-                        <label for="text">Street</label>
-                        <input type="text" class="Street"></input>
-                    </div>
-                    <div class="pc-city-maps">
-                        <label for="text" class="Same-t">PC</label>
-                        <input type="text" class="Same"></input>
-                        <label for="text">City</label>
-                        <input type="text" class="City"></input>
-                        <label for="text">Maps</label>
-                        <input type="text" class="Same-M"></input>
-                    </div>
-                    <div class="row-5">
-                        <label for="text">Build</label>
-                        <input type="text" class="Same"></input>
-                        <label for="text">Stairs</label>
-                        <input type="text" class="Same-r"></input>
-                        <label for="text" class="Floor">Floor</label>
-                        <input type="text" class="Same-r"></input>
-                        <label for="text"  class="Door">Door</label>
-                        <input type="text" class="Door"></input>
-                    </div>
-                    <div class="row-6">
-                        <label for="text" class="Code1">Code1</label>
-                        <input type="text" class="Same"></input>
-                        <label for="text" class="Code2">Code2</label>
-                        <input type="text" class="Same-r"></input>
-                        <label for="text" class="INTVW">Intvw</label>
-                        <input type="text" class="Same-r"></input>
-                        <label for="text" class="Time">Time</label>
-                        <input type="text" class="Same-r"></input>
-                    </div>
-                    <div class="row-7">
-                        <label for="text" class="Note">Note</label>
-                        <input type="text" class="Same-N"></input><br>
-                        <label for="text" class="Ordernote">Order note2</label>
-                        <input type="text" class="Same-r7"></input><br>
-                        <label for="text" class="Customerinfo">Customer info</label>
-                        <input type="text" class="Same-r7"></input><br>
-                        <label for="text" class="Customer-E">Customer email address</label>
-                        <input type="text" class="Cus-E"></input>
-                    </div>
-                    <div class="num-id">
-                        <div class="n0">
-                            <p>Number</p>
-                            <p>0</p>
+
+                    <!-- button to menu -->
+                    <div class="input-info">
+                        <div class="menu-btn">
+                            <div class="all-menu-btn">
+                                <div class="To-menu">
+                                    <a class="tomenu" href="{{url('menu')}}"><img src="frontend/images/icon index/bxs_food-menu.svg">MENU</a>
+                                </div>
+                                <button class="choosemenu-btn">F4 Choose<br>component</button>
+                                <button class="choosemenu-btn">F3 Choose<br>component </button>
+                                <button class="choosemenu-btn">Cancel Free</button>
+                                <button class="choosemenu-btn">Delete<br>Line</button>
+                                <button class="choosemenu-btn">Free ok</button>
+                            </div>
+                            <div class="all-choosemenu">
+                                <button class="choosemenu-btn">Note<br>Line</button>
+                                <button class="choosemenu-btn">Delete<br>Line</button>
+                                <button class="choosemenu-btn">Delete<br>Line</button>
+                                <button class="choosemenu-btn">Delete<br>All</button>
+                            </div>
                         </div>
-                        <div class="n0">
-                            <p>ID</p>
-                            <p>0</p>
+                    </div>
+                    <!-- scroll Table -->
+                    <div class="table-info">
+                        <div class="table-scroll">
+                            <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col" class="code"><button>Code</button></th>
+                                        <th scope="col" class="search">
+                                            Description
+                                        </th>
+                                        <th scope="col" class="pq"><button>Price</button></th>
+                                        <th scope="col" class="pq"><button>Qty</button></th>
+                                        <th scope="col" class="pq"><button>Price</button></th>
+                                        <th scope="col" class="note"><button>Note: type + to add Type - to remove Type / to Haif Haif</button></th>
+                                        <th scope="col" class="sm"><button>S</button></th>
+                                        <th scope="col" class="sm"><button>M</button></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>#</td>
+                                        <td>#</td>
+                                        <td>#</td>
+                                        <td>#</td>
+                                        <td>#</td>
+                                        <td>#</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>#</td>
+                                        <td>#</td>
+                                        <td>#</td>
+                                        <td>#</td>
+                                        <td>#</td>
+                                        <td>#</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>#</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>#</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>#</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">6</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>#</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">7</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>#</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">8</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>#</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">9</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>#</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">10</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>#</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="n0">
-                            <p>Cart</p>
-                            <p>0</p>
+                    </div>
+                    <div class="Allinfo-bottom">
+                        <div class="row">
+                            <div class="col-xxl-9 col-xl-9 col-lg-9">
+                                <div class="info-bottom-l">
+                                    <div class="show-info1">
+                                        <div class="S-Checkbox">
+                                            <p>Static</p>
+                                            <input type="checkbox" class="check"></input>
+                                        </div>
+                                        <div class="show-number">
+                                            <input type="text" readonly placeholder="info"></div>
+                                    </div>
+                                    <div class="show-info2">
+                                        <div class="S-Checkbox2">
+                                            <p>Pt-cde</p>
+                                            <p>0</p>
+                                            <p>Reduc%</p>
+                                            <p>0</p>
+                                            <p>Already dec</p>
+                                            <p>0.00</p>
+                                        </div>
+                                    </div>
+                                    <div class="show-info3">
+                                        <div class="S-Checkbox3">
+                                            <button>Apply<br>reduce</button>
+                                            <button>Cancel<br>Discount</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 col-lg-3">
+                                <div class="info-bottom-r">
+                                    <p class="paynum">0.00</p>
+                                    <div class="pay">
+                                        <p>Pay</p>
+                                        <p>0.00</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="n0">
-                            <p>Points</p>
-                            <p>0</p>
-                        </div>
-                        <button class="f">Last time</button>
                     </div>
                 </div>
-                <div class="input-middle3">
-                    <select name="zone" id="zone">
-                        <option value="Zone1">Zone1</option>
-                        <option value="#">#</option>
-                        <option value="#">#</option>
-                        <option value="#">#</option>
-                    </select>
-                    <select name="zone" id="zone">
-                        <option value="#">CHQ</option>
-                        <option value="#">#</option>
-                        <option value="#">#</option>
-                        <option value="#">#</option>
-                    </select>
-                    <input type="text" class="Retrieve1" placeholder="Retrieve 0"></input>
-                    <button class="info1">+ / -</button>
-                    <button class="info">History</button>
                 </div>
             </div>
 
-            <!-- button to menu -->
-            <div class="input-info">
-                <div class="menu-btn">
-                    <div class="all-menu-btn">
-                        <div class="To-menu">
-                            <a class="tomenu" href="{{url('menu')}}"><img src="frontend/images/icon index/bxs_food-menu.svg">MENU</a>
-                        </div>
-                        <button class="choosemenu-btn">F4 Choose<br>component</button>
-                        <button class="choosemenu-btn">F3 Choose<br>component </button>
-                        <button class="choosemenu-btn">Cancel Free</button>
-                        <button class="choosemenu-btn">Delete<br>Line</button>
-                        <button class="choosemenu-btn">Free ok</button>
-                    </div>
-                    <div class="all-choosemenu">
-                        <button class="choosemenu-btn">Note<br>Line</button>
-                        <button class="choosemenu-btn">Delete<br>Line</button>
-                        <button class="choosemenu-btn">Delete<br>Line</button>
-                        <button class="choosemenu-btn">Delete<br>All</button>
-                    </div>
-                </div>
-            </div>
-            <!-- scroll Table -->
-            <div class="table-info">
-                <div class="table-scroll">
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col" class="code"><button>Code</button>
-                                    
-                                <th scope="col">Description
-                                    <input type="search" id="menusearch" name="search" class="Msearch">
-                                    <button><img class="serachimg" width="14px" src="frontend/images/icon index/search.png"></button></th> 
-                                </th>
-                                <th scope="col" class="pq"><button>Price</button></th>
-                                <th scope="col" class="pq"><button>Qty</button></th>
-                                <th scope="col" class="pq"><button>Price</button></th>
-                                <th scope="col" class="note"><button>Note: type + to add Type - to remove Type / to Haif Haif</button></th>
-                                <th scope="col" class="sm"><button>S</button></th>
-                                <th scope="col" class="sm"><button>M</button></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">7</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">8</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">10</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>#</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="Allinfo-bottom">
-                <div class="info-bottom-l">
-                    <div class="show-info1">
-                        <div class="S-Checkbox">
-                            <p>Static</p>
-                            <input type="checkbox" class="check"></input>
-                        </div>
-                        <div class="show-number">info</div>
-                    </div>
-                    <div class="show-info2">
-                        <div class="S-Checkbox2">
-                            <p>Pt-cde</p>
-                            <p>0</p>
-                            <p>Reduc%</p>
-                            <p>0</p>
-                            <p>Already dec</p>
-                            <p>0.00</p>
-                        </div>
-                    </div>
-                    <div class="show-info3">
-                        <div class="S-Checkbox3">
-                            <button>Apply<br>reduce</button>
-                            <button>Cancel<br>Discount</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-bottom-r">
-                    <p class="paynum">0.00</p>
-                    <div class="pay">
-                        <p>Pay</p>
-                        <p>0.00</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <!-- button rightbar -->
+        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-3 pr-0">
         <div class="info-rightbar">
             <div class="btn-order">
                 <button class="btn1"><img src="frontend/images/icon index/EditMOTO 1.svg"><br> F9 New OrdDeliv
@@ -587,8 +606,12 @@
                 </div>
             </div>
         </div>
+        </div>
+        </div>
+    </div>
     </div>
 </div>
+
 
 @include("$prefix.inc_footer")
 

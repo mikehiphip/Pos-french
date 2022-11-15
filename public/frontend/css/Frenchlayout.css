@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600&display=swap');
 
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
- 
+
 body{
     font-family:'Nunito Sans';
     font-size: 16px;
@@ -15,9 +15,14 @@ button{
 }
 .container-fluid{
     background-color:#212121 ;
-    width: 100%;
-    padding: 10px 10px;
+    padding: 4px 10px;
     margin: 0 auto;
+}
+
+.wrap-pad{
+        max-width: 98%;
+        padding: 0 15px;
+        margin: 0 auto;
 }
 a, a:hover{
     text-decoration: none !important;
@@ -122,8 +127,8 @@ td{
     background-color: #ECEEF2;
     padding: 10px 0;
     margin-bottom: 4px;
-    display: grid;
-    grid-template-columns: auto auto auto;
+    /* display: grid;
+    grid-template-columns: auto auto auto; */
     grid-row: auto;
     font-size: 15px;
     border-radius: 4px;
@@ -157,7 +162,8 @@ td{
     margin-bottom: 4px;
 }
 .middle-btn{
-    display: inline;
+    display: flex;
+    column-gap: 4px;
 }
 .middle-btn button.add-btn{
     background-color: #D4D4D4;
@@ -311,7 +317,105 @@ td{
     display: flex;
     padding: 10px 20px;
 }
-
+@media screen and (max-width:1165px) and (min-width:1124px) {
+    .name-info input {
+        max-width: 150px;
+    }
+    .input-middle2 .Same,.row-5 input.Same-r,.row-5 input.Door,.row-6 input.Same-r,.pc-city-maps input.Same-M {
+        max-width: 60px;
+    }
+    .pc-city-maps input.City {
+        width: 170px;
+    }
+    .N-Street input.Street {
+        width: 270px;
+    }
+    .num-id {
+        column-gap: 4px;
+    }
+    .num-id .n0 {
+        padding: 10px 10px;
+    }
+    .row-7 input.Same-N {
+        width: 385px;
+    }
+    .row-7 input.Same-r7 {
+        width: 335px;
+    }
+    .row-7 input.Cus-E {
+        width: 265px;
+    }
+}
+@media screen and (max-width:1124px){
+    .input-middle2 h4 {
+        font-size: 16px;
+    }
+    .name-info label {
+        font-size: 14px;
+    }
+    label {
+        font-size: 14px;
+    }
+    .btn-name .f {
+        height: 48px;
+        font-size: 14px;
+    }
+    .middle-form input {
+        width: 140px;
+    }
+    .name-info input {
+        max-width: 125px;
+    }
+    .N-Street input.Street {
+        margin-left: 5px;
+        width: 220px;
+    }
+    .pc-city-maps input.City {
+        margin-left: 20px;
+        width: 110px;
+    }
+    .input-middle2 .Same {
+        max-width: 50px;
+    }
+    .row-5 input.Same-r {
+        width: 50px;
+    }
+    .row-6 input.Same-r {
+        width: 50px;
+    }
+    .row-5 input.Door {
+        width: 50px;
+    }
+    .row-7 input.Same-N {
+        width: 338px;
+    }
+    .row-7 input.Same-r7 {
+        width: 288px;
+    }
+    .row-7 input.Cus-E {
+        width: 224px;
+    }
+    .num-id .n0 {
+        display: flex;
+        padding: 10px 5px;
+    }
+    .all-menu-btn button, .all-choosemenu button {
+        font-size: 12px;
+    }
+    .all-menu-btn .tomenu {
+        font-size: 14px;
+    }
+    .middle-btn button.add-btn {
+        font-size: 12px;
+        margin: 0 2px;
+    }
+    .S-Checkbox2 {
+        font-size: 12px;
+    }
+    .S-Checkbox3 button {
+        font-size: 12px;
+    }
+}
 
 /* button to menu leftbar */
 .menu-btn{
@@ -368,10 +472,14 @@ td{
     background-color: #fff;
     padding: 4px 4px;
 }
+
+.searchtable{
+    display: flex;
+}
 .table-info .table-scroll{
     height: 300px;
     width: 100%;
-    overflow: auto;
+    overflow-x: auto;
 }
 table {
     border-collapse: collapse;
@@ -415,7 +523,7 @@ tbody tr:hover{
 .table-info .table-scroll-2{
     height: 100%;
     width: 100%;
-    overflow-y: auto;
+    overflow: auto;
 }
 @media screen and (max-width:1250px) {
     th, td {
@@ -424,14 +532,6 @@ tbody tr:hover{
         text-align: left;
         padding: 0;
     }
-    .N-Street input.Street{
-        margin-left: 5px;
-        width: 300px;
-    }
-    .pc-city-maps input.City{
-        margin-left: 20px;
-        width: 190px;
-     }
      .row-5 label.Floor{
         margin-right: 0;
     }
@@ -441,22 +541,12 @@ tbody tr:hover{
     .row-5 input.Same-r{
         margin-left: 5px;
     }
-    .row-7 input.Same-N {
-        width: 425px;
-    }
-    .row-7 input.Same-r7 {
-        width: 374px;
-    }
-    .row-7 input.Cus-E {
-        width: 305px;
-    }
 }
 /* info bottom menu leftbar */
-.Allinfo-bottom{
-    display: flex;
-}
+
 .info-bottom-l{
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto;
     background-color: #fff;
     border-radius: 4px;
     margin: 4px 5px 0 0;
@@ -488,15 +578,17 @@ tbody tr:hover{
     padding: 5px 5px;
     margin-top: 10px;
 }
+
 .show-number{
-    padding: 5px 10px;
-}
-.show-number{
-    background-color: #ECEEF2;
     color: #212121;
-    width: 320px;
+    max-width: 320px;
     margin: 5px 10px;
     border-radius: 4px;
+}
+.show-number input{
+    max-width: 320px;
+    border: none;
+    background-color: #D4D4D4;
 }
 .info-bottom-r{
     display: grid;
@@ -519,37 +611,49 @@ tbody tr:hover{
 /* Info-Rightbar */
 .order-info{
     color: #fff;
-    display: grid;
-    grid-template-columns: auto 460px;
-    column-gap: 8px;
 }
 .info-rightbar{
     padding: 0px;
     margin: 0px;
 }
-.btn-order{
-    display: grid;
-    grid-template-columns: 85px 85px 85px 85px 85px;
-    grid-template-rows: 80px 80px 80px;
-    justify-content: end;
-    column-gap: 4px;
-    row-gap: 8px;
-}
-@media screen and (max-width:1300px){
-    .order-info{
-        color: #fff;
-        display: grid;
-        grid-template-columns: auto 400px;
-        column-gap: 4px;
-    }
+@media screen and (max-width:1920px) and (min-width:1302px) {
     .btn-order{
         display: grid;
-        grid-template-columns: 75px 75px 75px 75px 75px;
-        grid-template-rows: 70px 70px 70px;
-        justify-content: center;
+        grid-template-columns: 80px 80px 80px 80px 80px;
+        grid-template-rows: 80px 80px 80px;
         column-gap: 4px;
-        row-gap: 4px;
+        row-gap: 8px;
     }
+    .btn-order button, .btn-order a.btn14 {
+        font-size: 14px;
+    }
+    .btn-order .btn-noactive {
+        font-size: 14px;
+    }
+    .service-Jour-btn p{
+        font-size: 14px;
+    }
+}
+@media screen and (max-width:1125px) {
+    .btn-order{
+        display: grid;
+        grid-template-columns: 60px 60px 60px 60px 60px;
+        grid-template-rows: 60px 60px 60px;
+        column-gap: 4px;
+        row-gap: 8px;
+    }
+    .btn-order .btn-noactive {
+        font-size: 12px;
+    }
+    .btn-order button, .btn-order a.btn14 {
+        font-size: 10px;
+    }
+  
+}
+.btn-order{
+    display: grid;
+    column-gap: 4px;
+    row-gap: 8px;
 }
 
 .btn-order img{
@@ -558,7 +662,6 @@ tbody tr:hover{
 .btn-order button, .btn-order a.btn14{
     background-color: #fff;
     color: #343434;
-    font-size: 14px;
     font-weight: 600;
     border-radius: 4px;
     cursor: pointer;
@@ -582,7 +685,6 @@ tbody tr:hover{
 .btn-order .btn-noactive{
     background-color: #fff;
     color: #343434;
-    font-size: 16px;
     font-weight: 600;
     border-radius: 4px;
     text-align: center;
@@ -764,34 +866,40 @@ button.N-st-b{
     padding:10px 0;
     column-gap: 4px;
 }
+@media screen and (max-width:1400px) and (min-width:1240px){
+    .btn-order {
+        grid-template-columns: 75px 75px 75px 75px 75px;
+        grid-template-rows: 70px 70px 70px;
+        justify-content: center;
+    }
+}
+@media screen and (max-width:1240px) and (min-width:1125px) {
+    .btn-order {
+        grid-template-columns: 70px 70px 70px 70px 70px;
+        grid-template-rows: 70px 70px 70px;
+    }
+}
 @media screen and (max-width:1300px) {
     .service-Jour-btn{
         display: flex;
         padding:10px 0;
         column-gap: 4px;
-        justify-content: end;
     }
     .service-Jour-btn button{
-        background: linear-gradient(180deg, #5594D8 0%, #6BB1FC 100%);
-        color: #212121;
-        border-radius: 30px;
-        font-size: 14px;
-        width: 70px;
-    }
-    .service-Jour-btn p{
-        font-size: 14px;
+        font-size: 12px;
     }
     .blue-btn{
         width: 70px;
     }
+    .service-Jour-btn p{
+      font-size: 12px
+    }
 }
 .service-Jour-btn{
     display: flex;
-    justify-content: end;
 }
 .service-Jour-btn p{
     color: #10CA00;
-    font-size: 16px;
 }
 .service-Jour-btn button{
     background: linear-gradient(180deg, #5594D8 0%, #6BB1FC 100%);
@@ -973,6 +1081,8 @@ td.price{
  {
     background-color: #2C2C2C;
     padding: 5px 5px;
+    overflow: auto;
+    height: 150px;
  }
  .btn {
     background-color: #E5E5E5;
@@ -1033,7 +1143,8 @@ td.price{
 .move-R{
     display: flex;
     column-gap: 4px;
-    justify-content: end;
+    justify-content: center;
+    /* justify-content: end; */
 }
 .move-R button{
     background-color: #ECEEF2;
@@ -1067,6 +1178,7 @@ td.price{
     height: 630px;
     border-radius: 4px;
     overflow: auto;
+    margin-right: 10px;
   }
   #menucontainer{
    
@@ -1095,7 +1207,7 @@ td.price{
   @media screen and (max-width:1564px) and (min-width:1431px){
     #menucontainer{
         display: grid;
-        grid-template-columns: auto auto auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto;
         padding-left: 20px;
       }
   }
@@ -1113,18 +1225,34 @@ td.price{
         padding-left: 20px;
       }
   }
-  @media screen and (max-width:1200px) {
+  /* @media screen and (max-width:1200px) {
     .btn-service {
         display: flex;
         padding-left: 20px;
     }
-  }
-  @media screen and (max-width:1086px) and (min-width:920px){
+  } */
+  @media screen and (max-width:1086px) and (min-width:1020px){
     #menucontainer{
         display: grid;
-        grid-template-columns: auto auto auto ;
-        padding-left: 20px;
+        grid-template-columns: auto auto auto auto;
+        column-gap: 4px;
+        padding-left: 5px;
       }
+      .btn, .btn-yl, .btn-y, .btn-rl, .btn-r, .btn-p, .btn-c, .btn-g, .btn-b {
+        font-size: 12px;
+    }
+    .btn-service button.c {
+        width: 40px;
+        height: 45px;
+    }
+    .btn-service button.service {
+        width: 45px;
+        height: 45px;
+    }
+    /* .btn-service {
+        display: grid;
+        grid-template-columns: auto auto;
+    } */
   }
   @media screen and (max-width:919px){
     #menucontainer{
@@ -1325,11 +1453,11 @@ td.san2{
 .check-RSum{
     color: #fff;
 }
-.table-form-LR{
+/* .table-form-LR{
     display: flex;
     justify-content: space-between;
     column-gap: 5px;
-}
+} */
 .form-sum-R{
     background-color: #343434;
     display: grid;

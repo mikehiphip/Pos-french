@@ -12,6 +12,7 @@ use App\Http\Controllers\Webpanel\LogsController;
 use Intervention\Image\ImageManagerStatic as Image;
 
 use App\Models\Backend\CategoryModel;
+use App\Models\Backend\SubCategoryModel;
 use App\Models\Backend\FoodModel;
 
 class MenuController extends Controller
@@ -22,10 +23,12 @@ class MenuController extends Controller
     {
         $cat = CategoryModel::where('status','on')->get();
         $food = FoodModel::where('status','on')->get();
+        $sub = SubCategoryModel::where('status','on')->orderBy('id','asc')->get();
         return view("$this->prefix.menu",[
             'prefix' => $this->prefix,
             'catagory'  => $cat,
             'food' => json_encode($food),
+            'row' =>json_encode($sub),
         ]);
     }
     public function get_food(Request $request , $id){
