@@ -33,13 +33,13 @@
                             </div>
                             <div class="add-drop">
                                 <button class="A-drop"><img class="a-drop img-fluid"
-                                        src="frontend/images/icon menu/Add_2.svg"><br>Qty +1</button>
+                                        src="frontend/images/icon menu/Add_2.svg" onclick="add_qty()"><br>Qty +1</button>
                                 <div class="remove-btn">
                                     <button class="A-drop2"><img class="a-drop img-fluid"
-                                            src="frontend/images/icon menu/Remove_3.svg"></button>
+                                            src="frontend/images/icon menu/Remove_3.svg" onclick="del_qty()"><br>Qty -1</button>
                                 </div>
                                 <button class="A-drop"><img class="a-drop img-fluid"
-                                        src="frontend/images/icon menu/Dell_4.svg"><br>Qty -1</button>
+                                        src="frontend/images/icon menu/Dell_4.svg"></button>
                                 <button class="A-drop"><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/123_5.svg"><br>Qty +1</button>
                                 <button class="A-drop"><img class="a-drop img-fluid"
@@ -291,6 +291,7 @@ for (var i = 0; i < btns.length; i++) {
     var get_sub_food ;
     var count_list = 0;
     var color_list = new Array();
+    var number_active = '';
     function btn_click(id,cid,name){
       cate = name;
       get_food = food.filter(x=>x.cat_id == cid);
@@ -330,10 +331,11 @@ for (var i = 0; i < btns.length; i++) {
         $("#"+old_menu).removeClass("active");
       }
       // var list = "<tr><th scope='row' class='btn-dark' id='num"+fid+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+fid+"' style='background-color:#ff0000;'>"+cate+" "+food_list.name+"</td><td class='price btn-dark' id='num_price"+fid+"'>"+food_list.price+"</td></tr>";
-      var list = "<tr onclick='list_active("+count_list+")'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'>"+cate+" "+food_list.name+"</td><td class='price btn-dark' id='num_price"+count_list+"'>"+food_list.price+"</td></tr>";
+      var list = "<tr onclick='list_active("+count_list+")'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'>"+cate+" "+food_list.name+" <input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'></td><td class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden' name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr>";
       document.getElementById("m_act"+fid).classList.add('active');
       $('#show_list').append(list);
       old_menu = 'm_act'+fid;
+      number_active = count_list;
       count_list++;
       color_list.push(food_list.color);
       recalass_list();
@@ -363,6 +365,7 @@ for (var i = 0; i < btns.length; i++) {
       $("#"+old_sub).addClass("active");
     }
     function list_active(reid){
+      number_active = reid;
       for(x=0;x<count_list;x++)
       {
         if(x == reid){
@@ -377,6 +380,25 @@ for (var i = 0; i < btns.length; i++) {
           $("#num_name"+x).css("background-color",color_list[x]);
         }
       }
+    }
+    function add_qty(){
+        let qty = document.getElementById('sum_qty'+number_active).value*1;
+        let total = document.getElementById('sum_price'+number_active).value*1;
+        document.getElementById('sum_qty'+number_active).value = qty+1;
+        document.getElementById('num'+number_active).innerHTML = (qty+1).toFixed(2) ;
+        // document.getElementById('sum_price'+number_active).value = (qty+1)*total;
+        document.getElementById('show_price'+number_active).innerHTML = ((qty+1)*total).toFixed(2) ;
+    }
+    function del_qty(){
+        let qty = document.getElementById('sum_qty'+number_active).value*1;
+        let total = document.getElementById('sum_price'+number_active).value*1;
+        if(qty-1 > 0){
+            document.getElementById('sum_qty'+number_active).value = qty-1;
+            document.getElementById('num'+number_active).innerHTML = (qty-1).toFixed(2) ;
+            // document.getElementById('sum_price'+number_active).value = (qty-1)*total;
+            document.getElementById('show_price'+number_active).innerHTML = ((qty-1)*total).toFixed(2) ;
+        }
+        
     }
 </script>
     <!-- Active Menu -->
