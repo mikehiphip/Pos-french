@@ -39,7 +39,7 @@
                                             src="frontend/images/icon menu/Remove_3.svg" onclick="del_qty()"><br>Qty -1</button>
                                 </div>
                                 <button class="A-drop"><img class="a-drop img-fluid"
-                                        src="frontend/images/icon menu/Dell_4.svg"></button>
+                                        src="frontend/images/icon menu/Dell_4.svg" onclick="del_list()"></button>
                                 <button class="A-drop"><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/123_5.svg"><br>Qty +1</button>
                                 <button class="A-drop"><img class="a-drop img-fluid"
@@ -285,6 +285,7 @@ for (var i = 0; i < btns.length; i++) {
     var old_btn = '';
     var old_menu = '';
     var old_sub = '';
+    var old_list = '';
     var cate = '';
     var get_food ;
     var get_sub ;
@@ -331,7 +332,7 @@ for (var i = 0; i < btns.length; i++) {
         $("#"+old_menu).removeClass("active");
       }
       // var list = "<tr><th scope='row' class='btn-dark' id='num"+fid+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+fid+"' style='background-color:#ff0000;'>"+cate+" "+food_list.name+"</td><td class='price btn-dark' id='num_price"+fid+"'>"+food_list.price+"</td></tr>";
-      var list = "<tr onclick='list_active("+count_list+")'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'>"+cate+" "+food_list.name+" <input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'></td><td class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden' name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr>";
+      var list = "<tr onclick='list_active("+count_list+")' id='list_tr"+count_list+"'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'>"+cate+" "+food_list.name+" <input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'></td><td class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden' name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr>";
       document.getElementById("m_act"+fid).classList.add('active');
       $('#show_list').append(list);
       old_menu = 'm_act'+fid;
@@ -339,6 +340,7 @@ for (var i = 0; i < btns.length; i++) {
       count_list++;
       color_list.push(food_list.color);
       recalass_list();
+     
     }
     function recalass_list(){
       for(x=0;x<count_list;x++)
@@ -398,7 +400,18 @@ for (var i = 0; i < btns.length; i++) {
             // document.getElementById('sum_price'+number_active).value = (qty-1)*total;
             document.getElementById('show_price'+number_active).innerHTML = ((qty-1)*total).toFixed(2) ;
         }
-        
+    }
+    function del_list(){
+     var de = document.getElementById('list_tr'+number_active);
+     de.parentNode.removeChild(de);
+     old_list = number_active-1;
+     if(old_list != ''){
+        $("#num"+old_list).addClass("btn-dark");
+        $("#num_price"+old_list).addClass("btn-dark");
+        $("#num_name"+old_list).addClass("table-active btn-dark");
+        $("#num_name"+old_list).css("background-color",'');
+      }
+     console.log(old_list,'-',number_active)
     }
 </script>
     <!-- Active Menu -->
