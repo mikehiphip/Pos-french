@@ -32,17 +32,17 @@
                                 </div>
                             </div>
                             <div class="add-drop">
-                                <button class="A-drop"><img class="a-drop img-fluid"
-                                        src="frontend/images/icon menu/Add_2.svg" onclick="add_qty()"><br>Qty +1</button>
+                                <button class="A-drop" onclick="add_qty()"><img class="a-drop img-fluid"
+                                        src="frontend/images/icon menu/Add_2.svg" ><br>Qty +1</button>
                                 <div class="remove-btn">
-                                    <button class="A-drop2"><img class="a-drop img-fluid"
-                                            src="frontend/images/icon menu/Remove_3.svg" onclick="del_qty()"><br>Qty -1</button>
+                                    <button class="A-drop2" onclick="del_qty()"><img class="a-drop img-fluid"
+                                            src="frontend/images/icon menu/Remove_3.svg" ><br>Qty -1</button>
                                 </div>
-                                <button class="A-drop"><img class="a-drop img-fluid"
-                                        src="frontend/images/icon menu/Dell_4.svg" onclick="del_list()"></button>
-                                <button class="A-drop"><img class="a-drop img-fluid"
-                                        src="frontend/images/icon menu/123_5.svg"><br>Qty +1</button>
-                                <button class="A-drop"><img class="a-drop img-fluid"
+                                <button class="A-drop" onclick="del_list()"><img class="a-drop img-fluid"
+                                        src="frontend/images/icon menu/Dell_4.svg" ></button>
+                                <button class="A-drop" data-toggle="modal" data-target="#exampleModal" id="btn_cal" disabled><img class="a-drop img-fluid"
+                                        src="frontend/images/icon menu/123_5.svg" ><br>Qty +1</button>
+                                <button class="A-drop" data-toggle="modal" data-target="#DeleteAll"><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/Cancel_6.svg"><br>Qty -1</button>
                             </div>
                             <div class="Move-Up">
@@ -51,28 +51,10 @@
                             </div>
                             <div class="showmenu-table">
                                 <table class="table" id="show_list">
-                                    <tbody>
-                                        {{-- <tr>
-                                            <th scope="row">1.0</th>
-                                            <td colspan="1" class="table-active">Potage Poulet coco
-                                            </td>
-                                            <td class="price">8.00</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">4.0</th>
-                                            <td colspan="1" class="table-color">Boissons</td>
-                                            <td class="price">12.00</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1.0</th>
-                                            <td colspan="1" class="table-ord">potage Crevettes Itronnell</td>
-                                            <td class="price">8.00</td>
-                                        </tr> --}}
-                                    </tbody>
                                 </table>
                             </div>
                             <div class="show-price">
-                                <p>0.00</p>
+                                <p id="show_total">0.00</p>
                             </div>
                             <div class="move-btn">
                                 <div class="move-UD">
@@ -100,23 +82,6 @@
                                                       @foreach ($catagory as $c => $cat)
                                                         <button class="btn" id="btn_{{$c}}" style="background-color:{{$cat->color}};" onclick="btn_click({{$c}},{{$cat->id}},'{{$cat->name}}')">{{strtoupper($cat->name)}}</button>
                                                       @endforeach
-                                                        {{-- <button class="btn active"> POTAGE</button>
-                                                        <button class="btn-yl"> ENTREE</button>
-                                                        <button class="btn-y"> POULET</button>
-                                                        <button class="btn-rl"> PORC</button>
-                                                        <button class="btn-r"> BOEUF</button>
-                                                        <button class="btn-p">CREVETTE</button>
-                                                        <button class="btn-p"> COMPOSAN</button>
-                                                        <button class="btn"> CANARD</button>
-                                                        <button class="btn"> RIZ SAUTE</button>
-                                                        <button class="btn-c"> NOUUILLES</button>
-                                                        <button class="btn-g"> VEGETARIE</button>
-                                                        <button class="btn-b"> BOISSONS</button>
-                                                        <button class="btn-p"> DESSERTS</button>
-                                                        <button class="btn"> LIVRAISON</button>
-                                                        <button class="btn"> INGREDIENT</button>
-                                                        <button class="btn"> DIVERS</button>
-                                                        <button class="btn"> SUPLMT</button> --}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -141,11 +106,6 @@
                                         <div class="col">
                                             <div class="all-move-menu">
                                                 <div class="menu-L" id="show_submenu">
-                                                    {{-- <button class="btn ">CHAUDE</button>
-                                                    <button class="btn ">SOFT</button>
-                                                    <button class="btn ">VINS</button>
-                                                    <button class="btn ">DIGESTIFS</button>
-                                                    <button class="btn ">APEROS</button> --}}
                                                 </div>
                                                 <div class="move-R">
                                                     <button><img class="img-fluid"
@@ -162,93 +122,6 @@
                                     </div>
                                     <div class="allmenu">
                                         <div id="menucontainer">
-                                            {{-- <div class="menu active">
-                                                <div class="card-menu">
-                                                    <img class="img-fluid" src="frontend/images/icon index/food1.png">
-                                                    <p>POTAGEPOULET<br>COCO</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>Price:8.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="menu2">
-                                                <div class="card-menu">
-                                                    <img class="img-fluid" src="frontend/images/icon index/food1.png">
-                                                    <p>POTAGE<br>CREVETTES<br>ITRONNELL</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>Price:8.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="menu">
-                                                <div class="card-menu">
-                                                    <img class="img-fluid" src="frontend/images/icon index/food1.png">
-                                                    <p>POTAGE<br>RAVIOLIS</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>Price:8.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="menu3">
-                                                <div class="card-menu">
-                                                    <div class="bg-cr-menu">
-                                                        <img class="img-fluid"
-                                                            src="frontend/images/icon menu/Drink1.png">
-                                                    </div>
-                                                    <p>BOISSONS</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>Price:3.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="menu3">
-                                                <div class="card-menu">
-                                                    <div class="bg-cr-menu">
-                                                        <img class="img-fluid"
-                                                            src="frontend/images/icon menu/Drink1.png">
-                                                    </div>
-                                                    <p>BOISSONS</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>Price:3.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="menu3">
-                                                <div class="card-menu">
-                                                    <div class="bg-cr-menu">
-                                                        <img class="img-fluid"
-                                                            src="frontend/images/icon menu/Drink1.png">
-                                                    </div>
-                                                    <p>BOISSONS</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>Price:3.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="menu3">
-                                                <div class="card-menu">
-                                                    <div class="bg-cr-menu">
-                                                        <img class="img-fluid"
-                                                            src="frontend/images/icon menu/Drink1.png">
-                                                    </div>
-                                                    <p>BOISSONS</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>Price:3.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="menu3">
-                                                <div class="card-menu">
-                                                    <div class="bg-cr-menu">
-                                                        <img class="img-fluid"
-                                                            src="frontend/images/icon menu/Drink1.png">
-                                                    </div>
-                                                    <p>BOISSONS</p>
-                                                </div>
-                                                <div class="price">
-                                                    <p>Price:3.00</p>
-                                                </div>
-                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -259,6 +132,55 @@
             </div>
         </div>
     </div>
+    
+  
+  <!-- Modal -->
+  <div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: red;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+        <div class="modal-body">
+         <div class="row">
+            <div class="col-lg-12 text-center">
+                <input type="text" class="form-control m-1" id="calculate" value="0" style="width: 97%;" readonly>
+                <button class="btn btn-primary m-1" onclick="CalCulate(1)" style="width:29%;color:black;">1</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate(2)" style="width:29%;color:black;">2</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate(3)" style="width:29%;color:black;">3</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate(4)" style="width:29%;color:black;">4</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate(5)" style="width:29%;color:black;">5</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate(6)" style="width:29%;color:black;">6</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate(7)" style="width:29%;color:black;">7</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate(8)" style="width:29%;color:black;">8</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate(9)" style="width:29%;color:black;">9</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate('C')" style="width:29%;color:black;">C</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate(0)" style="width:29%;color:black;">0</button>
+                <button class="btn btn-primary m-1" onclick="CalCulate('e')" data-dismiss="modal" style="width:29%;color:black;">OK</button>
+            </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="DeleteAll" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+         <div class="row">
+            <div class="col-lg-12 text-center">
+                <h4 style="color: white;">Do you want to delete data?</h4>
+                <button type="button" class="btn btn-secondary m-1" style="background-color: red;color:white;" onclick="del_all()" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-secondary m-1" aria-label="Close" data-dismiss="modal" style="background-color:#6c757d;">Cancel</button>
+            </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 
     <!-- Menu -->
     <!-- <script>
@@ -293,6 +215,8 @@ for (var i = 0; i < btns.length; i++) {
     var count_list = 0;
     var color_list = new Array();
     var number_active = '';
+    var move_list = new Array();
+
     function btn_click(id,cid,name){
       cate = name;
       get_food = food.filter(x=>x.cat_id == cid);
@@ -326,21 +250,37 @@ for (var i = 0; i < btns.length; i++) {
       old_menu = ''; 
       
     }
+    function sub_click(sid){
+      get_sub_food = food.filter(x=>x.sub_id == sid);
+      get_food = food.filter(x=>x.sub_id == sid);
+      if(old_sub != ''){
+        $("#"+old_sub).removeClass("active");
+      }
+      var datas = '';
+      for(x =0 ; x < get_sub_food.length ; x++) {
+        datas = datas+"<div class='menu' id='s_act"+get_sub_food[x].id+"' onclick='menu_click("+get_sub_food[x].id+")' style='background-color:"+get_sub_food[x].color+";'><div class='card-menu' ><img class='img-fluid' src='"+get_sub_food[x].img+"'><p>"+get_sub_food[x].name+"</p></div><div class='price'><p>Price:"+get_sub_food[x].price+"</p></div></div>" ;
+      }
+      document.getElementById("menucontainer").innerHTML = datas;
+      old_sub = 's_act'+sid;
+      $("#"+old_sub).addClass("active");
+    }
     function menu_click(fid){
       var food_list = get_food.find(x=>x.id == fid);
+
       if(old_menu != ''){
         $("#"+old_menu).removeClass("active");
       }
       // var list = "<tr><th scope='row' class='btn-dark' id='num"+fid+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+fid+"' style='background-color:#ff0000;'>"+cate+" "+food_list.name+"</td><td class='price btn-dark' id='num_price"+fid+"'>"+food_list.price+"</td></tr>";
       var list = "<tr onclick='list_active("+count_list+")' id='list_tr"+count_list+"'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'>"+cate+" "+food_list.name+" <input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'></td><td class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden' name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr>";
-      document.getElementById("m_act"+fid).classList.add('active');
+    //   document.getElementById("m_act"+fid).classList.add('active');
       $('#show_list').append(list);
       old_menu = 'm_act'+fid;
       number_active = count_list;
+     $('#btn_cal').removeAttr('disabled');
       count_list++;
       color_list.push(food_list.color);
       recalass_list();
-     
+      total_sumPrice();
     }
     function recalass_list(){
       for(x=0;x<count_list;x++)
@@ -353,21 +293,11 @@ for (var i = 0; i < btns.length; i++) {
         }
       }
     }
-    function sub_click(sid){
-      get_sub_food = food.filter(x=>x.sub_id == sid);
-      if(old_sub != ''){
-        $("#"+old_sub).removeClass("active");
-      }
-      var datas = '';
-      for(x =0 ; x < get_sub_food.length ; x++) {
-        datas = datas+"<div class='menu' id='s_act"+get_sub_food[x].id+"' onclick='menu_click("+get_sub_food[x].id+")' style='background-color:"+get_sub_food[x].color+";'><div class='card-menu' ><img class='img-fluid' src='"+get_sub_food[x].img+"'><p>"+get_sub_food[x].name+"</p></div><div class='price'><p>Price:"+get_sub_food[x].price+"</p></div></div>" ;
-      }
-      document.getElementById("menucontainer").innerHTML = datas;
-      old_sub = 's_act'+sid;
-      $("#"+old_sub).addClass("active");
-    }
+    
     function list_active(reid){
       number_active = reid;
+     $('#btn_cal').removeAttr('disabled');
+
       for(x=0;x<count_list;x++)
       {
         if(x == reid){
@@ -390,6 +320,7 @@ for (var i = 0; i < btns.length; i++) {
         document.getElementById('num'+number_active).innerHTML = (qty+1).toFixed(2) ;
         // document.getElementById('sum_price'+number_active).value = (qty+1)*total;
         document.getElementById('show_price'+number_active).innerHTML = ((qty+1)*total).toFixed(2) ;
+        total_sumPrice();
     }
     function del_qty(){
         let qty = document.getElementById('sum_qty'+number_active).value*1;
@@ -400,18 +331,59 @@ for (var i = 0; i < btns.length; i++) {
             // document.getElementById('sum_price'+number_active).value = (qty-1)*total;
             document.getElementById('show_price'+number_active).innerHTML = ((qty-1)*total).toFixed(2) ;
         }
+        total_sumPrice();
     }
     function del_list(){
      var de = document.getElementById('list_tr'+number_active);
      de.parentNode.removeChild(de);
-     old_list = number_active-1;
-     if(old_list != ''){
-        $("#num"+old_list).addClass("btn-dark");
-        $("#num_price"+old_list).addClass("btn-dark");
-        $("#num_name"+old_list).addClass("table-active btn-dark");
-        $("#num_name"+old_list).css("background-color",'');
+     number_active = '';
+     $('#btn_cal').prop('disabled', true);
+     total_sumPrice();
+    //  old_list = number_active-1;
+    //  if(old_list != ''){
+    //     $("#num"+old_list).addClass("btn-dark");
+    //     $("#num_price"+old_list).addClass("btn-dark");
+    //     $("#num_name"+old_list).addClass("table-active btn-dark");
+    //     $("#num_name"+old_list).css("background-color",'');
+    //   }
+    }
+    function CalCulate(num){
+        var btn_num1 = (document.getElementById('calculate').value*1)+(document.getElementById('sum_qty'+number_active).value*1);
+        var btn_num = (document.getElementById('calculate').value*1);
+        var total_sum = document.getElementById('sum_price'+number_active).value;
+        if(num == 'C'){
+            document.getElementById('calculate').value = 0;
+        }else if(num == 'e'){
+            document.getElementById('num'+number_active).innerHTML = (Number(btn_num1)).toFixed(2);
+            document.getElementById('sum_qty'+number_active).value = Number(btn_num1);
+            document.getElementById('show_price'+number_active).innerHTML = (Number(btn_num1)*total_sum).toFixed(2);
+            document.getElementById('calculate').value = 0;
+        }else{
+            if(btn_num == 0){
+                document.getElementById('calculate').value = num;
+            }else{
+                document.getElementById('calculate').value = btn_num + num;
+            }
+        }
+        total_sumPrice();
+    }
+    function del_all(){
+        document.getElementById('show_list').innerHTML = null;
+        count_list = 0;
+        color_list = new Array();
+        number_active = '';
+        total_sumPrice();
+    }
+    function total_sumPrice(){
+        var total_price = 0;
+        for(x=0;x<count_list;x++)
+      {
+        let sum = document.getElementById('sum_price'+x);
+        if(sum){
+            total_price += (document.getElementById('sum_qty'+x).value*1)*(document.getElementById('sum_price'+x).value*1);
+        }
       }
-     console.log(old_list,'-',number_active)
+      document.getElementById('show_total').innerHTML = total_price.toFixed(2);
     }
 </script>
     <!-- Active Menu -->
@@ -427,9 +399,6 @@ for (var i = 0; i < btns.length; i++) {
         }
 
     </script>
-
-
-
     @include("$prefix.inc_footer")
 </body>
 
