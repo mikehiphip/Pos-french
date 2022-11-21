@@ -20,15 +20,15 @@
                             <div class="All-Price">
                                 <div class="price-btn">
                                     <button class="p-btn">2nd<br>Half</button>
-                                    <button class="p-btn">Delete<br>Line</button>
+                                    <button class="p-btn" onclick="del_list()">Delete<br>Line</button>
                                     <button class="static">Static</button>
                                 </div>
                                 <div class="price-btn">
-                                    <button class="p-btn">Update<br>Price</button>
+                                    <button class="p-btn" id="price_up" onclick="update_price()">Update<br>Price</button>
                                     <button class="p-btn">Half price<br>O/N</button>
-                                    <button class="p-btn">Free<br>Yes/No</button>
+                                    <button class="p-btn" onclick="free_price()">Free<br>Yes/No</button>
                                     <button class="p-btn">Half price<br>O/N</button>
-                                    <button class="p-btn">Add<br>Note</button>
+                                    <button class="p-btn" data-toggle="modal" data-target="#keyboardModal" id="btn_note" disabled>Add<br>Note</button>
                                 </div>
                             </div>
                             <div class="add-drop">
@@ -134,7 +134,7 @@
     </div>
     
   
-  <!-- Modal -->
+  <!-- Modal Calculate -->
   <div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
@@ -165,6 +165,7 @@
       </div>
     </div>
   </div>
+   <!-- Modal delete all -->
   <div class="modal fade" id="DeleteAll" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
       <div class="modal-content">
@@ -180,6 +181,74 @@
       </div>
     </div>
   </div>
+  <!-- Modal Keyboard -->
+  <div class="modal fade bd-example-modal-lg" id="keyboardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+         <div class="row">
+            <div class="col-lg-12">
+              <input type="text" class="form-control m-1" id="note" value=""  readonly>
+            </div>
+            <div class="col-lg-9 text-center">
+                <button class="btn btn-primary m-1" onclick="add_note('Q')" style="width:7%;color:black;">Q</button>
+                <button class="btn btn-primary m-1" onclick="add_note('W')" style="width:7%;color:black;">W</button>
+                <button class="btn btn-primary m-1" onclick="add_note('R')" style="width:7%;color:black;">E</button>
+                <button class="btn btn-primary m-1" onclick="add_note('R')" style="width:7%;color:black;">R</button>
+                <button class="btn btn-primary m-1" onclick="add_note('T')" style="width:7%;color:black;">T</button>
+                <button class="btn btn-primary m-1" onclick="add_note('Y')" style="width:7%;color:black;">Y</button>
+                <button class="btn btn-primary m-1" onclick="add_note('U')" style="width:7%;color:black;">U</button>
+                <button class="btn btn-primary m-1" onclick="add_note('I')" style="width:7%;color:black;">I</button>
+                <button class="btn btn-primary m-1" onclick="add_note('O')" style="width:7%;color:black;">O</button>
+                <button class="btn btn-primary m-1" onclick="add_note('P')" style="width:7%;color:black;">P</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note('A')" style="width:7%;color:black;">A</button>
+                <button class="btn btn-primary m-1" onclick="add_note('S')" style="width:7%;color:black;">S</button>
+                <button class="btn btn-primary m-1" onclick="add_note('D')" style="width:7%;color:black;">D</button>
+                <button class="btn btn-primary m-1" onclick="add_note('F')" style="width:7%;color:black;">F</button>
+                <button class="btn btn-primary m-1" onclick="add_note('G')" style="width:7%;color:black;">G</button>
+                <button class="btn btn-primary m-1" onclick="add_note('H')" style="width:7%;color:black;">H</button>
+                <button class="btn btn-primary m-1" onclick="add_note('J')" style="width:7%;color:black;">J</button>
+                <button class="btn btn-primary m-1" onclick="add_note('K')" style="width:7%;color:black;">K</button>
+                <button class="btn btn-primary m-1" onclick="add_note('L')" style="width:7%;color:black;">L</button>
+                <button class="btn btn-primary m-1" onclick="add_note('@')" style="width:7%;color:black;">@</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note('Z')" style="width:7%;color:black;">Z</button>
+                <button class="btn btn-primary m-1" onclick="add_note('X')" style="width:7%;color:black;">X</button>
+                <button class="btn btn-primary m-1" onclick="add_note('C')" style="width:7%;color:black;">C</button>
+                <button class="btn btn-primary m-1" onclick="add_note('V')" style="width:7%;color:black;">V</button>
+                <button class="btn btn-primary m-1" onclick="add_note('B')" style="width:7%;color:black;">B</button>
+                <button class="btn btn-primary m-1" onclick="add_note('N')" style="width:7%;color:black;">N</button>
+                <button class="btn btn-primary m-1" onclick="add_note('M')" style="width:7%;color:black;">M</button>
+                <button class="btn btn-primary m-1" onclick="add_note('del')" style="width:7%;color:black;"><=</button>
+                <button class="btn btn-primary m-1" onclick="add_note('Clear')" style="width:16%;color:black;">Clear</button><br>
+                <button class="btn btn-primary m-1" data-dismiss="modal" style="color:red;">Cancel</button>
+                <button class="btn btn-primary m-1" onclick="add_note('(')" style="width:5%;color:black;">(</button>
+                <button class="btn btn-primary m-1" onclick="add_note(')')" style="width:5%;color:black;">)</button>
+                <button class="btn btn-primary m-1" onclick="add_note('space')" style="width:22%;color:black;">Space</button>
+                <button class="btn btn-primary m-1" onclick="add_note('-')" style="width:7%;color:black;">-</button>
+                <button class="btn btn-primary m-1" onclick="add_note(':')" style="width:7%;color:black;">:</button>
+                <button class="btn btn-primary m-1" onclick="add_note('/')" style="width:7%;color:black;">/</button>
+                <button class="btn btn-primary m-1" onclick="save_note()" data-dismiss="modal" style="color:green;">OK</button>
+            </div>
+            <div class="col-lg-3 text-center">
+                <button class="btn btn-primary m-1" onclick="add_note(7)" style="width:20%;color:black;">7</button>
+                <button class="btn btn-primary m-1" onclick="add_note(8)" style="width:20%;color:black;">8</button>
+                <button class="btn btn-primary m-1" onclick="add_note(9)" style="width:20%;color:black;">9</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note(4)" style="width:20%;color:black;">4</button>
+                <button class="btn btn-primary m-1" onclick="add_note(5)" style="width:20%;color:black;">5</button>
+                <button class="btn btn-primary m-1" onclick="add_note(6)" style="width:20%;color:black;">6</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note(1)" style="width:20%;color:black;">1</button>
+                <button class="btn btn-primary m-1" onclick="add_note(2)" style="width:20%;color:black;">2</button>
+                <button class="btn btn-primary m-1" onclick="add_note(3)" style="width:20%;color:black;">3</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note(0)" style="width:46%;color:black;">0</button>
+                <button class="btn btn-primary m-1" onclick="add_note('.')" style="width:20%;color:black;">.</button>
+            </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
   
 
     <!-- Menu -->
@@ -271,12 +340,13 @@ for (var i = 0; i < btns.length; i++) {
         $("#"+old_menu).removeClass("active");
       }
       // var list = "<tr><th scope='row' class='btn-dark' id='num"+fid+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+fid+"' style='background-color:#ff0000;'>"+cate+" "+food_list.name+"</td><td class='price btn-dark' id='num_price"+fid+"'>"+food_list.price+"</td></tr>";
-      var list = "<tr onclick='list_active("+count_list+")' id='list_tr"+count_list+"'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'>"+cate+" "+food_list.name+" <input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'></td><td class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden' name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr>";
+      var list = "<tr onclick='list_active("+count_list+")' id='list_tr"+count_list+"'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'>"+cate+" "+food_list.name+" <input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'></td><td class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden'  name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr>";
     //   document.getElementById("m_act"+fid).classList.add('active');
       $('#show_list').append(list);
       old_menu = 'm_act'+fid;
       number_active = count_list;
      $('#btn_cal').removeAttr('disabled');
+     $('#btn_note').removeAttr('disabled');
       count_list++;
       color_list.push(food_list.color);
       recalass_list();
@@ -297,6 +367,7 @@ for (var i = 0; i < btns.length; i++) {
     function list_active(reid){
       number_active = reid;
      $('#btn_cal').removeAttr('disabled');
+     $('#btn_note').removeAttr('disabled');
 
       for(x=0;x<count_list;x++)
       {
@@ -338,6 +409,7 @@ for (var i = 0; i < btns.length; i++) {
      de.parentNode.removeChild(de);
      number_active = '';
      $('#btn_cal').prop('disabled', true);
+     $('#btn_note').prop('disabled', true);
      total_sumPrice();
     //  old_list = number_active-1;
     //  if(old_list != ''){
@@ -349,7 +421,7 @@ for (var i = 0; i < btns.length; i++) {
     }
     function CalCulate(num){
         var btn_num1 = (document.getElementById('calculate').value*1)+(document.getElementById('sum_qty'+number_active).value*1);
-        var btn_num = (document.getElementById('calculate').value*1);
+        var btn_num = document.getElementById('calculate').value;
         var total_sum = document.getElementById('sum_price'+number_active).value;
         if(num == 'C'){
             document.getElementById('calculate').value = 0;
@@ -384,6 +456,56 @@ for (var i = 0; i < btns.length; i++) {
         }
       }
       document.getElementById('show_total').innerHTML = total_price.toFixed(2);
+    }
+    var btn_update = false;
+    function update_price(){
+      if(btn_update){
+        $("#price_up").addClass("p-btn");
+        $("#price_up").removeClass("btn-success");
+        $('#sum_price'+number_active).attr("type", "hidden");
+        $('#show_price'+number_active).show();
+        btn_update = false;
+        let qty = document.getElementById('sum_qty'+number_active).value*1;
+        let total = document.getElementById('sum_price'+number_active).value*1;
+        document.getElementById('sum_qty'+number_active).value = qty;
+        document.getElementById('num'+number_active).innerHTML = (qty).toFixed(2) ;
+        document.getElementById('show_price'+number_active).innerHTML = ((qty)*total).toFixed(2) ;
+        total_sumPrice();
+      }else{
+        $("#price_up").removeClass("p-btn");
+        $("#price_up").addClass(" btn-success");
+        $('#sum_price'+number_active).attr("type", "text");
+        $('#show_price'+number_active).hide();
+        btn_update = true;
+      }
+    }
+    function free_price(){
+      document.getElementById('sum_price'+number_active).value = 0;
+      let qty = document.getElementById('sum_qty'+number_active).value*1;
+      let total = document.getElementById('sum_price'+number_active).value*1;
+      if((qty)*total > 0){
+        document.getElementById('show_price'+number_active).innerHTML = ((qty)*total).toFixed(2) ;
+      }else{
+        document.getElementById('show_price'+number_active).innerHTML = 'free' ;
+      }
+      total_sumPrice();
+    }
+    function add_note(n){
+      var text = document.getElementById('note').value;
+      if(n == 'Clear'){
+          document.getElementById('note').value = '';
+      }else if(n == 'space'){
+          document.getElementById('note').value = text+' ';
+      }else if(n == 'del'){
+          let count_text = text.length-1;
+          document.getElementById('note').value = text.substring(0, count_text);
+      }else{
+          if(text == 0){
+            document.getElementById('note').value = n;
+          }else{
+            document.getElementById('note').value = text + n;
+          }
+      }
     }
 </script>
     <!-- Active Menu -->
