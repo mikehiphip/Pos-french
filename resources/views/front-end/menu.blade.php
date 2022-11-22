@@ -49,9 +49,8 @@
                                 <button class="move"><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/move_up1.png"></button>
                             </div>
-                            <div class="showmenu-table">
-                                <table class="table" id="show_list">
-                                </table>
+                            <div class="showmenu-table" id="show_list">
+                               
                             </div>
                             <div class="show-price">
                                 <p id="show_total">0.00</p>
@@ -193,7 +192,7 @@
             <div class="col-lg-9 text-center">
                 <button class="btn btn-primary m-1" onclick="add_note('Q')" style="width:7%;color:black;">Q</button>
                 <button class="btn btn-primary m-1" onclick="add_note('W')" style="width:7%;color:black;">W</button>
-                <button class="btn btn-primary m-1" onclick="add_note('R')" style="width:7%;color:black;">E</button>
+                <button class="btn btn-primary m-1" onclick="add_note('E')" style="width:7%;color:black;">E</button>
                 <button class="btn btn-primary m-1" onclick="add_note('R')" style="width:7%;color:black;">R</button>
                 <button class="btn btn-primary m-1" onclick="add_note('T')" style="width:7%;color:black;">T</button>
                 <button class="btn btn-primary m-1" onclick="add_note('Y')" style="width:7%;color:black;">Y</button>
@@ -284,6 +283,7 @@ for (var i = 0; i < btns.length; i++) {
     var count_list = 0;
     var color_list = new Array();
     var number_active = '';
+    var type_active = '';
     var move_list = new Array();
 
     function btn_click(id,cid,name){
@@ -338,9 +338,14 @@ for (var i = 0; i < btns.length; i++) {
 
       if(old_menu != ''){
         $("#"+old_menu).removeClass("active");
-      }
+      }   
+      if(number_active != ''){
+        if(type_active == 1){
+          $("#note_ac"+number_active).removeClass("table-active btn-dark");
+        }
+      }                 
       // var list = "<tr><th scope='row' class='btn-dark' id='num"+fid+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+fid+"' style='background-color:#ff0000;'>"+cate+" "+food_list.name+"</td><td class='price btn-dark' id='num_price"+fid+"'>"+food_list.price+"</td></tr>";
-      var list = "<tr onclick='list_active("+count_list+")' id='list_tr"+count_list+"'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'>"+cate+" "+food_list.name+" <input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'></td><td class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden'  name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr>";
+      var list = "<table id='table_list"+count_list+"'><tr onclick='list_active("+count_list+",0)' id='list_tr"+count_list+"'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'><b id='name_list"+count_list+"'>"+cate+" "+food_list.name+" </b><input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'><input type='hidden'  value='"+cate+' '+food_list.name+"' id='get_name"+count_list+"'></td><td class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden'  name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr></table>";
     //   document.getElementById("m_act"+fid).classList.add('active');
       $('#show_list').append(list);
       old_menu = 'm_act'+fid;
@@ -364,24 +369,46 @@ for (var i = 0; i < btns.length; i++) {
       }
     }
     
-    function list_active(reid){
+    function list_active(reid,t){
       number_active = reid;
-     $('#btn_cal').removeAttr('disabled');
-     $('#btn_note').removeAttr('disabled');
-
-      for(x=0;x<count_list;x++)
-      {
-        if(x == reid){
-          $("#num"+x).addClass("btn-dark");
-          $("#num_price"+x).addClass("btn-dark");
-          $("#num_name"+x).addClass("table-active btn-dark");
-          $("#num_name"+x).css("background-color",'');
-        }else{
-          $("#num"+x).removeClass("btn-dark");
-          $("#num_price"+x).removeClass("btn-dark");
-          $("#num_name"+x).removeClass("table-active btn-dark");
-          $("#num_name"+x).css("background-color",color_list[x]);
-        }
+      type_active = t ;
+      if(t == 0){
+        $('#btn_cal').removeAttr('disabled');
+        $('#btn_note').removeAttr('disabled');
+          for(x=0;x<count_list;x++)
+          {
+            if(x == reid){
+              $("#num"+x).addClass("btn-dark");
+              $("#num_price"+x).addClass("btn-dark");
+              $("#num_name"+x).addClass("table-active btn-dark");
+              $("#num_name"+x).css("background-color",'');
+            }else{
+              $("#num"+x).removeClass("btn-dark");
+              $("#num_price"+x).removeClass("btn-dark");
+              $("#num_name"+x).removeClass("table-active btn-dark");
+              $("#num_name"+x).css("background-color",color_list[x]);
+            }
+          }
+          for(x=0;x<note_c;x++)
+          {
+            $("#note_ac"+x).removeClass("table-active btn-dark");
+          }
+      }else{
+        for(x=0;x<note_c;x++)
+          {
+            if(x == reid){
+              $("#note_ac"+x).addClass("table-active btn-dark");
+            }else{
+              $("#note_ac"+x).removeClass("table-active btn-dark");
+            }
+          }
+          for(x=0;x<count_list;x++)
+          {
+              $("#num"+x).removeClass("btn-dark");
+              $("#num_price"+x).removeClass("btn-dark");
+              $("#num_name"+x).removeClass("table-active btn-dark");
+              $("#num_name"+x).css("background-color",color_list[x]);
+          }
       }
     }
     function add_qty(){
@@ -405,12 +432,19 @@ for (var i = 0; i < btns.length; i++) {
         total_sumPrice();
     }
     function del_list(){
-     var de = document.getElementById('list_tr'+number_active);
-     de.parentNode.removeChild(de);
-     number_active = '';
-     $('#btn_cal').prop('disabled', true);
-     $('#btn_note').prop('disabled', true);
-     total_sumPrice();
+      if(type_active == 0){
+        var de = document.getElementById('table_list'+number_active);
+        de.parentNode.removeChild(de);
+        number_active = '';
+        $('#btn_cal').prop('disabled', true);
+        $('#btn_note').prop('disabled', true);
+        total_sumPrice();
+      }else{
+        var de = document.getElementById('list_note'+number_active);
+        de.parentNode.removeChild(de);
+        number_active = '';
+      }
+     
     //  old_list = number_active-1;
     //  if(old_list != ''){
     //     $("#num"+old_list).addClass("btn-dark");
@@ -506,6 +540,17 @@ for (var i = 0; i < btns.length; i++) {
             document.getElementById('note').value = text + n;
           }
       }
+    }
+    var note_c = 0;
+    function save_note(){
+      let note = document.getElementById('note').value;
+      let fn = document.getElementById('get_name'+number_active).value;
+      if(note.length > 0){
+        var note_text = '<tr id="list_note'+note_c+'" onclick="list_active('+note_c+',1)"><td></td><td id="note_ac'+note_c+'">'+note+'</td><td></td></tr>';
+        $('#table_list'+number_active).append(note_text);
+        note_c++;
+      }
+      document.getElementById('note').value = '';
     }
 </script>
     <!-- Active Menu -->
