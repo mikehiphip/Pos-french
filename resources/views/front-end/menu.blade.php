@@ -46,7 +46,7 @@
                                         src="frontend/images/icon menu/Cancel_6.svg"><br>Qty -1</button>
                             </div>
                             <div class="Move-Up">
-                                <button class="move"><img class="a-drop img-fluid"
+                                <button class="move" onclick="move_active(0)"><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/move_up1.png"></button>
                             </div>
                             <div class="showmenu-table" id="show_list">
@@ -63,7 +63,7 @@
                                             src="frontend/images/icon menu/Arrow_drop_up_2.svg"><br>MOVE</button>
                                 </div>
                                 <div class="move-D">
-                                    <button><img class="a-drop img-fluid"
+                                    <button onclick="move_active(1)"><img class="a-drop img-fluid"
                                             src="frontend/images/icon menu/move_down2.svg"></button>
                                 </div>
                             </div>
@@ -551,6 +551,44 @@ for (var i = 0; i < btns.length; i++) {
         note_c++;
       }
       document.getElementById('note').value = '';
+    }
+    function move_active(u,d){
+      let test = number_active-1;
+      console.log(number_active+'test'+test)
+      // if(u == 0){
+        $('#btn_cal').removeAttr('disabled');
+        $('#btn_note').removeAttr('disabled');
+          for(x=0;x<number_active;x++)
+          {
+            if(x == test){
+              $("#num"+x).addClass("btn-dark");
+              $("#num_price"+x).addClass("btn-dark");
+              $("#num_name"+x).addClass("table-active btn-dark");
+              $("#num_name"+x).css("background-color",'');
+            }
+          }
+          $("#num"+number_active).removeClass("btn-dark");
+          $("#num_price"+number_active).removeClass("btn-dark");
+          $("#num_name"+number_active).removeClass("table-active btn-dark");
+          $("#num_name"+number_active).css("background-color",color_list[number_active]);
+      // }
+      // else{
+      //   for(x=0;x<note_c;x++)
+      //     {
+      //       if(x == reid){
+      //         $("#note_ac"+x).addClass("table-active btn-dark");
+      //       }else{
+      //         $("#note_ac"+x).removeClass("table-active btn-dark");
+      //       }
+      //     }
+      //     for(x=0;x<count_list;x++)
+      //     {
+      //         $("#num"+x).removeClass("btn-dark");
+      //         $("#num_price"+x).removeClass("btn-dark");
+      //         $("#num_name"+x).removeClass("table-active btn-dark");
+      //         $("#num_name"+x).css("background-color",color_list[x]);
+      //     }
+      // }
     }
 </script>
     <!-- Active Menu -->
