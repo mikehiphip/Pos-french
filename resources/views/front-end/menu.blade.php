@@ -15,7 +15,7 @@
                         <div class="showmenu">
                             <div class="btn-No-Ok">
                                 <button class="no" onclick="window.location.href='{{url('/')}}';">Esc = cancel</button>
-                                <button class="ok"><img src="frontend/images/icon menu/Check_ring1.svg">F12 ok</button>
+                                <button class="ok" onclick="submit_menu()"><img src="frontend/images/icon menu/Check_ring1.svg">F12 ok</button>
                             </div>
                             <div class="All-Price">
                                 <div class="price-btn">
@@ -46,24 +46,25 @@
                                         src="frontend/images/icon menu/Cancel_6.svg"><br>Qty -1</button>
                             </div>
                             <div class="Move-Up">
-                                <button class="move" onclick="move_active(0)"><img class="a-drop img-fluid"
+                                <button class="move" onclick="moveup_active()"><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/move_up1.png"></button>
                             </div>
+                            <form action="" method="post" id="confirm_menu">
                             <div class="showmenu-table" id="show_list">
-                               
                             </div>
+                            </form>
                             <div class="show-price">
                                 <p id="show_total">0.00</p>
                             </div>
                             <div class="move-btn">
                                 <div class="move-UD">
-                                    <button><img class="a-drop img-fluid"
+                                    <button onclick="move_up()"><img class="a-drop img-fluid"
                                             src="frontend/images/icon menu/Arrow_drop_up_1.svg"><br>MOVE</button>
-                                    <button><img class="a-drop img-fluid"
+                                    <button onclick="move_down()"><img class="a-drop img-fluid"
                                             src="frontend/images/icon menu/Arrow_drop_up_2.svg"><br>MOVE</button>
                                 </div>
                                 <div class="move-D">
-                                    <button onclick="move_active(1)"><img class="a-drop img-fluid"
+                                    <button onclick="movedown_active()"><img class="a-drop img-fluid"
                                             src="frontend/images/icon menu/move_down2.svg"></button>
                                 </div>
                             </div>
@@ -89,13 +90,13 @@
                                                     <div class="btn-service">
                                                         <button class="service"><img class="img-fluid"
                                                                 src="frontend/images/icon menu/move_up1.png"></button>
-                                                        <button class="c">close</button>
+                                                        <button class="c" data-toggle="modal" data-target="#ClosePage" >close</button>
                                                         <button class="service"><img class="img-fluid"
                                                                 src="frontend/images/icon menu/Down_move.svg"></button>
                                                         <button class="service">service</button>
                                                         <button class="service"><img class="img-fluid"
                                                                 src="frontend/images/icon menu/with.svg">with</button>
-                                                        <button class="c">Mode Normal</button>
+                                                        <button class="c" onclick="window.location.href='{{url('webpanel/login')}}';">Mode Normal</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -164,7 +165,7 @@
       </div>
     </div>
   </div>
-   <!-- Modal delete all -->
+  <!-- Modal delete all -->
   <div class="modal fade" id="DeleteAll" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
       <div class="modal-content">
@@ -173,6 +174,22 @@
             <div class="col-lg-12 text-center">
                 <h4 style="color: white;">Do you want to delete data?</h4>
                 <button type="button" class="btn btn-secondary m-1" style="background-color: red;color:white;" onclick="del_all()" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-secondary m-1" aria-label="Close" data-dismiss="modal" style="background-color:#6c757d;">Cancel</button>
+            </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal close -->
+  <div class="modal fade" id="ClosePage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+         <div class="row">
+            <div class="col-lg-12 text-center">
+                <h4 style="color: white;">Do you want to exit this page?</h4>
+                <button type="button" class="btn btn-secondary m-1" style="background-color: red;color:white;" data-dismiss="modal" onclick="window.location.href='{{url('/')}}';">OK</button>
                 <button type="button" class="btn btn-secondary m-1" aria-label="Close" data-dismiss="modal" style="background-color:#6c757d;">Cancel</button>
             </div>
          </div>
@@ -285,6 +302,7 @@ for (var i = 0; i < btns.length; i++) {
     var number_active = '';
     var type_active = '';
     var move_list = new Array();
+    var positionT = new Array();
 
     function btn_click(id,cid,name){
       cate = name;
@@ -345,13 +363,14 @@ for (var i = 0; i < btns.length; i++) {
         }
       }                 
       // var list = "<tr><th scope='row' class='btn-dark' id='num"+fid+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+fid+"' style='background-color:#ff0000;'>"+cate+" "+food_list.name+"</td><td class='price btn-dark' id='num_price"+fid+"'>"+food_list.price+"</td></tr>";
-      var list = "<table id='table_list"+count_list+"'><tr onclick='list_active("+count_list+",0)' id='list_tr"+count_list+"'><th scope='row' class='btn-dark' id='num"+count_list+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"'><b id='name_list"+count_list+"'>"+cate+" "+food_list.name+" </b><input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'><input type='hidden'  value='"+cate+' '+food_list.name+"' id='get_name"+count_list+"'></td><td class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden'  name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr></table>";
+      var list = "<table id='table_list"+count_list+"'><tr onclick='list_active("+count_list+",0)' id='list_tr"+count_list+"'><td width='10%' scope='row' class='btn-dark' id='num"+count_list+"'>1.00</td><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"' width='70%'><b id='name_list"+count_list+"'>"+cate+" "+food_list.name+" </b><input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'><input type='hidden'  value='"+cate+' '+food_list.name+"' id='get_name"+count_list+"'></td><td width='20%' class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden'  name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr></table>";
     //   document.getElementById("m_act"+fid).classList.add('active');
       $('#show_list').append(list);
       old_menu = 'm_act'+fid;
       number_active = count_list;
      $('#btn_cal').removeAttr('disabled');
      $('#btn_note').removeAttr('disabled');
+     positionT.push(count_list);
       count_list++;
       color_list.push(food_list.color);
       recalass_list();
@@ -435,10 +454,14 @@ for (var i = 0; i < btns.length; i++) {
       if(type_active == 0){
         var de = document.getElementById('table_list'+number_active);
         de.parentNode.removeChild(de);
-        number_active = '';
         $('#btn_cal').prop('disabled', true);
         $('#btn_note').prop('disabled', true);
         total_sumPrice();
+        let del_move = positionT.indexOf(number_active);
+        positionT.splice(del_move,1);
+        console.log(del_move)
+        console.log(positionT)
+        number_active = '';
       }else{
         var de = document.getElementById('list_note'+number_active);
         de.parentNode.removeChild(de);
@@ -552,43 +575,111 @@ for (var i = 0; i < btns.length; i++) {
       }
       document.getElementById('note').value = '';
     }
-    function move_active(u,d){
-      let test = number_active-1;
-      console.log(number_active+'test'+test)
-      // if(u == 0){
-        $('#btn_cal').removeAttr('disabled');
-        $('#btn_note').removeAttr('disabled');
-          for(x=0;x<number_active;x++)
-          {
-            if(x == test){
-              $("#num"+x).addClass("btn-dark");
-              $("#num_price"+x).addClass("btn-dark");
-              $("#num_name"+x).addClass("table-active btn-dark");
-              $("#num_name"+x).css("background-color",'');
-            }
-          }
-          $("#num"+number_active).removeClass("btn-dark");
-          $("#num_price"+number_active).removeClass("btn-dark");
-          $("#num_name"+number_active).removeClass("table-active btn-dark");
-          $("#num_name"+number_active).css("background-color",color_list[number_active]);
+    function moveup_active(){
+      for(x=number_active-1;x>=0;x--){
+       var m_up = document.getElementById('table_list'+x);
+        if(m_up){
+            $("#num"+number_active).removeClass("btn-dark");
+            $("#num_price"+number_active).removeClass("btn-dark");
+            $("#num_name"+number_active).removeClass("table-active btn-dark");
+            $("#num_name"+number_active).css("background-color",color_list[number_active]);
+
+            $("#num"+x).addClass("btn-dark");
+            $("#num_price"+x).addClass("btn-dark");
+            $("#num_name"+x).addClass("table-active btn-dark");
+            $("#num_name"+x).css("background-color",'');
+            number_active = x;
+            break;
+        }
+      }
+    }
+    function movedown_active(){
+      for(x=number_active+1;x<=count_list;x++){
+       var m_up = document.getElementById('table_list'+x);
+        if(m_up){
+            $("#num"+number_active).removeClass("btn-dark");
+            $("#num_price"+number_active).removeClass("btn-dark");
+            $("#num_name"+number_active).removeClass("table-active btn-dark");
+            $("#num_name"+number_active).css("background-color",color_list[number_active]);
+
+            $("#num"+x).addClass("btn-dark");
+            $("#num_price"+x).addClass("btn-dark");
+            $("#num_name"+x).addClass("table-active btn-dark");
+            $("#num_name"+x).css("background-color",'');
+            number_active = x;
+            break;
+        }
+      }
+    }
+    function move_up(){
+      var next = -1;
+      var now = positionT.indexOf(number_active);
+      if(now > 0){
+        next = now-1;
+        // for(x=now-1;x>=0;x--){
+        //   if(positionT[x]){
+        //     next = x;
+        //     break;
+        //   }else{
+        //     if(x == 0){
+        //       next = x;
+        //     }
+        //   }
+        // }
+      }
+      var info = new Array();
+      if(next >= 0){
+        let pm = positionT[now];
+        let pn = positionT[next];
+        positionT[next] = pm; 
+        positionT[now] = pn; 
+        for(i=0;i<positionT.length;i++){
+          let tl = document.getElementById('table_list'+positionT[i]);
+          info.push(tl);
+        }
+        document.getElementById('show_list').innerHTML = null;
+        for(z=0;z<info.length;z++){
+          $('#show_list').append(info[z]);
+        }
+      }
+
+      // var all_table = '';
+      // for(x=0;x<=count_list;x++){
+      //   let get_table = document.getElementById('table_list'+x);
+      //     all_table = all_table+get_table;
+      //     console.log(get_table)
       // }
-      // else{
-      //   for(x=0;x<note_c;x++)
-      //     {
-      //       if(x == reid){
-      //         $("#note_ac"+x).addClass("table-active btn-dark");
-      //       }else{
-      //         $("#note_ac"+x).removeClass("table-active btn-dark");
-      //       }
-      //     }
-      //     for(x=0;x<count_list;x++)
-      //     {
-      //         $("#num"+x).removeClass("btn-dark");
-      //         $("#num_price"+x).removeClass("btn-dark");
-      //         $("#num_name"+x).removeClass("table-active btn-dark");
-      //         $("#num_name"+x).css("background-color",color_list[x]);
-      //     }
+      // console.log(all_table)
+    }
+    function move_down(){
+      var now = positionT.indexOf(number_active);
+      var next = now+1;
+      var info = new Array();
+      if(next >= 0){
+        let pm = positionT[now];
+        let pn = positionT[next];
+        positionT[next] = pm; 
+        positionT[now] = pn; 
+        for(i=0;i<positionT.length;i++){
+          let tl = document.getElementById('table_list'+positionT[i]);
+          info.push(tl);
+        }
+        document.getElementById('show_list').innerHTML = null;
+        for(z=0;z<info.length;z++){
+          $('#show_list').append(info[z]);
+        }
+      }
+
+      // var all_table = '';
+      // for(x=0;x<=count_list;x++){
+      //   let get_table = document.getElementById('table_list'+x);
+      //     all_table = all_table+get_table;
+      //     console.log(get_table)
       // }
+      // console.log(all_table)
+    }
+    function submit_menu(){
+        document.getElementById(confirm_menu).submit();
     }
 </script>
     <!-- Active Menu -->
