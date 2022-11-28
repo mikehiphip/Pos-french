@@ -49,9 +49,9 @@
                                 <button class="move" onclick="moveup_active()"><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/move_up1.png"></button>
                             </div>
-                            <form action="" method="post" id="confirm_menu">
-                            <div class="showmenu-table" id="show_list">
-                            </div>
+                            <form action="{{url('menu-list')}}" method="POST" id="confirm_menu" enctype="multipart/form-data">
+                            @csrf
+                            <div class="showmenu-table" id="show_list"></div>
                             </form>
                             <div class="show-price">
                                 <p id="show_total">0.00</p>
@@ -375,6 +375,7 @@ for (var i = 0; i < btns.length; i++) {
       color_list.push(food_list.color);
       recalass_list();
       total_sumPrice();
+     
     }
     function recalass_list(){
       for(x=0;x<count_list;x++)
@@ -679,7 +680,7 @@ for (var i = 0; i < btns.length; i++) {
       // console.log(all_table)
     }
     function submit_menu(){
-        document.getElementById(confirm_menu).submit();
+        document.getElementById("confirm_menu").submit();
     }
 </script>
     <!-- Active Menu -->

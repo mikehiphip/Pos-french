@@ -202,15 +202,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($row['qty_num'] as $a)
                                     <tr>
                                         <th scope="row">1</th>
                                         <td>#</td>
                                         <td>#</td>
-                                        <td>#</td>
+                                        <td>{{$a}}</td>
                                         <td>#</td>
                                         <td>#</td>
                                         <td>#</td>
                                     </tr>
+                                    @endforeach
                                     <tr>
                                         <th scope="row">2</th>
                                         <td>#</td>

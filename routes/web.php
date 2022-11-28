@@ -44,6 +44,7 @@ use App\Http\Controllers\Frontend as Frontend;
 // });
 Route::get("/", [Frontend\HomeController::class, 'index']);
 Route::get("/menu", [Frontend\MenuController::class, 'index']);
+Route::post("/menu-list", [Frontend\MenuController::class, 'get_food']);
 
 require('web-backend.php');
 

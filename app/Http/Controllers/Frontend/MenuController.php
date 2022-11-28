@@ -31,7 +31,14 @@ class MenuController extends Controller
             'row' =>json_encode($sub),
         ]);
     }
-    public function get_food(Request $request , $id){
-        
+    public function get_food(Request $request){
+        // dd($request);
+        $data = array();
+        $data['qty_num'] = $request->qty_num;
+        // dd($data);
+        return view("$this->prefix.index",[
+            'prefix' => $this->prefix,
+            'row'   => $data,
+        ]);
     }
 }
