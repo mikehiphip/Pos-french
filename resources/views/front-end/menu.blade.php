@@ -51,6 +51,7 @@
                             </div>
                             <form action="{{url('menu-list')}}" method="POST" id="confirm_menu" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="ran_num" value="{{random_int(100000,999999)}}" >
                             <div class="showmenu-table" id="show_list"></div>
                             </form>
                             <div class="show-price">
@@ -363,7 +364,7 @@ for (var i = 0; i < btns.length; i++) {
         }
       }                 
       // var list = "<tr><th scope='row' class='btn-dark' id='num"+fid+"'>1.00</th><td colspan='1' class='table-active btn-dark' id='num_name"+fid+"' style='background-color:#ff0000;'>"+cate+" "+food_list.name+"</td><td class='price btn-dark' id='num_price"+fid+"'>"+food_list.price+"</td></tr>";
-      var list = "<table id='table_list"+count_list+"'><tr onclick='list_active("+count_list+",0)' id='list_tr"+count_list+"'><td width='10%' scope='row' class='btn-dark' id='num"+count_list+"'>1.00</td><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"' width='70%'><b id='name_list"+count_list+"'>"+cate+" "+food_list.name+" </b><input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'><input type='hidden'  value='"+cate+' '+food_list.name+"' id='get_name"+count_list+"'></td><td width='20%' class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden'  name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr></table>";
+      var list = "<table id='table_list"+count_list+"'><tr onclick='list_active("+count_list+",0)' id='list_tr"+count_list+"'><td width='10%' scope='row' class='btn-dark' id='num"+count_list+"'>1.00</td><td colspan='1' class='table-active btn-dark' id='num_name"+count_list+"' width='70%'><b id='name_list"+count_list+"'>"+cate+" "+food_list.name+" </b><input type='hidden' name='qty_num[]' value='1' id='sum_qty"+count_list+"'><input type='hidden' name='qty_id[]' value='"+food_list.id+"'><input type='hidden' name='pointer[]' value='"+count_list+"'><input type='hidden' name=food_name[]  value='"+cate+' '+food_list.name+"' id='get_name"+count_list+"'></td><td width='20%' class='price btn-dark' id='num_price"+count_list+"'><b id='show_price"+count_list+"'>"+food_list.price+"</b><input type='hidden'  name='qty_price[]' value='"+food_list.price+"' id='sum_price"+count_list+"'></td></tr></table>";
     //   document.getElementById("m_act"+fid).classList.add('active');
       $('#show_list').append(list);
       old_menu = 'm_act'+fid;
@@ -570,7 +571,7 @@ for (var i = 0; i < btns.length; i++) {
       let note = document.getElementById('note').value;
       let fn = document.getElementById('get_name'+number_active).value;
       if(note.length > 0){
-        var note_text = '<tr id="list_note'+note_c+'" onclick="list_active('+note_c+',1)"><td></td><td id="note_ac'+note_c+'">'+note+'</td><td></td></tr>';
+        var note_text = '<tr id="list_note'+note_c+'" onclick="list_active('+note_c+',1)"><td></td><td id="note_ac'+note_c+'">'+note+'<input type="hidden" name="note['+number_active+'][]" value="'+note+'"></td><td></td></tr>';
         $('#table_list'+number_active).append(note_text);
         note_c++;
       }

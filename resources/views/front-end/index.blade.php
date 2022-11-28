@@ -202,18 +202,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($row['qty_num'] as $a)
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>#</td>
-                                        <td>#</td>
-                                        <td>{{$a}}</td>
-                                        <td>#</td>
-                                        <td>#</td>
-                                        <td>#</td>
-                                    </tr>
+                                    <?php $count_r = 1; ?>
+                                    @foreach($pointer as $r => $data)
+                                        @foreach($data as $d => $dat)
+                                        <tr>
+                                            <th scope="row">{{$count_r}}</th>
+                                            <td>{{$food_name[$r][$d]}}</td>
+                                            <td>{{$qty_price[$r][$d]}}</td>
+                                            <td>{{$qty_num[$r][$d]}}</td>
+                                            <td>{{$qty_num[$r][$d] * $qty_price[$r][$d]}}</td>
+                                            <td>@if(isset($note[$r][$pointer[$r][$d]])) 
+                                                @foreach($note[$r][$pointer[$r][$d]] as $n)
+                                                {{$n.' '}}
+                                                @endforeach
+                                                @endif</td>
+                                            <td>#</td>
+                                        </tr>
+                                        <?php $count_r++ ?>
+                                        @endforeach
                                     @endforeach
-                                    <tr>
+                                    {{-- <tr>
                                         <th scope="row">2</th>
                                         <td>#</td>
                                         <td>#</td>
@@ -293,7 +301,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>#</td>
-                                    </tr>
+                                    </tr> --}}
                                 </tbody>
                             </table>
                         </div>
@@ -310,21 +318,52 @@
                                         <div class="show-number">
                                             <input type="text" readonly placeholder="info"></div>
                                     </div>
-                                    <div class="show-info2">
-                                        <div class="S-Checkbox2">
-                                            <p>Pt-cde</p>
+                                    <div class="show-info2" >
+                                        <div class="S-Checkbox2" >
+                                            <div class="row">
+                                                <div class="col-lg-7">
+                                                    <div class="row">
+                                                        <div class="col-lg-5 mt-1">
+                                                            Pt-cde
+                                                        </div>
+                                                        <div class="col-lg-6 mt-1">
+                                                            0
+                                                        </div>
+                                                       
+                                                        <div class="col-lg-5 mt-1">
+                                                            Reduc%
+                                                        </div>
+                                                        <div class="col-lg-6 mt-1">
+                                                            <input type="number" min="0" id="discount" class="form-control" style="height: 70%;width:60%;" max="100" onkeyup="check_discount()">
+                                                        </div>
+                                                        <div class="col-lg-5 mt-1">
+                                                            Already dec
+                                                        </div>
+                                                        <div class="col-lg-6 mt-1" id="per_dis">
+                                                            0.00
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-5">
+                                                    <div class="S-Checkbox3">
+                                                        <button onclick="CalDis()">Apply<br>reduce</button>
+                                                        <button>Cancel<br>Discount</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- <p>Pt-cde</p>
                                             <p>0</p>
                                             <p>Reduc%</p>
                                             <p>0</p>
                                             <p>Already dec</p>
-                                            <p>0.00</p>
+                                            <p>0.00</p> --}}
                                         </div>
                                     </div>
                                     <div class="show-info3">
-                                        <div class="S-Checkbox3">
+                                        {{-- <div class="S-Checkbox3">
                                             <button>Apply<br>reduce</button>
                                             <button>Cancel<br>Discount</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -616,6 +655,16 @@
 
 
 @include("$prefix.inc_footer")
-
+<script>
+   function check_discount(){
+    var dis = document.getElementById('discount').value;
+    if(dis < 0 || dis > 100){
+        document.getElementById('discount').value = 0;
+    }
+   }
+   function CalDis(){
+  
+   }
+</script>
 </body>
 </html>
