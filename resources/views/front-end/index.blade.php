@@ -202,14 +202,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $count_r = 1; ?>
+                                    <?php 
+                                        $count_r = 1; 
+                                        $total = 0;
+                                    ?>
                                     @foreach($pointer as $r => $data)
                                         @foreach($data as $d => $dat)
+                                        <?php $total +=  $qty_num[$r][$d] * $qty_price[$r][$d]; ?>
                                         <tr>
                                             <th scope="row">{{$count_r}}</th>
                                             <td>{{$food_name[$r][$d]}}</td>
                                             <td>{{$qty_price[$r][$d]}}</td>
-                                            <td>{{$qty_num[$r][$d]}}</td>
+                                            <td>{{$qty_num[$r][$d]}} </td>
                                             <td>{{$qty_num[$r][$d] * $qty_price[$r][$d]}}</td>
                                             <td>@if(isset($note[$r][$pointer[$r][$d]])) 
                                                 @foreach($note[$r][$pointer[$r][$d]] as $n)
@@ -369,7 +373,7 @@
                             </div>
                             <div class="col-xxl-3 col-xl-3 col-lg-3">
                                 <div class="info-bottom-r">
-                                    <p class="paynum">0.00</p>
+                                    <p class="paynum" id="payment" >{{$total}}</p>
                                     <div class="pay">
                                         <p>Pay</p>
                                         <p>0.00</p>
@@ -662,8 +666,8 @@
         document.getElementById('discount').value = 0;
     }
    }
+   var pay = document.getElementById('sum_pay1').value ;
    function CalDis(){
-  
    }
 </script>
 </body>

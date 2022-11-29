@@ -42,7 +42,7 @@ use App\Http\Controllers\Frontend as Frontend;
 // Route::get('/', function () {
 //     return redirect('/webpanel');
 // });
-Route::get("/", [Frontend\HomeController::class, 'index']);
+Route::get("/", [Frontend\MenuController::class, 'get_food']);
 Route::get("/menu", [Frontend\MenuController::class, 'index']);
 Route::post("/menu-list", [Frontend\MenuController::class, 'get_food']);
 Route::get("/menu-list", [Frontend\MenuController::class, 'get_food']);
