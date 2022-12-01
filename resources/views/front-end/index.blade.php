@@ -171,7 +171,7 @@
                                 </div>
                                 <button class="choosemenu-btn">F4 Choose<br>component</button>
                                 <button class="choosemenu-btn">F3 Choose<br>component </button>
-                                <button class="choosemenu-btn">Cancel Free</button>
+                                <button class="choosemenu-btn" onclick="CancelDis()">Cancel Free</button>
                                 <button class="choosemenu-btn">Delete<br>Line</button>
                                 <button class="choosemenu-btn">Free ok</button>
                             </div>
@@ -212,9 +212,11 @@
                                         <tr>
                                             <th scope="row">{{$count_r}}</th>
                                             <td>{{$food_name[$r][$d]}}</td>
-                                            <td>{{$qty_price[$r][$d]}}</td>
+                                            <td id="price{{$count_r}}">{{number_format(($qty_price[$r][$d]),2)}}</td>
+                                            <input type="hidden" id="v_price{{$count_r}}" value="{{$qty_price[$r][$d]}}">
                                             <td>{{$qty_num[$r][$d]}} </td>
-                                            <td>{{$qty_num[$r][$d] * $qty_price[$r][$d]}}</td>
+                                            <td id="sum_qty{{$count_r}}">{{number_format(($qty_num[$r][$d] * $qty_price[$r][$d]),2)}}</td>
+                                            <input type="hidden" id="price_qty{{$count_r}}" value="{{$qty_num[$r][$d] * $qty_price[$r][$d]}}">
                                             <td>@if(isset($note[$r][$pointer[$r][$d]])) 
                                                 @foreach($note[$r][$pointer[$r][$d]] as $n)
                                                 {{$n.' '}}
@@ -233,79 +235,7 @@
                                         <td>#</td>
                                         <td>#</td>
                                         <td>#</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>#</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>#</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">5</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>#</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">6</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>#</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">7</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>#</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">8</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>#</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">9</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>#</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">10</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>#</td>
-                                    </tr> --}}
+                                    </tr>--}}
                                 </tbody>
                             </table>
                         </div>
@@ -338,7 +268,7 @@
                                                             Reduc%
                                                         </div>
                                                         <div class="col-lg-6 mt-1">
-                                                            <input type="number" min="0" id="discount" class="form-control" style="height: 70%;width:60%;" max="100" onkeyup="check_discount()">
+                                                            <input type="number" min="0" id="discount" class="form-control" style="height: 70%;width:65%;" max="100" onkeyup="check_discount()">
                                                         </div>
                                                         <div class="col-lg-5 mt-1">
                                                             Already dec
@@ -351,7 +281,7 @@
                                                 <div class="col-lg-5">
                                                     <div class="S-Checkbox3">
                                                         <button onclick="CalDis()">Apply<br>reduce</button>
-                                                        <button>Cancel<br>Discount</button>
+                                                        <button onclick="CancelDis()">Cancel<br>Discount</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -373,10 +303,11 @@
                             </div>
                             <div class="col-xxl-3 col-xl-3 col-lg-3">
                                 <div class="info-bottom-r">
-                                    <p class="paynum" id="payment" >{{$total}}</p>
+                                    <p class="paynum" id="sum_pay">{{number_format($total,2)}}</p>
+                                    <input type="hidden" id="payment" value="{{$total}}" >
                                     <div class="pay">
                                         <p>Pay</p>
-                                        <p>0.00</p>
+                                        <p id="sum_pay2">{{number_format($total,2)}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -661,13 +592,46 @@
 @include("$prefix.inc_footer")
 <script>
    function check_discount(){
+    var pay = Number(document.getElementById('payment').value);
     var dis = document.getElementById('discount').value;
-    if(dis < 0 || dis > 100){
+    if (dis < 0 || dis > 100){
         document.getElementById('discount').value = 0;
     }
+    var sum_dis = (dis/100)*pay;
+    document.getElementById('per_dis').innerHTML = sum_dis.toLocaleString();
    }
-   var pay = document.getElementById('sum_pay1').value ;
    function CalDis(){
+    var get_v = '{{$count_r}}';
+    get_v = get_v*1;
+    var pay = Number(document.getElementById('payment').value);
+    var dis = document.getElementById('discount').value;
+    var sum = (pay * (100-dis))/100;
+    document.getElementById('sum_pay').innerHTML = sum.toLocaleString() ; 
+    document.getElementById('sum_pay2').innerHTML = sum.toLocaleString(); 
+    for(x=1;x<get_v;x++){
+        var qty_p = document.getElementById('price_qty'+x).value;
+        var price = document.getElementById('v_price'+x).value;
+        var cal_qty = (qty_p * (100-dis))/100;
+        var cal_price = (price * (100-dis))/100;
+        document.getElementById('sum_qty'+x).innerHTML = cal_qty.toLocaleString(); 
+        document.getElementById('price'+x).innerHTML = cal_price.toLocaleString(); 
+    }
+    $('#discount').prop('disabled', true);
+   }
+   function CancelDis(){
+    var get_v = '{{$count_r}}';
+    get_v = get_v*1;
+    var pay = Number(document.getElementById('payment').value);
+    var dis = document.getElementById('discount').value;
+    document.getElementById('sum_pay').innerHTML = pay.toLocaleString() ; 
+    document.getElementById('sum_pay2').innerHTML = pay.toLocaleString(); 
+    for(x=1;x<get_v;x++){
+        var qty_p = document.getElementById('price_qty'+x).value;
+        var price = document.getElementById('v_price'+x).value;
+        document.getElementById('sum_qty'+x).innerHTML = qty_p.toLocaleString(); 
+        document.getElementById('price'+x).innerHTML = price.toLocaleString(); 
+    }
+    $('#discount').removeAttr('disabled');
    }
 </script>
 </body>
