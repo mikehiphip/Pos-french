@@ -626,8 +626,9 @@
     document.getElementById('sum_pay').innerHTML = pay.toLocaleString() ; 
     document.getElementById('sum_pay2').innerHTML = pay.toLocaleString(); 
     for(x=1;x<get_v;x++){
-        var qty_p = document.getElementById('price_qty'+x).value;
-        var price = document.getElementById('v_price'+x).value;
+        var qty_p = document.getElementById('price_qty'+x).value*1;
+        console.log(qty_p)
+        var price = document.getElementById('v_price'+x).value*1;
         document.getElementById('sum_qty'+x).innerHTML = qty_p.toLocaleString(); 
         document.getElementById('price'+x).innerHTML = price.toLocaleString(); 
     }

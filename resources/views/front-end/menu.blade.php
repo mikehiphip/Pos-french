@@ -681,7 +681,9 @@ for (var i = 0; i < btns.length; i++) {
       // console.log(all_table)
     }
     function submit_menu(){
+      if(positionT.length > 0){
         document.getElementById("confirm_menu").submit();
+      }
     }
 </script>
     <!-- Active Menu -->
