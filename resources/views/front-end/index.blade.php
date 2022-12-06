@@ -169,16 +169,16 @@
                                 <div class="To-menu">
                                     <a class="tomenu" href="{{url('menu')}}"><img src="frontend/images/icon index/bxs_food-menu.svg">MENU</a>
                                 </div>
-                                <button class="choosemenu-btn">F4 Choose<br>component</button>
-                                <button class="choosemenu-btn">F3 Choose<br>component </button>
-                                <button class="choosemenu-btn" onclick="CancelDis()">Cancel Free</button>
-                                <button class="choosemenu-btn">Delete<br>Line</button>
-                                <button class="choosemenu-btn">Free ok</button>
+                                {{-- <button class="choosemenu-btn">F4 Choose<br>component</button> --}}
+                                {{-- <button class="choosemenu-btn">F3 Choose<br>component </button> --}}
+                                <button class="choosemenu-btn" onclick="CancelFree()">Cancel Free</button>
+                                {{-- <button class="choosemenu-btn">Delete<br>Line</button> --}}
+                                <button class="choosemenu-btn" onclick="FreePirce()">Free ok</button>
                             </div>
                             <div class="all-choosemenu">
                                 <button class="choosemenu-btn">Note<br>Line</button>
                                 <button class="choosemenu-btn">Delete<br>Line</button>
-                                <button class="choosemenu-btn">Delete<br>Line</button>
+                                {{-- <button class="choosemenu-btn">Delete<br>Line</button> --}}
                                 <button class="choosemenu-btn">Delete<br>All</button>
                             </div>
                         </div>
@@ -197,8 +197,8 @@
                                         <th scope="col" class="pq"><button>Qty</button></th>
                                         <th scope="col" class="pq"><button>Price</button></th>
                                         <th scope="col" class="note"><button>Note: type + to add Type - to remove Type / to Haif Haif</button></th>
-                                        <th scope="col" class="sm"><button>S</button></th>
-                                        <th scope="col" class="sm"><button>M</button></th>
+                                        {{-- <th scope="col" class="sm"><button>S</button></th> --}}
+                                        {{-- <th scope="col" class="sm"><button>M</button></th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -209,12 +209,13 @@
                                     @foreach($pointer as $r => $data)
                                         @foreach($data as $d => $dat)
                                         <?php $total +=  $qty_num[$r][$d] * $qty_price[$r][$d]; ?>
-                                        <tr>
-                                            <th scope="row">{{$count_r}}</th>
+                                        <tr onclick="check_active({{$count_r}})">
+                                            <th scope="row"><input type="radio" name="click" id="ch{{$count_r}}" value="{{$count_r}}"> {{$count_r}}</th>
                                             <td>{{$food_name[$r][$d]}}</td>
                                             <td id="price{{$count_r}}">{{number_format(($qty_price[$r][$d]),2)}}</td>
                                             <input type="hidden" id="v_price{{$count_r}}" value="{{$qty_price[$r][$d]}}">
-                                            <td>{{$qty_num[$r][$d]}} </td>
+                                            <input type="hidden" id="free_p{{$count_r}}" value="{{$qty_price[$r][$d]}}">
+                                            <td class="text-center">{{$qty_num[$r][$d]}} </td>
                                             <td id="sum_qty{{$count_r}}">{{number_format(($qty_num[$r][$d] * $qty_price[$r][$d]),2)}}</td>
                                             <input type="hidden" id="price_qty{{$count_r}}" value="{{$qty_num[$r][$d] * $qty_price[$r][$d]}}">
                                             <td>@if(isset($note[$r][$pointer[$r][$d]])) 
@@ -222,7 +223,7 @@
                                                 {{$n.' '}}
                                                 @endforeach
                                                 @endif</td>
-                                            <td>#</td>
+                                            {{-- <td>#</td> --}}
                                         </tr>
                                         <?php $count_r++ ?>
                                         @endforeach
@@ -245,25 +246,25 @@
                             <div class="col-xxl-9 col-xl-9 col-lg-9">
                                 <div class="info-bottom-l">
                                     <div class="show-info1">
-                                        <div class="S-Checkbox">
+                                        {{-- <div class="S-Checkbox">
                                             <p>Static</p>
                                             <input type="checkbox" class="check"></input>
                                         </div>
                                         <div class="show-number">
-                                            <input type="text" readonly placeholder="info"></div>
+                                            <input type="text" readonly placeholder="info">
+                                        </div> --}}
                                     </div>
                                     <div class="show-info2" >
                                         <div class="S-Checkbox2" >
                                             <div class="row">
-                                                <div class="col-lg-7">
+                                                <div class="col-lg-8">
                                                     <div class="row">
-                                                        <div class="col-lg-5 mt-1">
+                                                        {{-- <div class="col-lg-5 mt-1">
                                                             Pt-cde
                                                         </div>
                                                         <div class="col-lg-6 mt-1">
                                                             0
-                                                        </div>
-                                                       
+                                                        </div> --}}
                                                         <div class="col-lg-5 mt-1">
                                                             Reduc%
                                                         </div>
@@ -276,21 +277,19 @@
                                                         <div class="col-lg-6 mt-1" id="per_dis">
                                                             0.00
                                                         </div>
+                                                        <div class="col-lg-5 mt-1"></div>
+                                                        <div class="col-lg-6 mt-1"></div>
+                                                        <div class="col-lg-5 mt-1"></div>
+                                                        <div class="col-lg-6 mt-1"></div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-5">
+                                                <div class="col-lg-4">
                                                     <div class="S-Checkbox3">
                                                         <button onclick="CalDis()">Apply<br>reduce</button>
                                                         <button onclick="CancelDis()">Cancel<br>Discount</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <p>Pt-cde</p>
-                                            <p>0</p>
-                                            <p>Reduc%</p>
-                                            <p>0</p>
-                                            <p>Already dec</p>
-                                            <p>0.00</p> --}}
                                         </div>
                                     </div>
                                     <div class="show-info3">
@@ -354,6 +353,7 @@
                                     <button class="op-w2"><img src="frontend/images/icon modal/r2-3.svg"><br>F2 : Sales listings</button>
                                 </div>
                                 <div class="op-btn-3">
+                                    <button class="op-w3" onclick="window.location.href='{{url('webpanel/login')}}';">Mode Normal</button>
                                     <button class="op-w"><img src="frontend/images/icon modal/r3-1.svg"><br>Customer Ticket</button>
                                     <button class="op-w3"><img src="frontend/images/icon modal/r1-3.svg"><br>F8 : Product</button>
                                     <button class="op-w3"><img src="frontend/images/icon modal/r3-2.svg"><br>Help</button>
@@ -591,6 +591,7 @@
 
 @include("$prefix.inc_footer")
 <script>
+    var active = '';
    function check_discount(){
     var pay = Number(document.getElementById('payment').value);
     var dis = document.getElementById('discount').value;
@@ -600,23 +601,28 @@
     var sum_dis = (dis/100)*pay;
     document.getElementById('per_dis').innerHTML = sum_dis.toLocaleString();
    }
-   function CalDis(){
+   function CalDis(c){
     var get_v = '{{$count_r}}';
     get_v = get_v*1;
     var pay = Number(document.getElementById('payment').value);
     var dis = document.getElementById('discount').value;
-    var sum = (pay * (100-dis))/100;
+    // var sum = (pay * (100-dis))/100;
+    var sum = 0;
+    for(x=1;x<get_v;x++){
+        var qty_p = document.getElementById('price_qty'+x).value*1;
+        var free_p = document.getElementById('free_p'+x).value*1;
+        var price = document.getElementById('v_price'+x).value*1;
+        if(price == free_p){
+            var cal_qty = (qty_p * (100-dis))/100;
+            var cal_price = (price * (100-dis))/100;
+            sum+= cal_price;
+            document.getElementById('sum_qty'+x).innerHTML = cal_qty.toLocaleString(); 
+            document.getElementById('price'+x).innerHTML = cal_price.toLocaleString(); 
+        }
+    }
     document.getElementById('sum_pay').innerHTML = sum.toLocaleString() ; 
     document.getElementById('sum_pay2').innerHTML = sum.toLocaleString(); 
-    for(x=1;x<get_v;x++){
-        var qty_p = document.getElementById('price_qty'+x).value;
-        var price = document.getElementById('v_price'+x).value;
-        var cal_qty = (qty_p * (100-dis))/100;
-        var cal_price = (price * (100-dis))/100;
-        document.getElementById('sum_qty'+x).innerHTML = cal_qty.toLocaleString(); 
-        document.getElementById('price'+x).innerHTML = cal_price.toLocaleString(); 
-    }
-    $('#discount').prop('disabled', true);
+    if(c){}else{$('#discount').prop('disabled', true);}
    }
    function CancelDis(){
     var get_v = '{{$count_r}}';
@@ -627,12 +633,28 @@
     document.getElementById('sum_pay2').innerHTML = pay.toLocaleString(); 
     for(x=1;x<get_v;x++){
         var qty_p = document.getElementById('price_qty'+x).value*1;
-        console.log(qty_p)
+        var free_p = document.getElementById('free_p'+x).value*1;
         var price = document.getElementById('v_price'+x).value*1;
+        if(price == free_p){
         document.getElementById('sum_qty'+x).innerHTML = qty_p.toLocaleString(); 
         document.getElementById('price'+x).innerHTML = price.toLocaleString(); 
+        }
     }
     $('#discount').removeAttr('disabled');
+   }
+   function check_active(id){
+    document.getElementById('ch'+id).checked = true;
+    active = id;
+   }
+   function FreePirce(){
+    document.getElementById('free_p'+active).value = 0;
+    document.getElementById('sum_qty'+active).innerHTML = 'free'; 
+    document.getElementById('price'+active).innerHTML = 'free'; 
+    CalDis(1);
+   }
+   function CancelFree(){
+    document.getElementById('free_p'+active).value = document.getElementById('v_price'+active).value*1;
+    CalDis(1);
    }
 </script>
 </body>

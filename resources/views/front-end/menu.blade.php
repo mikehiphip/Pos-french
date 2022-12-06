@@ -41,9 +41,9 @@
                                 <button class="A-drop" onclick="del_list()"><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/Dell_4.svg" ></button>
                                 <button class="A-drop" data-toggle="modal" data-target="#exampleModal" id="btn_cal" disabled><img class="a-drop img-fluid"
-                                        src="frontend/images/icon menu/123_5.svg" ><br>Qty +1</button>
+                                        src="frontend/images/icon menu/123_5.svg" ><br>Qty +</button>
                                 <button class="A-drop" data-toggle="modal" data-target="#DeleteAll"><img class="a-drop img-fluid"
-                                        src="frontend/images/icon menu/Cancel_6.svg"><br>Qty -1</button>
+                                        src="frontend/images/icon menu/Cancel_6.svg"><br>Delete</button>
                             </div>
                             <div class="Move-Up">
                                 <button class="move" onclick="moveup_active()"><img class="a-drop img-fluid"
@@ -89,15 +89,12 @@
                                             <div class="col-xl-2 col-lg-3 col-md-4">
                                                 <div class="allbtn-service">
                                                     <div class="btn-service">
-                                                        <button class="service"><img class="img-fluid"
-                                                                src="frontend/images/icon menu/move_up1.png"></button>
-                                                        <button class="c" data-toggle="modal" data-target="#ClosePage" >close</button>
-                                                        <button class="service"><img class="img-fluid"
-                                                                src="frontend/images/icon menu/Down_move.svg"></button>
-                                                        <button class="service">service</button>
-                                                        <button class="service"><img class="img-fluid"
-                                                                src="frontend/images/icon menu/with.svg">with</button>
-                                                        <button class="c" onclick="window.location.href='{{url('webpanel/login')}}';">Mode Normal</button>
+                                                        <button class="service"><img class="img-fluid" src="frontend/images/icon menu/move_up1.png"></button> <br>
+                                                        {{-- <button class="c" data-toggle="modal" data-target="#ClosePage" >close</button> --}}
+                                                        <button class="service"><img class="img-fluid" src="frontend/images/icon menu/Down_move.svg"></button>
+                                                        {{-- <button class="service">service</button> --}}
+                                                        {{-- <button class="service"><img class="img-fluid" src="frontend/images/icon menu/with.svg">with</button> --}}
+                                                        {{-- <button class="c" onclick="window.location.href='{{url('webpanel/login')}}';">Mode Normal</button> --}}
                                                     </div>
                                                 </div>
                                             </div>
