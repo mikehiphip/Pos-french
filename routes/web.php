@@ -46,6 +46,8 @@ Route::get("/", [Frontend\MenuController::class, 'get_food']);
 Route::get("/menu", [Frontend\MenuController::class, 'index']);
 Route::post("/menu-list", [Frontend\MenuController::class, 'get_food']);
 Route::get("/menu-list", [Frontend\MenuController::class, 'get_food']);
+Route::get("/list", [Frontend\MenuController::class, 'food_list']);
+Route::get("/del-list", [Frontend\MenuController::class, 'del_all']);
 
 
 require('web-backend.php');

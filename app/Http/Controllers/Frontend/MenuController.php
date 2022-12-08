@@ -32,6 +32,7 @@ class MenuController extends Controller
         ]);
     }
     public function get_food(Request $request){
+        // dd(Session::get('food'));
         // dd($request);
         // Session::put('food',null);
         $f_id = array();
@@ -86,8 +87,14 @@ class MenuController extends Controller
         }else{
             Session::put('food',null);
         }
-        
-        // dd($note);
+        // dd($get_food);
+        if(isset($get_food['discount'])){
+            $check = $get_food['discount']*1 >= 0?(100-$get_food['discount']*1)/100:1;
+            $dis_value = $get_food['discount']*1;
+        }else{
+            $check = 1;
+            $dis_value = 0;
+        }
         return view("$this->prefix.index",[
             'prefix' => $this->prefix,
             'row'   => $f_id,
@@ -96,6 +103,25 @@ class MenuController extends Controller
             'food_name' => $name,
             'qty_price' => $price,
             'note' =>$note,
+            'discount' => $check ,
+            'dis_value' =>$dis_value,
         ]);
+    }
+    public function food_list(Request $request){
+        $get_food = Session::get('food');
+        array_splice ( $get_food[1][$request->ar], $request->ad, 1 );
+        array_splice ( $get_food[2][$request->ar], $request->ad, 1 );
+        array_splice ( $get_food[3][$request->ar], $request->ad, 1 );
+        array_splice ( $get_food[4][$request->ar], $request->ad, 1 );
+        array_splice ( $get_food[5][$request->ar], $request->ad, 1 );
+        if(isset($get_food[6][$request->ar])){  array_splice ( $get_food[6][$request->ar], $request->ad, 1 ); }
+        $get_food['discount'] = $request->discount;
+        Session::put('food',$get_food);
+        return response()->json(true);
+    }
+    public function del_all(Request $request){
+        Session::put('food',null);
+        // dd(Session::get('food'));
+        return response()->json(true);
     }
 }

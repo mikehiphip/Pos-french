@@ -177,9 +177,9 @@
                             </div>
                             <div class="all-choosemenu">
                                 <button class="choosemenu-btn">Note<br>Line</button>
-                                <button class="choosemenu-btn">Delete<br>Line</button>
+                                <button class="choosemenu-btn" onclick="DelLine()">Delete<br>Line</button>
                                 {{-- <button class="choosemenu-btn">Delete<br>Line</button> --}}
-                                <button class="choosemenu-btn">Delete<br>All</button>
+                                <button class="choosemenu-btn" onclick="DelAll()">Delete<br>All</button>
                             </div>
                         </div>
                     </div>
@@ -205,18 +205,21 @@
                                     <?php 
                                         $count_r = 1; 
                                         $total = 0;
+                                        $ready = 0;
                                     ?>
                                     @foreach($pointer as $r => $data)
                                         @foreach($data as $d => $dat)
-                                        <?php $total +=  $qty_num[$r][$d] * $qty_price[$r][$d]; ?>
-                                        <tr onclick="check_active({{$count_r}})">
+                                        <?php $total +=  $qty_num[$r][$d] * ($qty_price[$r][$d]*$discount); 
+                                              $ready += $qty_price[$r][$d]-($qty_price[$r][$d]*$discount);
+                                        ?>
+                                        <tr onclick="check_active({{$count_r}},{{$r}},{{$d}})">
                                             <th scope="row"><input type="radio" name="click" id="ch{{$count_r}}" value="{{$count_r}}"> {{$count_r}}</th>
                                             <td>{{$food_name[$r][$d]}}</td>
-                                            <td id="price{{$count_r}}">{{number_format(($qty_price[$r][$d]),2)}}</td>
+                                            <td id="price{{$count_r}}">{{number_format(($qty_price[$r][$d]*$discount),2)}}</td>
                                             <input type="hidden" id="v_price{{$count_r}}" value="{{$qty_price[$r][$d]}}">
                                             <input type="hidden" id="free_p{{$count_r}}" value="{{$qty_price[$r][$d]}}">
                                             <td class="text-center">{{$qty_num[$r][$d]}} </td>
-                                            <td id="sum_qty{{$count_r}}">{{number_format(($qty_num[$r][$d] * $qty_price[$r][$d]),2)}}</td>
+                                            <td id="sum_qty{{$count_r}}">{{number_format(($qty_num[$r][$d] *($qty_price[$r][$d]*$discount)),2)}}</td>
                                             <input type="hidden" id="price_qty{{$count_r}}" value="{{$qty_num[$r][$d] * $qty_price[$r][$d]}}">
                                             <td>@if(isset($note[$r][$pointer[$r][$d]])) 
                                                 @foreach($note[$r][$pointer[$r][$d]] as $n)
@@ -269,13 +272,13 @@
                                                             Reduc%
                                                         </div>
                                                         <div class="col-lg-6 mt-1">
-                                                            <input type="number" min="0" id="discount" class="form-control" style="height: 70%;width:65%;" max="100" onkeyup="check_discount()">
+                                                            <input type="number" min="0" id="discount" class="form-control" style="height: 70%;width:65%;" max="100" onkeyup="check_discount()" value="{{$dis_value}}">
                                                         </div>
                                                         <div class="col-lg-5 mt-1">
                                                             Already dec
                                                         </div>
                                                         <div class="col-lg-6 mt-1" id="per_dis">
-                                                            0.00
+                                                            {{number_format($ready,2)}}
                                                         </div>
                                                         <div class="col-lg-5 mt-1"></div>
                                                         <div class="col-lg-6 mt-1"></div>
@@ -592,6 +595,8 @@
 @include("$prefix.inc_footer")
 <script>
     var active = '';
+    var po_ar = '';
+    var po_ad = '';
    function check_discount(){
     var pay = Number(document.getElementById('payment').value);
     var dis = document.getElementById('discount').value;
@@ -599,7 +604,7 @@
         document.getElementById('discount').value = 0;
     }
     var sum_dis = (dis/100)*pay;
-    document.getElementById('per_dis').innerHTML = sum_dis.toLocaleString();
+    document.getElementById('per_dis').innerHTML = sum_dis.toLocaleString("en-US", {minimumFractionDigits: 2});
    }
    function CalDis(c){
     var get_v = '{{$count_r}}';
@@ -616,35 +621,41 @@
             var cal_qty = (qty_p * (100-dis))/100;
             var cal_price = (price * (100-dis))/100;
             sum+= cal_price;
-            document.getElementById('sum_qty'+x).innerHTML = cal_qty.toLocaleString(); 
-            document.getElementById('price'+x).innerHTML = cal_price.toLocaleString(); 
+            document.getElementById('sum_qty'+x).innerHTML = cal_qty.toLocaleString("en-US", {minimumFractionDigits: 2}); 
+            document.getElementById('price'+x).innerHTML = cal_price.toLocaleString("en-US", {minimumFractionDigits: 2}); 
         }
     }
-    document.getElementById('sum_pay').innerHTML = sum.toLocaleString() ; 
-    document.getElementById('sum_pay2').innerHTML = sum.toLocaleString(); 
+    document.getElementById('sum_pay').innerHTML = sum.toLocaleString("en-US", {minimumFractionDigits: 2}) ; 
+    document.getElementById('sum_pay2').innerHTML = sum.toLocaleString("en-US", {minimumFractionDigits: 2}); 
     if(c){}else{$('#discount').prop('disabled', true);}
    }
    function CancelDis(){
     var get_v = '{{$count_r}}';
     get_v = get_v*1;
-    var pay = Number(document.getElementById('payment').value);
-    var dis = document.getElementById('discount').value;
-    document.getElementById('sum_pay').innerHTML = pay.toLocaleString() ; 
-    document.getElementById('sum_pay2').innerHTML = pay.toLocaleString(); 
+    var pay = '{{$total+$ready}}';
+    pay = pay*1;
+    // var pay = Number(document.getElementById('payment').value);
+    // var dis = document.getElementById('discount').value;
+    document.getElementById('discount').value = 0;
+    document.getElementById('per_dis').innerHTML = '0.00';
+    document.getElementById('sum_pay').innerHTML = pay.toLocaleString("en-US", {minimumFractionDigits: 2}) ; 
+    document.getElementById('sum_pay2').innerHTML = pay.toLocaleString("en-US", {minimumFractionDigits: 2}); 
     for(x=1;x<get_v;x++){
         var qty_p = document.getElementById('price_qty'+x).value*1;
         var free_p = document.getElementById('free_p'+x).value*1;
         var price = document.getElementById('v_price'+x).value*1;
         if(price == free_p){
-        document.getElementById('sum_qty'+x).innerHTML = qty_p.toLocaleString(); 
-        document.getElementById('price'+x).innerHTML = price.toLocaleString(); 
+        document.getElementById('sum_qty'+x).innerHTML = qty_p.toLocaleString("en-US", {minimumFractionDigits: 2}); 
+        document.getElementById('price'+x).innerHTML = price.toLocaleString("en-US", {minimumFractionDigits: 2}); 
         }
     }
     $('#discount').removeAttr('disabled');
    }
-   function check_active(id){
+   function check_active(id,r,d){
     document.getElementById('ch'+id).checked = true;
     active = id;
+    po_ar = r;
+    po_ad = d;
    }
    function FreePirce(){
     document.getElementById('free_p'+active).value = 0;
@@ -655,6 +666,33 @@
    function CancelFree(){
     document.getElementById('free_p'+active).value = document.getElementById('v_price'+active).value*1;
     CalDis(1);
+   }
+   function DelLine(){
+        $.ajax({
+                type: 'GET',
+                url:'{{url("/list")}}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    ar:po_ar,
+                    ad:po_ad,
+                    discount:document.getElementById('discount').value,
+                },
+                success: function(data) {
+                    window.location.reload();
+                }
+            });
+   }
+   function DelAll(){
+        $.ajax({
+                type: 'GET',
+                url:'{{url("/del-list")}}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    window.location.replace('{{url("/menu-list")}}');
+                }
+            });
    }
 </script>
 </body>
