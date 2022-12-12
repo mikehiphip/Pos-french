@@ -32,3 +32,4 @@
     <!-- WOW -->
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/wow-master/css/animate.css')}}">
     <script src="{{asset('frontend/wow-master/dist/wow.min.js')}}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

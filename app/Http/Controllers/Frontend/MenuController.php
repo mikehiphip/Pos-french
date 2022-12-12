@@ -108,13 +108,25 @@ class MenuController extends Controller
         ]);
     }
     public function food_list(Request $request){
+        
         $get_food = Session::get('food');
+        // dd($request,$get_food);
+        // dd($get_food);
+        $pointer = array_search($request->ad,$get_food[3][$request->ar]);
+        // dd($pointer,$request,$get_food);
         array_splice ( $get_food[1][$request->ar], $request->ad, 1 );
         array_splice ( $get_food[2][$request->ar], $request->ad, 1 );
         array_splice ( $get_food[3][$request->ar], $request->ad, 1 );
         array_splice ( $get_food[4][$request->ar], $request->ad, 1 );
         array_splice ( $get_food[5][$request->ar], $request->ad, 1 );
-        if(isset($get_food[6][$request->ar])){  array_splice ( $get_food[6][$request->ar], $request->ad, 1 ); }
+        if($pointer){
+            if(isset($get_food[6][$request->ar][$pointer])){  
+                // dd($get_food[6][$request->ar]);
+                unset($get_food[6][$request->ar][$pointer]);
+                // array_splice ( $get_food[6][$request->ar][$request->ad], $request->ad, 1 ); 
+            }
+        }
+        
         $get_food['discount'] = $request->discount;
         Session::put('food',$get_food);
         return response()->json(true);
@@ -123,5 +135,19 @@ class MenuController extends Controller
         Session::put('food',null);
         // dd(Session::get('food'));
         return response()->json(true);
+    }
+    public function add_note(Request $request){
+        $get_food = Session::get('food');
+        $pointer = array_search($request->ad,$get_food[3][$request->ar]);
+        if($pointer >= 0){
+            if(isset($get_food[6][$request->ar][$pointer])){  
+                $get_food[6][$request->ar][$pointer]['new_note'] =  $request->note;
+            }
+        }
+        Session::put('food',$get_food);
+        return $request->note;
+    }
+    public function insert(Request $request){
+        dd($request);
     }
 }

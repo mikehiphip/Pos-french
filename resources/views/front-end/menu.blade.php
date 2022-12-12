@@ -42,7 +42,7 @@
                                         src="frontend/images/icon menu/Dell_4.svg" ></button>
                                 <button class="A-drop" data-toggle="modal" data-target="#exampleModal" id="btn_cal" disabled><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/123_5.svg" ><br>Qty +</button>
-                                <button class="A-drop" data-toggle="modal" data-target="#DeleteAll"><img class="a-drop img-fluid"
+                                <button class="A-drop" onclick="del_all()"><img class="a-drop img-fluid"
                                         src="frontend/images/icon menu/Cancel_6.svg"><br>Delete</button>
                             </div>
                             <div class="Move-Up">
@@ -496,11 +496,28 @@ for (var i = 0; i < btns.length; i++) {
         total_sumPrice();
     }
     function del_all(){
+      Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
         document.getElementById('show_list').innerHTML = null;
         count_list = 0;
         color_list = new Array();
         number_active = '';
         total_sumPrice();
+        Swal.fire(
+          'Deleted!',
+          'Your list has been deleted.',
+          'success'
+        )
+      }
+    })   
     }
     function total_sumPrice(){
         var total_price = 0;

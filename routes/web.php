@@ -48,6 +48,8 @@ Route::post("/menu-list", [Frontend\MenuController::class, 'get_food']);
 Route::get("/menu-list", [Frontend\MenuController::class, 'get_food']);
 Route::get("/list", [Frontend\MenuController::class, 'food_list']);
 Route::get("/del-list", [Frontend\MenuController::class, 'del_all']);
+Route::get("/note", [Frontend\MenuController::class, 'add_note']);
+Route::post("/save-menu", [Frontend\MenuController::class, 'insert']);
 
 
 require('web-backend.php');

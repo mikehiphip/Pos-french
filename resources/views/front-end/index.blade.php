@@ -38,6 +38,8 @@
                         <p class="tel">Tel.</p>
                         <div class="check-s"><input type="checkbox" class="serve">serve</input></div>
                     </div>
+                    <form action="javascript:void(0)" method="POST" id="Menu_form" onSubmit="JavaScript:return fncSubmit();">
+                    @csrf
                     <div class="allinput-middle">
                         <div class="row">
                             <div class="col-xxl-3 col-xl-3 col-lg-3">
@@ -71,7 +73,7 @@
                                         <label for="text">Static</label><br>
                                         <input type="text" class="Static" placeholder="0"></input>
                                     </div>
-                                    <button class="f">F10</button>
+                                    {{-- <button class="f">F10</button> --}}
                                     <button class="f">Save<br>Custome</button>
                                 </div>
                             </div>
@@ -161,6 +163,7 @@
                             </div>
                         </div>
                     </div>
+                    </form>
 
                     <!-- button to menu -->
                     <div class="input-info">
@@ -176,7 +179,7 @@
                                 <button class="choosemenu-btn" onclick="FreePirce()">Free ok</button>
                             </div>
                             <div class="all-choosemenu">
-                                <button class="choosemenu-btn">Note<br>Line</button>
+                                <button class="choosemenu-btn" data-toggle="modal" onclick="get_note()" data-target="#keyboardModal" id="btn_note" disabled>Note<br>Line</button>
                                 <button class="choosemenu-btn" onclick="DelLine()">Delete<br>Line</button>
                                 {{-- <button class="choosemenu-btn">Delete<br>Line</button> --}}
                                 <button class="choosemenu-btn" onclick="DelAll()">Delete<br>All</button>
@@ -221,12 +224,15 @@
                                             <td class="text-center">{{$qty_num[$r][$d]}} </td>
                                             <td id="sum_qty{{$count_r}}">{{number_format(($qty_num[$r][$d] *($qty_price[$r][$d]*$discount)),2)}}</td>
                                             <input type="hidden" id="price_qty{{$count_r}}" value="{{$qty_num[$r][$d] * $qty_price[$r][$d]}}">
-                                            <td>@if(isset($note[$r][$pointer[$r][$d]])) 
+                                            <td ><?php $note_text = ''; $m = 0?>
+                                                @if(isset($note[$r][$pointer[$r][$d]])) 
                                                 @foreach($note[$r][$pointer[$r][$d]] as $n)
-                                                {{$n.' '}}
+                                                @if($m <= count($note[$r][$pointer[$r][$d]])-2) {{$n.' '}} @else <?php $note_text = $n; ?>@endif
+                                                <?php $m++; ?>
                                                 @endforeach
-                                                @endif</td>
-                                            {{-- <td>#</td> --}}
+                                                @endif
+                                                <input type="hidden" id="hideNote{{$count_r}}" value="{{$note_text}}" readonly>
+                                                <label id="adNote{{$count_r}}">{{$note_text}}</label></td>
                                         </tr>
                                         <?php $count_r++ ?>
                                         @endforeach
@@ -590,6 +596,72 @@
     </div>
     </div>
 </div>
+  <!-- Modal Keyboard -->
+  <div class="modal fade bd-example-modal-lg" id="keyboardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+         <div class="row">
+            <div class="col-lg-12">
+              <input type="text" class="form-control m-1" id="note" value=""  readonly>
+            </div>
+            <div class="col-lg-9 text-center">
+                <button class="btn btn-primary m-1" onclick="add_note('Q')" style="width:7%;color:black;">Q</button>
+                <button class="btn btn-primary m-1" onclick="add_note('W')" style="width:7%;color:black;">W</button>
+                <button class="btn btn-primary m-1" onclick="add_note('E')" style="width:7%;color:black;">E</button>
+                <button class="btn btn-primary m-1" onclick="add_note('R')" style="width:7%;color:black;">R</button>
+                <button class="btn btn-primary m-1" onclick="add_note('T')" style="width:7%;color:black;">T</button>
+                <button class="btn btn-primary m-1" onclick="add_note('Y')" style="width:7%;color:black;">Y</button>
+                <button class="btn btn-primary m-1" onclick="add_note('U')" style="width:7%;color:black;">U</button>
+                <button class="btn btn-primary m-1" onclick="add_note('I')" style="width:7%;color:black;">I</button>
+                <button class="btn btn-primary m-1" onclick="add_note('O')" style="width:7%;color:black;">O</button>
+                <button class="btn btn-primary m-1" onclick="add_note('P')" style="width:7%;color:black;">P</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note('A')" style="width:7%;color:black;">A</button>
+                <button class="btn btn-primary m-1" onclick="add_note('S')" style="width:7%;color:black;">S</button>
+                <button class="btn btn-primary m-1" onclick="add_note('D')" style="width:7%;color:black;">D</button>
+                <button class="btn btn-primary m-1" onclick="add_note('F')" style="width:7%;color:black;">F</button>
+                <button class="btn btn-primary m-1" onclick="add_note('G')" style="width:7%;color:black;">G</button>
+                <button class="btn btn-primary m-1" onclick="add_note('H')" style="width:7%;color:black;">H</button>
+                <button class="btn btn-primary m-1" onclick="add_note('J')" style="width:7%;color:black;">J</button>
+                <button class="btn btn-primary m-1" onclick="add_note('K')" style="width:7%;color:black;">K</button>
+                <button class="btn btn-primary m-1" onclick="add_note('L')" style="width:7%;color:black;">L</button>
+                <button class="btn btn-primary m-1" onclick="add_note('@')" style="width:7%;color:black;">@</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note('Z')" style="width:7%;color:black;">Z</button>
+                <button class="btn btn-primary m-1" onclick="add_note('X')" style="width:7%;color:black;">X</button>
+                <button class="btn btn-primary m-1" onclick="add_note('C')" style="width:7%;color:black;">C</button>
+                <button class="btn btn-primary m-1" onclick="add_note('V')" style="width:7%;color:black;">V</button>
+                <button class="btn btn-primary m-1" onclick="add_note('B')" style="width:7%;color:black;">B</button>
+                <button class="btn btn-primary m-1" onclick="add_note('N')" style="width:7%;color:black;">N</button>
+                <button class="btn btn-primary m-1" onclick="add_note('M')" style="width:7%;color:black;">M</button>
+                <button class="btn btn-primary m-1" onclick="add_note('del')" style="width:7%;color:black;"><=</button>
+                <button class="btn btn-primary m-1" onclick="add_note('Clear')" style="width:16%;color:black;">Clear</button><br>
+                <button class="btn btn-primary m-1" data-dismiss="modal" style="color:red;">Cancel</button>
+                <button class="btn btn-primary m-1" onclick="add_note('(')" style="width:5%;color:black;">(</button>
+                <button class="btn btn-primary m-1" onclick="add_note(')')" style="width:5%;color:black;">)</button>
+                <button class="btn btn-primary m-1" onclick="add_note('space')" style="width:22%;color:black;">Space</button>
+                <button class="btn btn-primary m-1" onclick="add_note('-')" style="width:7%;color:black;">-</button>
+                <button class="btn btn-primary m-1" onclick="add_note(':')" style="width:7%;color:black;">:</button>
+                <button class="btn btn-primary m-1" onclick="add_note('/')" style="width:7%;color:black;">/</button>
+                <button class="btn btn-primary m-1" onclick="save_note()" data-dismiss="modal" style="color:green;">OK</button>
+            </div>
+            <div class="col-lg-3 text-center">
+                <button class="btn btn-primary m-1" onclick="add_note(7)" style="width:20%;color:black;">7</button>
+                <button class="btn btn-primary m-1" onclick="add_note(8)" style="width:20%;color:black;">8</button>
+                <button class="btn btn-primary m-1" onclick="add_note(9)" style="width:20%;color:black;">9</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note(4)" style="width:20%;color:black;">4</button>
+                <button class="btn btn-primary m-1" onclick="add_note(5)" style="width:20%;color:black;">5</button>
+                <button class="btn btn-primary m-1" onclick="add_note(6)" style="width:20%;color:black;">6</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note(1)" style="width:20%;color:black;">1</button>
+                <button class="btn btn-primary m-1" onclick="add_note(2)" style="width:20%;color:black;">2</button>
+                <button class="btn btn-primary m-1" onclick="add_note(3)" style="width:20%;color:black;">3</button><br>
+                <button class="btn btn-primary m-1" onclick="add_note(0)" style="width:46%;color:black;">0</button>
+                <button class="btn btn-primary m-1" onclick="add_note('.')" style="width:20%;color:black;">.</button>
+            </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 @include("$prefix.inc_footer")
@@ -656,6 +728,7 @@
     active = id;
     po_ar = r;
     po_ad = d;
+    $('#btn_note').removeAttr('disabled');
    }
    function FreePirce(){
     document.getElementById('free_p'+active).value = 0;
@@ -668,32 +741,134 @@
     CalDis(1);
    }
    function DelLine(){
-        $.ajax({
-                type: 'GET',
-                url:'{{url("/list")}}',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    ar:po_ar,
-                    ad:po_ad,
-                    discount:document.getElementById('discount').value,
-                },
-                success: function(data) {
-                    window.location.reload();
-                }
-            });
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'GET',
+                    url:'{{url("/list")}}',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        ar:po_ar,
+                        ad:po_ad,
+                        discount:document.getElementById('discount').value,
+                    },
+                    success: function(data) {
+                        Swal.fire(
+                        'Deleted!',
+                        'Your list has been deleted.',
+                        'success'
+                        ).then((result2)=>{
+                            if(result2.isConfirmed){
+                                window.location.reload();
+                            }
+                        })
+                    }
+                });
+            }
+        })
    }
    function DelAll(){
-        $.ajax({
-                type: 'GET',
-                url:'{{url("/del-list")}}',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                },
-                success: function(data) {
-                    window.location.replace('{{url("/menu-list")}}');
-                }
-            });
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'GET',
+                    url:'{{url("/del-list")}}',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        ar:po_ar,
+                        ad:po_ad,
+                        discount:document.getElementById('discount').value,
+                    },
+                    success: function(data) {
+                        Swal.fire(
+                        'Deleted!',
+                        'Your list has been deleted.',
+                        'success'
+                        ).then((result2)=>{
+                            if(result2.isConfirmed){
+                                window.location.replace('{{url("/menu-list")}}');
+                            }
+                        })
+                    }
+                });
+            }
+        })
    }
+   function add_note(n){
+    //
+      var text = document.getElementById('note').value;
+      if(n == 'Clear'){
+          document.getElementById('note').value = '';
+      }else if(n == 'space'){
+          document.getElementById('note').value = text+' ';
+      }else if(n == 'del'){
+          let count_text = text.length-1;
+          document.getElementById('note').value = text.substring(0, count_text);
+      }else{
+          if(text == 0){
+            document.getElementById('note').value = n;
+          }else{
+            document.getElementById('note').value = text + n;
+          }
+      }
+    }
+    function get_note(){
+        document.getElementById('note').value = document.getElementById('hideNote'+active).value;
+        console.log(document.getElementById('note').value);
+    }
+   function save_note(){
+    $.ajax({
+        type: 'GET',
+        url:'{{url("/note")}}',
+        data: {
+            ar:po_ar,
+            ad:po_ad,
+            note:document.getElementById('note').value,
+            },
+            success: function(data) {
+                // alert(data)
+                document.getElementById('adNote'+active).innerHTML = data;
+                document.getElementById('hideNote'+active).value = data;
+                // $('#adNote'+active).append(' '+document.getElementById('note').value);
+            }
+        });
+   }
+   function fncSubmit()
+{
+    var form = $('#Menu_form')[0];
+   
+    var data = new FormData(form);
+    console.log(data)
+    $.ajax({
+                    type: 'POST',
+                    url:'{{url("/save-menu")}}',
+                    enctype: 'multipart/form-data',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function(data) {
+                        
+                    }
+                });
+    return false;
+}
 </script>
 </body>
 </html>
