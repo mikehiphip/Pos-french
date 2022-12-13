@@ -45,7 +45,7 @@
                             <div class="col-xxl-3 col-xl-3 col-lg-3">
                             <div class="input-middle2">
                             <div class="middle-form">
-                                <input type="text" class="form1"></input><br>
+                                <input type="text" class="form1 test"></input><br>
                                 <input type="text" class="form2"></input><br>
                                 <input type="text" class="form3"></input><br>
                             </div>
@@ -64,62 +64,62 @@
                             <div class="name-btn">
                                 <div class="name-info">
                                     <label for="name">Name</label>
-                                    <input type="text" class="name1"></input><br>
+                                    <input type="text" class="name1" name="name"></input><br>
                                     <label for="Company">Company</label>
-                                    <input type="text" class="name2"></input>
+                                    <input type="text" class="name2" name="company"></input>
                                 </div>
                                 <div class="btn-name">
                                     <div class="static">
                                         <label for="text">Static</label><br>
-                                        <input type="text" class="Static" placeholder="0"></input>
+                                        <input type="text" class="Static" placeholder="0" name="static"></input>
                                     </div>
                                     {{-- <button class="f">F10</button> --}}
-                                    <button class="f">Save<br>Custome</button>
+                                    <button class="f" type="submit">Save<br>Custome</button>
                                 </div>
                             </div>
                             <div class="N-Street">
-                                <label for="text" class="Same-t">N”</label>
-                                <input type="text" class="Same"></input>
+                                <label for="text" class="Same-t" >N”</label>
+                                <input type="text" class="Same" name="nn"></input>
                                 <label for="text">Street</label>
-                                <input type="text" class="Street"></input>
+                                <input type="text" class="Street" name="street"></input>
                             </div>
                             <div class="pc-city-maps">
                                 <label for="text" class="Same-t">PC</label>
-                                <input type="text" class="Same"></input>
+                                <input type="text" class="Same" name="pc"></input>
                                 <label for="text">City</label>
-                                <input type="text" class="City"></input>
+                                <input type="text" class="City" name="city"></input>
                                 <label for="text">Maps</label>
-                                <input type="text" class="Same-M"></input>
+                                <input type="text" class="Same-M" name="maps"></input>
                             </div>
                             <div class="row-5">
                                 <label for="text">Build</label>
-                                <input type="text" class="Same"></input>
+                                <input type="text" class="Same" name="build"></input>
                                 <label for="text">Stairs</label>
-                                <input type="text" class="Same-r"></input>
+                                <input type="text" class="Same-r" name="stairs"></input>
                                 <label for="text" class="Floor">Floor</label>
-                                <input type="text" class="Same-r"></input>
+                                <input type="text" class="Same-r" name="floor"></input>
                                 <label for="text"  class="Door">Door</label>
-                                <input type="text" class="Door"></input>
+                                <input type="text" class="Door" name="door"></input>
                             </div>
                             <div class="row-6">
                                 <label for="text" class="Code1">Code1</label>
-                                <input type="text" class="Same"></input>
+                                <input type="text" class="Same" name="code1"></input>
                                 <label for="text" class="Code2">Code2</label>
-                                <input type="text" class="Same-r"></input>
+                                <input type="text" class="Same-r" name="code2"></input>
                                 <label for="text" class="INTVW">Intvw</label>
-                                <input type="text" class="Same-r"></input>
+                                <input type="text" class="Same-r" name="intvw"></input>
                                 <label for="text" class="Time">Time</label>
-                                <input type="text" class="Same-r"></input>
+                                <input type="text" class="Same-r" name="time"></input>
                             </div>
                             <div class="row-7">
                                 <label for="text" class="Note">Note</label>
-                                <input type="text" class="Same-N"></input><br>
+                                <input type="text" class="Same-N" name="note"></input><br>
                                 <label for="text" class="Ordernote">Order note2</label>
-                                <input type="text" class="Same-r7"></input><br>
+                                <input type="text" class="Same-r7" name="order_note"></input><br>
                                 <label for="text" class="Customerinfo">Customer info</label>
-                                <input type="text" class="Same-r7"></input><br>
+                                <input type="text" class="Same-r7" name="info"></input><br>
                                 <label for="text" class="Customer-E">Customer email address</label>
-                                <input type="text" class="Cus-E"></input>
+                                <input type="text" class="Cus-E" name="email"></input>
                             </div>
                             <div class="num-id">
                                 <div class="n0">
@@ -864,9 +864,24 @@
                     contentType: false,
                     cache: false,
                     success: function(data) {
-                        
+                        if(data){
+                            Swal.fire({
+                            icon: 'success',
+                            title: 'Data saved',
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
+                        }else{
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Something is empty',
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
+                        }
                     }
                 });
+    document.getElementById("Menu_form").reset();
     return false;
 }
 </script>

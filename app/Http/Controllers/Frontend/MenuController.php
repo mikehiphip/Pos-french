@@ -14,6 +14,8 @@ use Intervention\Image\ImageManagerStatic as Image;
 use App\Models\Backend\CategoryModel;
 use App\Models\Backend\SubCategoryModel;
 use App\Models\Backend\FoodModel;
+use App\Models\Backend\CustomerModel;
+
 
 class MenuController extends Controller
 {
@@ -147,7 +149,38 @@ class MenuController extends Controller
         Session::put('food',$get_food);
         return $request->note;
     }
-    public function insert(Request $request){
-        dd($request);
+    public function insert(Request $request)
+    {
+        try {
+                $data = new CustomerModel();
+                $data->created_at = date('Y-m-d H:i:s');
+                $data->updated_at = date('Y-m-d H:i:s');
+                $data->name = $request->name;
+                $data->company = $request->company;
+                $data->static = $request->static;
+                $data->n = $request->nn;
+                $data->street = $request->street;
+                $data->pc = $request->pc;
+                $data->city = $request->city;
+                $data->maps = $request->maps;
+                $data->build = $request->build;
+                $data->stairs = $request->stairs;
+                $data->floor = $request->floor;
+                $data->door = $request->door;
+                $data->code1 = $request->code1;
+                $data->code2 = $request->code2;
+                $data->intvw = $request->intvw;
+                $data->time = $request->time;
+                $data->note = $request->note;
+                $data->order_note = $request->order_note;
+                $data->info = $request->info;
+                $data->email = $request->email;
+                $data->save();
+            return response()->json(true);
+        } catch (\Throwable $th) {
+            return response()->json(false);
+
+        }
+        
     }
 }
