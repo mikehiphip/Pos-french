@@ -20,7 +20,7 @@
                             <input type="text" class="input1"></input>
                             <input type="text" class="input2"></input>
                             <input type="time" class="input3"></input>
-                            <button class="chang-item">A Employer</button>
+                            <button class="chang-item" id="employer">A Employer</button>
                             <input type="text" class="input4"></input>
                             <input type="time" class="input5"></input>
                         </div>
@@ -329,10 +329,10 @@
         <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-3 pr-0">
         <div class="info-rightbar">
             <div class="btn-order">
-                <button class="btn1"><img src="frontend/images/icon index/EditMOTO 1.svg"><br> F9 New OrdDeliv
+                <button class="btn1" onclick="change_modeButton(0)"><img src="frontend/images/icon index/EditMOTO 1.svg"><br> F9 New OrdDeliv
                 </button>
-                <button class="btn2"><img src="frontend/images/icon index/new ord.svg"><br>New<br>Ord Take</button>
-                <button class="btn3"><img src="frontend/images/icon index/ic_baseline-table-restaurant.svg"><br>New<br>Ord On</button>
+                <button class="btn2" onclick="change_modeButton(1)"><img src="frontend/images/icon index/new ord.svg"><br>New<br>Ord Take</button>
+                <button class="btn3" onclick="change_modeButton(2)"><img src="frontend/images/icon index/ic_baseline-table-restaurant.svg"><br>New<br>Ord On</button>
                 <div class="btn-noactive"><img src="frontend/images/icon index/fa6-solid_map-location-dot.svg"><br>Locate address</div>
                 <button class="btn5">Exit <img src="frontend/images/icon index/exit.svg"> </button>
                 <button class="btn6"><img src="frontend/images/icon index/zondicons_save-disk.svg"><br>F12Save</button>
@@ -852,7 +852,6 @@
    function fncSubmit()
 {
     var form = $('#Menu_form')[0];
-   
     var data = new FormData(form);
     console.log(data)
     $.ajax({
@@ -883,6 +882,10 @@
                 });
     document.getElementById("Menu_form").reset();
     return false;
+}
+var color_but = ['red','blue','green'];
+function change_modeButton(num){
+    $("#employer").css("background-color",color_but[num]);
 }
 </script>
 </body>
