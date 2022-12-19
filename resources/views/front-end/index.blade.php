@@ -45,14 +45,25 @@
                             <div class="col-xxl-3 col-xl-3 col-lg-3">
                             <div class="input-middle2">
                             <div class="middle-form">
-                                <input type="text" class="form1 test"></input><br>
-                                <input type="text" class="form2"></input><br>
-                                <input type="text" class="form3"></input><br>
+                                <input type="text" class="form1" id="main_phone" readonly></input><br>
+                                {{-- <input type="text" class="form2"></input><br> --}}
+                                {{-- <input type="text" class="form3"></input><br> --}}
+                            </div>
+                            <div class="middle-form" style="height:200px;overflow-y: scroll;background:white;width:82.5%;margin-top: 5px;margin-bottom:5px;">
+                                <table class="table table-borderless" id="show_phone"></table>
+                                {{-- <input type="text" class="form1"></input><br> --}}
+                                {{-- <input type="text" class="form2"></input><br> --}}
+                                {{-- <input type="text" class="form3"></input><br> --}}
+                            </div>
+                            <div class="middle-form">
+                                {{-- <input type="text" class="form1"></input><br> --}}
+                                {{-- <input type="text" class="form2"></input><br> --}}
+                                <input type="text" class="form3" id="phone"></input><br>
                             </div>
                             <div class="middle-btn">
-                                <button class="add-btn">Add</button>
-                                <button class="add-btn" type="reset" value="Reset">Reset</button>
-                                <button class="add-btn">Tel Principle</button>
+                                <button class="add-btn" onclick="add_phone()" type="button">Add</button>
+                                <button class="add-btn" type="reset" value="Reset" type="button" onclick="reset_phone()">Reset</button>
+                                <button class="add-btn" type="button" onclick="select_phone()">Tel Principle</button>
                             </div>
                         </div>
                             </div>
@@ -886,6 +897,39 @@
 var color_but = ['red','blue','green'];
 function change_modeButton(num){
     $("#employer").css("background-color",color_but[num]);
+}
+var count_tr = 0;
+var re_act = '';
+var cls_active = '';
+var cls_actived = '';
+function add_phone(){
+  var phone = document.getElementById('phone').value;
+  if(phone.length >= 10){
+    var data = '<tr id="phone_list'+count_tr+'" onclick="list_active('+count_tr+')"><td>'+phone+'<input type="hidden" value="'+phone+'" id="inp_p'+count_tr+'"></td></tr>'
+    $('#show_phone').append(data);
+    document.getElementById('phone').value = null;
+    count_tr++;
+  }
+}
+function list_active(c){
+    re_act = c;
+    console.log(cls_actived,'-',c)
+    if(cls_actived != '' || cls_actived == 0){
+        $('#phone_list'+cls_actived).css("background-color",'white');
+    }
+    cls_actived = c;
+    $('#phone_list'+c).css("background-color",'#ffc107');  
+}
+function reset_phone(){
+    var de = document.getElementById('phone_list'+re_act);
+    de.parentNode.removeChild(de);
+    $('#main_phone').css("background-color",'white');
+    re_act = null;
+    cls_actived = null;
+}
+function select_phone(){
+    document.getElementById('main_phone').value = document.getElementById('inp_p'+re_act).value;
+    $('#main_phone').css("background-color",'#ffc107');
 }
 </script>
 </body>

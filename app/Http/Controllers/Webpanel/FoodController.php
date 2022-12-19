@@ -155,6 +155,7 @@ class FoodController extends Controller
     {
         try {
             $cate = $request->cat_id;
+            $allow = ['png','jpeg','jpg'];
             // dd($request);
             // dd($request->file('image'));
             DB::beginTransaction();
@@ -168,10 +169,12 @@ class FoodController extends Controller
                     $path = 'upload/food';
                     $img = $request->file('image');
                     $name_new = 'upload/food/Food-' . date('YmdHis') . '.' . $img->getClientOriginalExtension();
-                    $save_path = $img->move(public_path($path), $name_new);
-    
-                    $data->img             = $name_new;
-                    $data->save();
+                    if(in_array($img->getClientOriginalExtension(),$allow)){
+                        $save_path = $img->move(public_path($path), $name_new);
+                        $data->img             = $name_new;
+                        $data->save();
+                    }
+                    
                 } 
             } else {
                
@@ -188,11 +191,12 @@ class FoodController extends Controller
                     $path = 'upload/food';
                     $img = $request->file('image');
                     $img_name = 'upload/food/food-' . date('YmdHis') . '.' . $img->getClientOriginalExtension();
+                    if(in_array($img->getClientOriginalExtension(),$allow)){
                     $save_path = $img->move(public_path($path), $img_name);
                     $image = $img_name;
-
                     $data->img          = $image;
                     $data->save();
+                    }
                 }
             }
             $data->name = $request->name;
