@@ -15,6 +15,8 @@ use App\Models\Backend\CategoryModel;
 use App\Models\Backend\SubCategoryModel;
 use App\Models\Backend\FoodModel;
 use App\Models\Backend\CustomerModel;
+use App\Models\Backend\PaymentModel;
+use App\Models\Backend\ZoneModel;
 
 
 class MenuController extends Controller
@@ -97,6 +99,8 @@ class MenuController extends Controller
             $check = 1;
             $dis_value = 0;
         }
+        $pay = PaymentModel::orderBy('id','asc')->get();
+        $zone = ZoneModel::leftjoin('tb_city','tb_zone.id','=','tb_city.zone_id')->get();
         return view("$this->prefix.index",[
             'prefix' => $this->prefix,
             'row'   => $f_id,
@@ -107,6 +111,9 @@ class MenuController extends Controller
             'note' =>$note,
             'discount' => $check ,
             'dis_value' =>$dis_value,
+            'payment' => $pay,
+            'zone_data' => json_encode($zone),
+
         ]);
     }
     public function food_list(Request $request){
@@ -152,9 +159,12 @@ class MenuController extends Controller
     public function insert(Request $request)
     {
         try {
+            // dd($request);
                 $data = new CustomerModel();
                 $data->created_at = date('Y-m-d H:i:s');
                 $data->updated_at = date('Y-m-d H:i:s');
+                $data->main_phone = $request->main_p;
+                $data->phone = json_encode($request->tel_list);
                 $data->name = $request->name;
                 $data->company = $request->company;
                 $data->static = $request->static;
@@ -162,7 +172,9 @@ class MenuController extends Controller
                 $data->street = $request->street;
                 $data->pc = $request->pc;
                 $data->city = $request->city;
-                $data->maps = $request->maps;
+                $data->zone = $request->zone;
+                $data->charge = $request->charge;
+                $data->pay = $request->pay;
                 $data->build = $request->build;
                 $data->stairs = $request->stairs;
                 $data->floor = $request->floor;
@@ -178,6 +190,7 @@ class MenuController extends Controller
                 $data->save();
             return response()->json(true);
         } catch (\Throwable $th) {
+            dd($th);
             return response()->json(false);
 
         }

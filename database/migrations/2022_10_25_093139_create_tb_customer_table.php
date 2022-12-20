@@ -15,6 +15,8 @@ class CreateTbCustomerTable extends Migration
     {
         Schema::create('tb_customer', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string("main_phone",100)->nullable();
+            $table->text("phone")->nullable();
             $table->string("name",100)->nullable();
             $table->string("company",100)->nullable();
             $table->integer('static')->nullable();
@@ -22,7 +24,9 @@ class CreateTbCustomerTable extends Migration
             $table->string("street",255)->nullable();
             $table->string("pc",255)->nullable();
             $table->string("city",255)->nullable();
-            $table->string("maps",255)->nullable();
+            $table->string("zone",255)->nullable();
+            $table->integer('charge')->nullable();
+            $table->integer('pay')->nullable(); 
             $table->string("build",255)->nullable();
             $table->string("stairs",255)->nullable();
             $table->string("floor",255)->nullable();

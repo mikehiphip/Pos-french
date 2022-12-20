@@ -45,7 +45,7 @@
                             <div class="col-xxl-3 col-xl-3 col-lg-3">
                             <div class="input-middle2">
                             <div class="middle-form">
-                                <input type="text" class="form1" id="main_phone" readonly></input><br>
+                                <input type="text" class="form1" id="main_phone" readonly name="main_p" required></input><br>
                                 {{-- <input type="text" class="form2"></input><br> --}}
                                 {{-- <input type="text" class="form3"></input><br> --}}
                             </div>
@@ -84,23 +84,23 @@
                                         <label for="text">Static</label><br>
                                         <input type="text" class="Static" placeholder="0" name="static"></input>
                                     </div>
-                                    {{-- <button class="f">F10</button> --}}
+                                    <button class="f" type="button">Customer</button>
                                     <button class="f" type="submit">Save<br>Custome</button>
                                 </div>
                             </div>
                             <div class="N-Street">
-                                <label for="text" class="Same-t" >N”</label>
-                                <input type="text" class="Same" name="nn"></input>
                                 <label for="text">Street</label>
                                 <input type="text" class="Street" name="street"></input>
+                                <label for="text" >N”</label>
+                                <input type="text" class="Same" name="nn" id="code_zone" onkeyup="select_zone()"></input>
                             </div>
                             <div class="pc-city-maps">
                                 <label for="text" class="Same-t">PC</label>
                                 <input type="text" class="Same" name="pc"></input>
                                 <label for="text">City</label>
-                                <input type="text" class="City" name="city"></input>
-                                <label for="text">Maps</label>
-                                <input type="text" class="Same-M" name="maps"></input>
+                                <input type="text" class="City text-center" name="city" id="city"></input>
+                                <label for="text">Zone</label>
+                                <input type="text" class="Same-M text-center" name="zone" id="zone"></input>
                             </div>
                             <div class="row-5">
                                 <label for="text">Build</label>
@@ -155,21 +155,21 @@
                             </div>
                             <div class="col-xxl-2 col-xl-2 col-lg-2">
                             <div class="input-middle3">
-                            <select name="zone" id="zone">
+                            {{-- <select name="zone" id="zone">
                                 <option value="Zone1">Zone1</option>
                                 <option value="#">#</option>
                                 <option value="#">#</option>
                                 <option value="#">#</option>
+                            </select> --}}
+                            <select name="zone" id="zone" name="pay">
+                                <option value="" hidden>Payment</option>
+                                @foreach($payment as $pay)
+                                <option class="text-center" value="{{$pay->id}}">{{$pay->pay}}</option>
+                                @endforeach
                             </select>
-                            <select name="zone" id="zone">
-                                <option value="#">CHQ</option>
-                                <option value="#">#</option>
-                                <option value="#">#</option>
-                                <option value="#">#</option>
-                            </select>
-                            <input type="text" class="Retrieve1" placeholder="Retrieve 0"></input>
-                            <button class="info1">+ / -</button>
-                            <button class="info">History</button>
+                            <input type="text" class="Retrieve1 text-center" placeholder="0" id="delivery" name="charge"></input>
+                            {{-- <button class="info1">+ / -</button> --}}
+                            <button class="info" type="button">History</button>
                         </div>
                             </div>
                         </div>
@@ -676,6 +676,11 @@
 
 
 @include("$prefix.inc_footer")
+<?php
+echo "<script>";
+echo "var zone_data = $zone_data";
+echo "</script>";
+?>
 <script>
     var active = '';
     var po_ar = '';
@@ -881,6 +886,9 @@
                             showConfirmButton: false,
                             timer: 1500
                             })
+                        document.getElementById('show_phone').innerHTML = null;
+                        document.getElementById('main_phone').innerHTML = null;
+                        $('#main_phone').css("background-color",'white');
                         }else{
                             Swal.fire({
                             icon: 'error',
@@ -905,7 +913,7 @@ var cls_actived = '';
 function add_phone(){
   var phone = document.getElementById('phone').value;
   if(phone.length >= 10){
-    var data = '<tr id="phone_list'+count_tr+'" onclick="list_active('+count_tr+')"><td>'+phone+'<input type="hidden" value="'+phone+'" id="inp_p'+count_tr+'"></td></tr>'
+    var data = '<tr id="phone_list'+count_tr+'" onclick="list_active('+count_tr+')"><td>'+phone+'<input type="hidden" value="'+phone+'" id="inp_p'+count_tr+'" name="tel_list[]"></td></tr>'
     $('#show_phone').append(data);
     document.getElementById('phone').value = null;
     count_tr++;
@@ -930,6 +938,19 @@ function reset_phone(){
 function select_phone(){
     document.getElementById('main_phone').value = document.getElementById('inp_p'+re_act).value;
     $('#main_phone').css("background-color",'#ffc107');
+}
+function select_zone(){
+ let code = document.getElementById('code_zone').value;
+ if(code.length == 4){
+  let data =  zone_data.find(x=>x.code==code);
+  document.getElementById('city').value = data.city;
+  document.getElementById('zone').value = data.zone;
+  document.getElementById('delivery').value = data.charge;
+ }else{
+    document.getElementById('city').value =  null ;
+    document.getElementById('zone').value =  null ;
+    document.getElementById('delivery').value =  null ;
+ }
 }
 </script>
 </body>
