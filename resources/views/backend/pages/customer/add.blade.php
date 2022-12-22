@@ -56,12 +56,12 @@
                                 </div>
                                 <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
                                     <div class="col-span-4 lg:col-span-4">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> N </label>
-                                        <input type="text" name="n" class="form-control w-full" placeholder="">
-                                    </div>
-                                    <div class="col-span-4 lg:col-span-4">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Street </label>
                                         <input type="text" name="street" class="form-control w-full" placeholder="">
+                                    </div>
+                                    <div class="col-span-4 lg:col-span-4">
+                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> N </label>
+                                        <input type="text" name="n" class="form-control w-full" placeholder="">
                                     </div>
                                     <div class="col-span-4 lg:col-span-4">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> PC </label>
@@ -74,8 +74,8 @@
                                         <input type="text" name="city" class="form-control w-full" placeholder="">
                                     </div>
                                     <div class="col-span-4 lg:col-span-4">
-                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Maps </label>
-                                        <input type="text" name="maps" class="form-control w-full" placeholder="">
+                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Zone </label>
+                                        <input type="text" name="zone" class="form-control w-full" placeholder="">
                                     </div>
                                     <div class="col-span-4 lg:col-span-4">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Build </label>

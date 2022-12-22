@@ -75,16 +75,16 @@
                             <div class="name-btn">
                                 <div class="name-info">
                                     <label for="name">Name</label>
-                                    <input type="text" class="name1" name="name"></input><br>
+                                    <input type="text" class="name1" name="name" id="name_data"></input><br>
                                     <label for="Company">Company</label>
-                                    <input type="text" class="name2" name="company"></input>
+                                    <input type="text" class="name2" name="company" id="company_data"></input>
                                 </div>
                                 <div class="btn-name">
                                     <div class="static">
                                         <label for="text">Static</label><br>
-                                        <input type="text" class="Static" placeholder="0" name="static"></input>
+                                        <input type="text" class="Static" placeholder="0" name="static" id="static_data"></input>
                                     </div>
-                                    <button class="f" type="button">Customer</button>
+                                    <button class="f" type="button" data-toggle="modal" data-target="#customerModal" >Customer</button>
                                     <button class="f" type="submit">Save<br>Custome</button>
                                 </div>
                             </div>
@@ -98,9 +98,9 @@
                                 <label for="text" class="Same-t">PC</label>
                                 <input type="text" class="Same" name="pc"></input>
                                 <label for="text">City</label>
-                                <input type="text" class="City text-center" name="city" id="city"></input>
+                                <input type="text" class="City text-center" name="city_select" id="city"></input>
                                 <label for="text">Zone</label>
-                                <input type="text" class="Same-M text-center" name="zone" id="zone"></input>
+                                <input type="text" class="Same-M text-center" name="zone_select" id="zone"></input>
                             </div>
                             <div class="row-5">
                                 <label for="text">Build</label>
@@ -161,7 +161,7 @@
                                 <option value="#">#</option>
                                 <option value="#">#</option>
                             </select> --}}
-                            <select name="zone" id="zone" name="pay">
+                            <select name="pay">
                                 <option value="" hidden>Payment</option>
                                 @foreach($payment as $pay)
                                 <option class="text-center" value="{{$pay->id}}">{{$pay->pay}}</option>
@@ -673,12 +673,45 @@
       </div>
     </div>
   </div>
+  <!--Customer Modal -->
+<div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <table class="table table-borderless">
+            <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Tel</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Company</th>
+            </tr>
+            @foreach($customer as $c =>$cus)
+            <tr id="cus_tr{{$c}}" onclick="cus_active({{$cus->id}})" data-dismiss="modal">
+                <td class="text-center">{{$c}}</td>
+                <td class="text-center">{{$cus->main_phone}}</td>
+                <td class="text-center">{{$cus->name}}</td>
+                <td class="text-center">{{$cus->company}}</td>
+            </tr>
+            @endforeach
+          </table>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color:#6c757d;">Close</button>
+        </div>
+        {{-- <div class="col-lg-12 text-center">
+          <button type="button" class="btn btn-primary" style="background-color: red;color:white;" >Open</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color:#6c757d;">Close</button>
+        </div> --}}
+      </div>
+    </div>
+  </div>
 
 
 @include("$prefix.inc_footer")
 <?php
 echo "<script>";
 echo "var zone_data = $zone_data";
+echo "</script>";
+echo "<script>";
+echo "var cus_data = $cus_data";
 echo "</script>";
 ?>
 <script>
@@ -921,7 +954,6 @@ function add_phone(){
 }
 function list_active(c){
     re_act = c;
-    console.log(cls_actived,'-',c)
     if(cls_actived != '' || cls_actived == 0){
         $('#phone_list'+cls_actived).css("background-color",'white');
     }
@@ -952,6 +984,26 @@ function select_zone(){
     document.getElementById('delivery').value =  null ;
  }
 }
+var cus_act = '';
+var cus_actived = '';
+function cus_active(cus){
+    cus_act = cus;
+    if(cus_actived != '' || cus_actived == 0){
+        let data =  cus_data.find(x=>x.id==cus_act);
+        document.getElementById('name_data').value = data.name;
+        document.getElementById('company_data').value = data.company;
+        document.getElementById('main_phone').value = data.main_phone;
+        document.getElementById('city').value = data.city;
+        document.getElementById('zone').value = data.zone;
+        document.getElementById('delivery').value = data.charge;
+        document.getElementById('code_zone').value = data.n;
+        // $('#cus_tr'+cus_actived).css("background-color",'white');
+        $('#show_phone').append(data.);
+    }
+    cus_actived = cus;
+    // $('#cus_tr'+cus).css("background-color",'#ffc107');  
+}
+
 </script>
 </body>
 </html>

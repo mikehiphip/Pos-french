@@ -101,6 +101,7 @@ class MenuController extends Controller
         }
         $pay = PaymentModel::orderBy('id','asc')->get();
         $zone = ZoneModel::leftjoin('tb_city','tb_zone.id','=','tb_city.zone_id')->get();
+        $cus = CustomerModel::orderBy('name')->get();
         return view("$this->prefix.index",[
             'prefix' => $this->prefix,
             'row'   => $f_id,
@@ -113,7 +114,8 @@ class MenuController extends Controller
             'dis_value' =>$dis_value,
             'payment' => $pay,
             'zone_data' => json_encode($zone),
-
+            'customer'  => $cus,
+            'cus_data' => json_encode($cus),
         ]);
     }
     public function food_list(Request $request){
@@ -171,8 +173,8 @@ class MenuController extends Controller
                 $data->n = $request->nn;
                 $data->street = $request->street;
                 $data->pc = $request->pc;
-                $data->city = $request->city;
-                $data->zone = $request->zone;
+                $data->city = $request->city_select;
+                $data->zone = $request->zone_select;
                 $data->charge = $request->charge;
                 $data->pay = $request->pay;
                 $data->build = $request->build;
