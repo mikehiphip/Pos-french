@@ -92,11 +92,11 @@
                                 <label for="text">Street</label>
                                 <input type="text" class="Street" name="street"></input>
                                 <label for="text" >N”</label>
-                                <input type="text" class="Same" name="nn" id="code_zone" onkeyup="select_zone()"></input>
+                                <input type="text" class="Same" name="nn" ></input>
                             </div>
                             <div class="pc-city-maps">
                                 <label for="text" class="Same-t">PC</label>
-                                <input type="text" class="Same" name="pc"></input>
+                                <input type="text" class="Same" name="pc" id="code_zone" onkeyup="select_zone()"></input>
                                 <label for="text">City</label>
                                 <input type="text" class="City text-center" name="city_select" id="city"></input>
                                 <label for="text">Zone</label>
@@ -678,8 +678,8 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <table class="table table-borderless">
-            <tr>
+          <table class="table table-border">
+            <tr style="background-color: #ffc107">
                 <th class="text-center">No.</th>
                 <th class="text-center">Tel</th>
                 <th class="text-center">Name</th>
@@ -687,14 +687,14 @@
             </tr>
             @foreach($customer as $c =>$cus)
             <tr id="cus_tr{{$c}}" onclick="cus_active({{$cus->id}})" data-dismiss="modal">
-                <td class="text-center">{{$c}}</td>
+                <td class="text-center">{{$c+1}}</td>
                 <td class="text-center">{{$cus->main_phone}}</td>
                 <td class="text-center">{{$cus->name}}</td>
                 <td class="text-center">{{$cus->company}}</td>
             </tr>
             @endforeach
           </table>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color:#6c757d;">Close</button>
+        <center><button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color:red;">Close</button></center>
         </div>
         {{-- <div class="col-lg-12 text-center">
           <button type="button" class="btn btn-primary" style="background-color: red;color:white;" >Open</button>
@@ -985,10 +985,8 @@ function select_zone(){
  }
 }
 var cus_act = '';
-var cus_actived = '';
 function cus_active(cus){
     cus_act = cus;
-    if(cus_actived != '' || cus_actived == 0){
         let data =  cus_data.find(x=>x.id==cus_act);
         document.getElementById('name_data').value = data.name;
         document.getElementById('company_data').value = data.company;
@@ -997,11 +995,15 @@ function cus_active(cus){
         document.getElementById('zone').value = data.zone;
         document.getElementById('delivery').value = data.charge;
         document.getElementById('code_zone').value = data.n;
+        $('#main_phone').css("background-color",'#ffc107');
         // $('#cus_tr'+cus_actived).css("background-color",'white');
-        $('#show_phone').append(data.);
-    }
-    cus_actived = cus;
-    // $('#cus_tr'+cus).css("background-color",'#ffc107');  
+        let phone = JSON.parse(data.phone);
+        for(x=0;x<phone.length;x++){
+            var tel = '<tr id="phone_list'+x+'" onclick="list_active('+x+')"><td>'+phone[x]+'<input type="hidden" value="'+phone[x]+'" id="inp_p'+x+'" name="tel_list[]"></td></tr>'
+            $('#show_phone').append(tel);
+            count_tr++;
+        }
+        console.log(phone)
 }
 
 </script>

@@ -102,6 +102,7 @@ class MenuController extends Controller
         $pay = PaymentModel::orderBy('id','asc')->get();
         $zone = ZoneModel::leftjoin('tb_city','tb_zone.id','=','tb_city.zone_id')->get();
         $cus = CustomerModel::orderBy('name')->get();
+        // dd(json_encode($cus));
         return view("$this->prefix.index",[
             'prefix' => $this->prefix,
             'row'   => $f_id,
