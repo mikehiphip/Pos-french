@@ -198,140 +198,145 @@
                         </div>
                     </div>
                     <!-- scroll Table -->
-                    <div class="table-info">
-                        <div class="table-scroll">
-                            <table class="table">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col" class="code"><button>Code</button></th>
-                                        <th scope="col" class="search">
-                                            Description
-                                        </th>
-                                        <th scope="col" class="pq"><button>Price</button></th>
-                                        <th scope="col" class="pq"><button>Qty</button></th>
-                                        <th scope="col" class="pq"><button>Price</button></th>
-                                        <th scope="col" class="note"><button>Note: type + to add Type - to remove Type / to Haif Haif</button></th>
-                                        {{-- <th scope="col" class="sm"><button>S</button></th> --}}
-                                        {{-- <th scope="col" class="sm"><button>M</button></th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                        $count_r = 1; 
-                                        $total = 0;
-                                        $ready = 0;
-                                    ?>
-                                    @foreach($pointer as $r => $data)
-                                        @foreach($data as $d => $dat)
-                                        <?php $total +=  $qty_num[$r][$d] * ($qty_price[$r][$d]*$discount); 
-                                              $ready += $qty_price[$r][$d]-($qty_price[$r][$d]*$discount);
-                                        ?>
-                                        <tr onclick="check_active({{$count_r}},{{$r}},{{$d}})">
-                                            <th scope="row"><input type="radio" name="click" id="ch{{$count_r}}" value="{{$count_r}}"> {{$count_r}}</th>
-                                            <td>{{$food_name[$r][$d]}}</td>
-                                            <td id="price{{$count_r}}">{{number_format(($qty_price[$r][$d]*$discount),2)}}</td>
-                                            <input type="hidden" id="v_price{{$count_r}}" value="{{$qty_price[$r][$d]}}">
-                                            <input type="hidden" id="free_p{{$count_r}}" value="{{$qty_price[$r][$d]}}">
-                                            <td class="text-center">{{$qty_num[$r][$d]}} </td>
-                                            <td id="sum_qty{{$count_r}}">{{number_format(($qty_num[$r][$d] *($qty_price[$r][$d]*$discount)),2)}}</td>
-                                            <input type="hidden" id="price_qty{{$count_r}}" value="{{$qty_num[$r][$d] * $qty_price[$r][$d]}}">
-                                            <td ><?php $note_text = ''; $m = 0?>
-                                                @if(isset($note[$r][$pointer[$r][$d]])) 
-                                                @foreach($note[$r][$pointer[$r][$d]] as $n)
-                                                @if($m <= count($note[$r][$pointer[$r][$d]])-2) {{$n.' '}} @else <?php $note_text = $n; ?>@endif
-                                                <?php $m++; ?>
-                                                @endforeach
-                                                @endif
-                                                <input type="hidden" id="hideNote{{$count_r}}" value="{{$note_text}}" readonly>
-                                                <label id="adNote{{$count_r}}">{{$note_text}}</label></td>
+                    <form action="javascript:void(0)" method="POST" id="Form_test" onSubmit="JavaScript:return OrderSubmit({{count($pointer)}});">
+                    @csrf
+                        <div class="table-info">
+                            <div class="table-scroll">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="code"><button>Code</button></th>
+                                            <th scope="col" class="search">
+                                                Description
+                                            </th>
+                                            <th scope="col" class="pq"><button>Price</button></th>
+                                            <th scope="col" class="pq"><button>Qty</button></th>
+                                            <th scope="col" class="pq"><button>Price</button></th>
+                                            <th scope="col" class="note"><button>Note: type + to add Type - to remove Type / to Haif Haif</button></th>
+                                            {{-- <th scope="col" class="sm"><button>S</button></th> --}}
+                                            {{-- <th scope="col" class="sm"><button>M</button></th> --}}
                                         </tr>
-                                        <?php $count_r++ ?>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                            $count_r = 1; 
+                                            $total = 0;
+                                            $ready = 0;
+                                        ?>
+                                        @foreach($pointer as $r => $data)
+                                            @foreach($data as $d => $dat)
+                                            <?php $total +=  $qty_num[$r][$d] * ($qty_price[$r][$d]*$discount); 
+                                                $ready += $qty_price[$r][$d]-($qty_price[$r][$d]*$discount);
+                                            ?>
+                                            <tr onclick="check_active({{$count_r}},{{$r}},{{$d}})">
+                                                <th scope="row"><input type="radio" name="click" id="ch{{$count_r}}" value="{{$count_r}}"> {{$count_r}}</th>
+                                                <td>{{$food_name[$r][$d]}}</td>
+                                                <input type="hidden" name="food_id[]" value="{{$row[$r][$d]}}">
+                                                <td id="price{{$count_r}}">{{number_format(($qty_price[$r][$d]*$discount),2)}}</td>
+                                                <input type="hidden" id="v_price{{$count_r}}" value="{{$qty_price[$r][$d]}}" name="p_qty[]">
+                                                <input type="hidden" id="free_p{{$count_r}}" value="{{$qty_price[$r][$d]}}" name="free_product[]">
+                                                <td class="text-center" >{{$qty_num[$r][$d]}} </td>
+                                                <input type="hidden" name="qty_nump[]" value="{{$qty_num[$r][$d]}}">
+                                                <td id="sum_qty{{$count_r}}">{{number_format(($qty_num[$r][$d] *($qty_price[$r][$d]*$discount)),2)}}</td>
+                                                <input type="hidden" id="price_qty{{$count_r}}" value="{{$qty_num[$r][$d] * $qty_price[$r][$d]}}" name="total_qty[]">
+                                                <td ><?php $note_text = ''; $m = 0?>
+                                                    @if(isset($note[$r][$pointer[$r][$d]])) 
+                                                    @foreach($note[$r][$pointer[$r][$d]] as $n)
+                                                    @if($m <= count($note[$r][$pointer[$r][$d]])-2) {{$n.' '}} @else <?php $note_text = $n; ?>@endif
+                                                    <?php $m++; ?>
+                                                    @endforeach
+                                                    @endif
+                                                    <input type="hidden" id="hideNote{{$count_r}}" value="{{$note_text}}" name="note_text[]" readonly>
+                                                    <label id="adNote{{$count_r}}">{{$note_text}}</label></td>
+                                            </tr>
+                                            <?php $count_r++ ?>
+                                            @endforeach
                                         @endforeach
-                                    @endforeach
-                                    {{-- <tr>
-                                        <th scope="row">2</th>
-                                        <td>#</td>
-                                        <td>#</td>
-                                        <td>#</td>
-                                        <td>#</td>
-                                        <td>#</td>
-                                        <td>#</td>
-                                    </tr>--}}
-                                </tbody>
-                            </table>
+                                        {{-- <tr>
+                                            <th scope="row">2</th>
+                                            <td>#</td>
+                                            <td>#</td>
+                                            <td>#</td>
+                                            <td>#</td>
+                                            <td>#</td>
+                                            <td>#</td>
+                                        </tr>--}}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div class="Allinfo-bottom">
-                        <div class="row">
-                            <div class="col-xxl-9 col-xl-9 col-lg-9">
-                                <div class="info-bottom-l">
-                                    <div class="show-info1">
-                                        {{-- <div class="S-Checkbox">
-                                            <p>Static</p>
-                                            <input type="checkbox" class="check"></input>
+                        <div class="Allinfo-bottom">
+                            <div class="row">
+                                <div class="col-xxl-9 col-xl-9 col-lg-9">
+                                    <div class="info-bottom-l">
+                                        <div class="show-info1">
+                                            {{-- <div class="S-Checkbox">
+                                                <p>Static</p>
+                                                <input type="checkbox" class="check"></input>
+                                            </div>
+                                            <div class="show-number">
+                                                <input type="text" readonly placeholder="info">
+                                            </div> --}}
                                         </div>
-                                        <div class="show-number">
-                                            <input type="text" readonly placeholder="info">
-                                        </div> --}}
-                                    </div>
-                                    <div class="show-info2" >
-                                        <div class="S-Checkbox2" >
-                                            <div class="row">
-                                                <div class="col-lg-8">
-                                                    <div class="row">
-                                                        {{-- <div class="col-lg-5 mt-1">
-                                                            Pt-cde
+                                        <div class="show-info2" >
+                                            <div class="S-Checkbox2" >
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="row">
+                                                            {{-- <div class="col-lg-5 mt-1">
+                                                                Pt-cde
+                                                            </div>
+                                                            <div class="col-lg-6 mt-1">
+                                                                0
+                                                            </div> --}}
+                                                            <div class="col-lg-5 mt-1">
+                                                                Reduc%
+                                                            </div>
+                                                            <div class="col-lg-6 mt-1">
+                                                                <input type="number" min="0" id="discount" class="form-control" style="height: 70%;width:65%;" max="100" onkeyup="check_discount()" value="{{$dis_value}}">
+                                                            </div>
+                                                            <div class="col-lg-5 mt-1">
+                                                                Already dec
+                                                            </div>
+                                                            <div class="col-lg-6 mt-1" id="per_dis">
+                                                                {{number_format($ready,2)}}
+                                                            </div>
+                                                            <div class="col-lg-5 mt-1"></div>
+                                                            <div class="col-lg-6 mt-1"></div>
+                                                            <div class="col-lg-5 mt-1"></div>
+                                                            <div class="col-lg-6 mt-1"></div>
                                                         </div>
-                                                        <div class="col-lg-6 mt-1">
-                                                            0
-                                                        </div> --}}
-                                                        <div class="col-lg-5 mt-1">
-                                                            Reduc%
-                                                        </div>
-                                                        <div class="col-lg-6 mt-1">
-                                                            <input type="number" min="0" id="discount" class="form-control" style="height: 70%;width:65%;" max="100" onkeyup="check_discount()" value="{{$dis_value}}">
-                                                        </div>
-                                                        <div class="col-lg-5 mt-1">
-                                                            Already dec
-                                                        </div>
-                                                        <div class="col-lg-6 mt-1" id="per_dis">
-                                                            {{number_format($ready,2)}}
-                                                        </div>
-                                                        <div class="col-lg-5 mt-1"></div>
-                                                        <div class="col-lg-6 mt-1"></div>
-                                                        <div class="col-lg-5 mt-1"></div>
-                                                        <div class="col-lg-6 mt-1"></div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="S-Checkbox3">
-                                                        <button onclick="CalDis()">Apply<br>reduce</button>
-                                                        <button onclick="CancelDis()">Cancel<br>Discount</button>
+                                                    <div class="col-lg-4">
+                                                        <div class="S-Checkbox3">
+                                                            <button onclick="CalDis()">Apply<br>reduce</button>
+                                                            <button onclick="CancelDis()">Cancel<br>Discount</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="show-info3">
-                                        {{-- <div class="S-Checkbox3">
-                                            <button>Apply<br>reduce</button>
-                                            <button>Cancel<br>Discount</button>
-                                        </div> --}}
+                                        <div class="show-info3">
+                                            {{-- <div class="S-Checkbox3">
+                                                <button>Apply<br>reduce</button>
+                                                <button>Cancel<br>Discount</button>
+                                            </div> --}}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xxl-3 col-xl-3 col-lg-3">
-                                <div class="info-bottom-r">
-                                    <p class="paynum" id="sum_pay">{{number_format($total,2)}}</p>
-                                    <input type="hidden" id="payment" value="{{$total}}" >
-                                    <div class="pay">
-                                        <p>Pay</p>
-                                        <p id="sum_pay2">{{number_format($total,2)}}</p>
+                                <div class="col-xxl-3 col-xl-3 col-lg-3">
+                                    <div class="info-bottom-r">
+                                        <p class="paynum" id="sum_pay">{{number_format($total,2)}}</p>
+                                        <input type="hidden" id="payment" value="{{$total}}" >
+                                        <div class="pay">
+                                            <p>Pay</p>
+                                            <p id="sum_pay2">{{number_format($total,2)}}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 </div>
             </div>
@@ -346,7 +351,7 @@
                 <button class="btn3" onclick="change_modeButton(2)"><img src="frontend/images/icon index/ic_baseline-table-restaurant.svg"><br>New<br>Ord On</button>
                 <div class="btn-noactive"><img src="frontend/images/icon index/fa6-solid_map-location-dot.svg"><br>Locate address</div>
                 <button class="btn5">Exit <img src="frontend/images/icon index/exit.svg"> </button>
-                <button class="btn6"><img src="frontend/images/icon index/zondicons_save-disk.svg"><br>F12Save</button>
+                <button class="btn6" type="button" onclick="SaveOrder()"><img src="frontend/images/icon index/zondicons_save-disk.svg"><br>F12Save</button>
                 <button class="btn7"><img src="frontend/images/icon index/Print.svg"><br>F6  Ticket</button>
                 <div class="btn-noactive"><img src="frontend/images/icon index/treat.svg"><br>F7 Treat</div>
                 <button class="btn9"><img src="frontend/images/icon index/Frame clash.svg"><br>F8 Cash</button>
@@ -719,11 +724,26 @@ echo "</script>";
     var po_ar = '';
     var po_ad = '';
    function check_discount(){
-    var pay = Number(document.getElementById('payment').value);
+    // var pay = Number(document.getElementById('payment').value);
+    var pay = 0;
+    var get_v = '{{$count_r}}';
+    get_v = get_v*1;
     var dis = document.getElementById('discount').value;
+    for(x=1;x<get_v;x++){
+        var qty_p = document.getElementById('price_qty'+x).value*1;
+        var free_p = document.getElementById('free_p'+x).value*1;
+        var price = document.getElementById('v_price'+x).value*1;
+        if(price == free_p){
+            var cal_qty = (qty_p * (100-dis))/100;
+            var cal_price = (price * (100-dis))/100;
+            pay+=qty_p;
+
+        }
+    }
     if (dis < 0 || dis > 100){
         document.getElementById('discount').value = 0;
     }
+
     var sum_dis = (dis/100)*pay;
     document.getElementById('per_dis').innerHTML = sum_dis.toLocaleString("en-US", {minimumFractionDigits: 2});
    }
@@ -741,7 +761,13 @@ echo "</script>";
         if(price == free_p){
             var cal_qty = (qty_p * (100-dis))/100;
             var cal_price = (price * (100-dis))/100;
-            sum+= cal_price;
+            if(c){
+                sum+=qty_p;
+            }else{
+                sum+=cal_qty;
+
+            }
+            
             document.getElementById('sum_qty'+x).innerHTML = cal_qty.toLocaleString("en-US", {minimumFractionDigits: 2}); 
             document.getElementById('price'+x).innerHTML = cal_price.toLocaleString("en-US", {minimumFractionDigits: 2}); 
         }
@@ -755,21 +781,23 @@ echo "</script>";
     get_v = get_v*1;
     var pay = '{{$total+$ready}}';
     pay = pay*1;
+    var sum = 0;
     // var pay = Number(document.getElementById('payment').value);
     // var dis = document.getElementById('discount').value;
     document.getElementById('discount').value = 0;
     document.getElementById('per_dis').innerHTML = '0.00';
-    document.getElementById('sum_pay').innerHTML = pay.toLocaleString("en-US", {minimumFractionDigits: 2}) ; 
-    document.getElementById('sum_pay2').innerHTML = pay.toLocaleString("en-US", {minimumFractionDigits: 2}); 
     for(x=1;x<get_v;x++){
         var qty_p = document.getElementById('price_qty'+x).value*1;
         var free_p = document.getElementById('free_p'+x).value*1;
         var price = document.getElementById('v_price'+x).value*1;
         if(price == free_p){
+        sum+=qty_p;
         document.getElementById('sum_qty'+x).innerHTML = qty_p.toLocaleString("en-US", {minimumFractionDigits: 2}); 
         document.getElementById('price'+x).innerHTML = price.toLocaleString("en-US", {minimumFractionDigits: 2}); 
         }
     }
+    document.getElementById('sum_pay').innerHTML = sum.toLocaleString("en-US", {minimumFractionDigits: 2}) ; 
+    document.getElementById('sum_pay2').innerHTML = sum.toLocaleString("en-US", {minimumFractionDigits: 2}); 
     $('#discount').removeAttr('disabled');
    }
    function check_active(id,r,d){
@@ -810,15 +838,7 @@ echo "</script>";
                         discount:document.getElementById('discount').value,
                     },
                     success: function(data) {
-                        Swal.fire(
-                        'Deleted!',
-                        'Your list has been deleted.',
-                        'success'
-                        ).then((result2)=>{
-                            if(result2.isConfirmed){
-                                window.location.reload();
-                            }
-                        })
+                        window.location.reload();
                     }
                 });
             }
@@ -879,7 +899,7 @@ echo "</script>";
     }
     function get_note(){
         document.getElementById('note').value = document.getElementById('hideNote'+active).value;
-        console.log(document.getElementById('note').value);
+        // console.log(document.getElementById('note').value);
     }
    function save_note(){
     $.ajax({
@@ -902,7 +922,7 @@ echo "</script>";
 {
     var form = $('#Menu_form')[0];
     var data = new FormData(form);
-    console.log(data)
+    // console.log(data)
     $.ajax({
                     type: 'POST',
                     url:'{{url("/save-menu")}}',
@@ -1003,7 +1023,46 @@ function cus_active(cus){
             $('#show_phone').append(tel);
             count_tr++;
         }
-        console.log(phone)
+        // console.log(phone)
+}
+function SaveOrder(){
+    var form = $('#Form_test')[0];
+    var data = new FormData(form);
+    // console.log(data)
+    $.ajax({
+                    type: 'POST',
+                    url:'{{url("/order-save")}}',
+                    enctype: 'multipart/form-data',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function(data) {
+                        if(data){
+                            Swal.fire({
+                            icon: 'success',
+                            title: 'Data saved',
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
+                        }else{
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Something is empty',
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
+                        }
+                    }
+                });
+    document.getElementById("Form_test").reset();
+    return false;
+
+}
+function OrderSubmit(po){
+    if(po == 0){
+        return false;
+    }
 }
 
 </script>

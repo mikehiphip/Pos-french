@@ -197,6 +197,11 @@ class MenuController extends Controller
             return response()->json(false);
 
         }
-        
+    }
+    public function save_order(Request $request){
+        try {
+            dd($request);
+        } catch (\Throwable $th) {
+        }
     }
 }
