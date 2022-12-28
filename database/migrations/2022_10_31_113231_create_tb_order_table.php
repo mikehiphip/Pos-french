@@ -19,9 +19,10 @@ class CreateTbOrderTable extends Migration
             $table->enum("typ",['1','2']);
             $table->enum("member",['yes','no'])->default('no');
             $table->integer('total_qty');
-            $table->string("discount",100);
+            $table->integer("discount");
             $table->string("total_price",100);
             $table->string("prefix",255);
+            $table->integer('number');
             $table->string("total_paid",100);
             $table->integer("pt_cde")->nullable();
             $table->datetime('created_at')->nullable();

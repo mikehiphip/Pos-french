@@ -17,6 +17,10 @@ use App\Models\Backend\FoodModel;
 use App\Models\Backend\CustomerModel;
 use App\Models\Backend\PaymentModel;
 use App\Models\Backend\ZoneModel;
+use App\Models\Backend\OrderModel;
+use App\Models\Backend\OrderListModel;
+
+
 
 
 class MenuController extends Controller
@@ -200,8 +204,60 @@ class MenuController extends Controller
     }
     public function save_order(Request $request){
         try {
-            dd($request);
+            // dd($request);
+            $prefix = 'OD'.date('Ymd');
+            $number = OrderModel::max('number');
+            $number = $number == null?1:$number+1 ;
+            // dd($number);
+            if($number < 10){
+                $text_number = $prefix."000$number";
+            }else if($number >= 10 && $number < 100){
+                $text_number = $prefix."00$number";
+            }else if($number >= 100 && $number < 1000){
+                $text_number = $prefix."0$number";
+            }else{
+                $text_number = $prefix.$number;
+            }
+            // dd($text_number);
+          
+            $data = new OrderModel;
+            $data->prefix = $text_number;
+            $data->number = $number;
+            $data->total_qty = array_sum($request->qty_nump)*1;
+            $data->discount = ($request->disscount)*1;
+            $data->total_price = array_sum($request->free_product);
+            $data->total_paid = $request->total_paid;
+            $data->bill  = 'y';
+            $data->cus_id = $request->cusid;
+            if($request->cusid){
+                $data->member = 'yes';
+            }
+            $data->typ = $request->type;
+            $data->created_at = date('Y-m-d H:i:s');
+            $data->updated_at = date('Y-m-d H:i:s');
+            if($data->save()){
+                for($x=0;$x<count($request->food_id);$x++){
+                    $find = FoodModel::where('id',$request->food_id[$x])->first();
+                    // dd($find);
+                    $data1 = new OrderListModel;
+                    $data1->order_id = $data->id;
+                    $data1->cat_id  = $find->cat_id;
+                    $data1->food_id = $request->food_id[$x];
+                    $data1->price    = $request->free_product[$x];
+                    $data1->qty     = $request->qty_nump[$x];
+                    $data1->note     = $request->note_text[$x];
+                    $data1->created_at = date('Y-m-d H:i:s');
+                    $data1->updated_at = date('Y-m-d H:i:s');
+                    $data1->save();
+                }
+                // dd($data,$data1);
+            }
+            return response()->json(true);
+            // dd($data);
+
         } catch (\Throwable $th) {
+            dd($th);
+            return response()->json(false);
         }
     }
 }

@@ -223,6 +223,9 @@
                                             $total = 0;
                                             $ready = 0;
                                         ?>
+                                         <input id="disc" type="hidden" value="0" name="disscount">
+                                         <input type="hidden" id="cus_id" name="cusid">
+                                         <input type="hidden" id="type" name="type">
                                         @foreach($pointer as $r => $data)
                                             @foreach($data as $d => $dat)
                                             <?php $total +=  $qty_num[$r][$d] * ($qty_price[$r][$d]*$discount); 
@@ -293,7 +296,7 @@
                                                                 Reduc%
                                                             </div>
                                                             <div class="col-lg-6 mt-1">
-                                                                <input type="number" min="0" id="discount" class="form-control" style="height: 70%;width:65%;" max="100" onkeyup="check_discount()" value="{{$dis_value}}">
+                                                                <input type="number" min="0" id="discount"  class="form-control" style="height: 70%;width:65%;" max="100" onkeyup="check_discount()" value="{{$dis_value}}">
                                                             </div>
                                                             <div class="col-lg-5 mt-1">
                                                                 Already dec
@@ -327,7 +330,7 @@
                                 <div class="col-xxl-3 col-xl-3 col-lg-3">
                                     <div class="info-bottom-r">
                                         <p class="paynum" id="sum_pay">{{number_format($total,2)}}</p>
-                                        <input type="hidden" id="payment" value="{{$total}}" >
+                                        <input type="hidden" id="payment" value="{{$total}}" name="total_paid">
                                         <div class="pay">
                                             <p>Pay</p>
                                             <p id="sum_pay2">{{number_format($total,2)}}</p>
@@ -729,6 +732,7 @@ echo "</script>";
     var get_v = '{{$count_r}}';
     get_v = get_v*1;
     var dis = document.getElementById('discount').value;
+    document.getElementById('disc').value = dis ;
     for(x=1;x<get_v;x++){
         var qty_p = document.getElementById('price_qty'+x).value*1;
         var free_p = document.getElementById('free_p'+x).value*1;
@@ -774,6 +778,7 @@ echo "</script>";
     }
     document.getElementById('sum_pay').innerHTML = sum.toLocaleString("en-US", {minimumFractionDigits: 2}) ; 
     document.getElementById('sum_pay2').innerHTML = sum.toLocaleString("en-US", {minimumFractionDigits: 2}); 
+    document.getElementById('payment').value = sum;
     if(c){}else{$('#discount').prop('disabled', true);}
    }
    function CancelDis(){
@@ -798,6 +803,7 @@ echo "</script>";
     }
     document.getElementById('sum_pay').innerHTML = sum.toLocaleString("en-US", {minimumFractionDigits: 2}) ; 
     document.getElementById('sum_pay2').innerHTML = sum.toLocaleString("en-US", {minimumFractionDigits: 2}); 
+    document.getElementById('payment').value = sum;
     $('#discount').removeAttr('disabled');
    }
    function check_active(id,r,d){
@@ -958,6 +964,7 @@ echo "</script>";
 var color_but = ['red','blue','green'];
 function change_modeButton(num){
     $("#employer").css("background-color",color_but[num]);
+    document.getElementById('type').value = num;
 }
 var count_tr = 0;
 var re_act = '';
@@ -1015,6 +1022,7 @@ function cus_active(cus){
         document.getElementById('zone').value = data.zone;
         document.getElementById('delivery').value = data.charge;
         document.getElementById('code_zone').value = data.n;
+        document.getElementById('cus_id').value = data.id;
         $('#main_phone').css("background-color",'#ffc107');
         // $('#cus_tr'+cus_actived).css("background-color",'white');
         let phone = JSON.parse(data.phone);
@@ -1029,7 +1037,8 @@ function SaveOrder(){
     var form = $('#Form_test')[0];
     var data = new FormData(form);
     // console.log(data)
-    $.ajax({
+    if(document.getElementById('type').value){
+        $.ajax({
                     type: 'POST',
                     url:'{{url("/order-save")}}',
                     enctype: 'multipart/form-data',
@@ -1042,9 +1051,12 @@ function SaveOrder(){
                             Swal.fire({
                             icon: 'success',
                             title: 'Data saved',
-                            showConfirmButton: false,
-                            timer: 1500
-                            })
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.replace('{{url("/menu-list")}}');
+                                    } 
+                                })
                         }else{
                             Swal.fire({
                             icon: 'error',
@@ -1055,9 +1067,16 @@ function SaveOrder(){
                         }
                     }
                 });
-    document.getElementById("Form_test").reset();
+        document.getElementById("Form_test").reset();
+    }else{
+        Swal.fire({
+            icon: 'error',
+            title: 'Please choose Delivery Take away or On table ',
+            showConfirmButton: false,
+            timer: 5000
+        })
+    }
     return false;
-
 }
 function OrderSubmit(po){
     if(po == 0){
