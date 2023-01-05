@@ -107,6 +107,7 @@ class MenuController extends Controller
         $zone = ZoneModel::leftjoin('tb_city','tb_zone.id','=','tb_city.zone_id')->get();
         $cus = CustomerModel::orderBy('name')->get();
         // dd(json_encode($cus));
+
         return view("$this->prefix.index",[
             'prefix' => $this->prefix,
             'row'   => $f_id,
@@ -233,6 +234,7 @@ class MenuController extends Controller
                 $data->member = 'yes';
             }
             $data->typ = $request->type;
+            $data->created_by = Auth::guard('Member')->id();
             $data->created_at = date('Y-m-d H:i:s');
             $data->updated_at = date('Y-m-d H:i:s');
             if($data->save()){
@@ -259,5 +261,34 @@ class MenuController extends Controller
             dd($th);
             return response()->json(false);
         }
+    }
+    public function service_data($id){
+        if($id == 1){
+            $data = OrderModel::where('paid','n')->orderBy('id','desc')->get();
+        }
+        $test = "";
+        $ser = ['L','E','P'];
+        $color = ['#FF33FF','#99FFFF','#FFFACD'];
+        $count_data = count($data);
+        foreach($data as $d => $dat){
+            if($count_data < 10){
+                $count_data = "000$count_data";
+            }else if($count_data >= 10 && $count_data < 100){
+                $count_data = "00$count_data";
+            }else if($count_data >= 100 && $count_data < 1000){
+                $count_data = "0$count_data";
+            }else{
+                $count_data = $count_data;
+            }
+            $co = $dat->typ ==null?'':"style='background-color:".$color[$dat->typ].";'";
+            $vices = $dat->typ ==null?'':$ser[$dat->typ];
+            $test .= "<tr>";
+            $test .= "<td $co class='text-center'>$vices</td>";
+            $test .= "<td>$count_data</td>";
+
+            $test .= "</tr>";
+            $count_data--;
+        }
+        return $test;
     }
 }

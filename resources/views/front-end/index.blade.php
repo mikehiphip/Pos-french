@@ -472,14 +472,14 @@
             </div>
             <div class="service-Jour-btn">
                 <p>Service<br>Jour</p>
-                <button class="blue-btn">Inprogress</button>
-                <button class="blue-btn">Completed</button>
-                <button class="blue-btn">Service</button>
-                <button class="blue-btn">Daytime</button>
+                <button class="blue-btn" type="button" onclick="Service_data(1)">Inprogress</button>
+                <button class="blue-btn" type="button" onclick="Service_data(2)">Completed</button>
+                <button class="blue-btn" type="button" onclick="Service_data(3)">Service</button>
+                <button class="blue-btn" type="button" onclick="Service_data(4)">Daytime</button>
             </div>
             <div class="table-info">
                 <div class="table-scroll-2">
-                    <table class="table">
+                    <table class="table" style="overflow-y: scroll;" >
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col"><button>Co</button></th>
@@ -494,117 +494,7 @@
                                 <th scope="col"><button>Ok</button></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                                <td>#</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">7</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">8</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">9</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">10</th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                        <tbody id="show_service">
                         </tbody>
                     </table>
                 </div>
@@ -961,7 +851,7 @@ echo "</script>";
     document.getElementById("Menu_form").reset();
     return false;
 }
-var color_but = ['red','blue','green'];
+var color_but = ['#FF33FF','#99FFFF','#FFFACD'];
 function change_modeButton(num){
     $("#employer").css("background-color",color_but[num]);
     document.getElementById('type').value = num;
@@ -1082,6 +972,15 @@ function OrderSubmit(po){
     if(po == 0){
         return false;
     }
+}
+function Service_data(t){
+    $.ajax({
+                    type: 'GET',
+                    url:'{{url("/service-data")}}/'+t,
+                    success: function(data) {
+                       document.getElementById('show_service').innerHTML = data;
+                    }
+                });
 }
 
 </script>
