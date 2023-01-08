@@ -488,9 +488,9 @@
                                 <th scope="col"><button>Qty</button></th>
                                 <th scope="col"><button>Customer</button></th>
                                 <th scope="col"><button>Staff</button></th>
-                                <th scope="col" class="zone">
-                                <input type="number" id="quantity" name="quantity" min="1" max="100" placeholder="Zone"></th>
-                                <th scope="col"><button>Size</button></th>
+                                {{-- <th scope="col" class="zone">
+                                <input type="number" id="quantity" name="quantity" min="1" max="100" placeholder="Zone"></th> --}}
+                                <th scope="col"><button>Site</button></th>
                                 <th scope="col"><button>Ok</button></th>
                             </tr>
                         </thead>

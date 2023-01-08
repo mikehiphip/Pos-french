@@ -266,6 +266,9 @@ class MenuController extends Controller
         if($id == 1){
             $data = OrderModel::where('paid','n')->orderBy('id','desc')->get();
         }
+        if($id == 2){
+            $data = OrderModel::where('paid','y')->orderBy('id','desc')->get();
+        }
         $test = "";
         $ser = ['L','E','P'];
         $color = ['#FF33FF','#99FFFF','#FFFACD'];
@@ -284,8 +287,13 @@ class MenuController extends Controller
             $vices = $dat->typ ==null?'':$ser[$dat->typ];
             $test .= "<tr>";
             $test .= "<td $co class='text-center'>$vices</td>";
-            $test .= "<td>$count_data</td>";
-
+            $test .= "<td class='text-center'>$count_data</td>";
+            $test .= "<td class='text-center'>".date('H:i',Strtotime($dat->created_at))."</td>";
+            $test .= "<td class='text-center'>$dat->total_qty</td>";
+            $test .= "<td class='text-center'>$dat->cus_id</td>";
+            $test .= "<td class='text-center'>$dat->created_by</td>";
+            $test .= "<td class='text-center'>M0000</td>";
+            $test .= "<td class='text-center'><input type='checkbox' disabled></td>";
             $test .= "</tr>";
             $count_data--;
         }
