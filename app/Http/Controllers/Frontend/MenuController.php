@@ -19,6 +19,8 @@ use App\Models\Backend\PaymentModel;
 use App\Models\Backend\ZoneModel;
 use App\Models\Backend\OrderModel;
 use App\Models\Backend\OrderListModel;
+use App\Models\Backend\TableDetailModel;
+
 
 
 
@@ -264,16 +266,27 @@ class MenuController extends Controller
     }
     public function service_data($id){
         if($id == 1){
-            $data = OrderModel::where('paid','n')->orderBy('id','desc')->get();
+            $data = OrderModel::/* whereDate('created_at',date('Y-m-d'))-> */where('paid','n')->orderBy('id','desc')->get();
         }
         if($id == 2){
-            $data = OrderModel::where('paid','y')->orderBy('id','desc')->get();
+            $data = OrderModel::/* whereDate('created_at',date('Y-m-d'))-> */where('paid','y')->orderBy('id','desc')->get();
+        }
+        if($id == 3){
+            $data = OrderModel::whereDate('created_at',date('Y-m-d'))
+            ->whereTime('created_at','>=', \Carbon\Carbon::parse('15:00'))
+            ->whereTime('created_at','<=', \Carbon\Carbon::parse('23:59:59'))
+            ->orderBy('id','desc')->get();
+        }
+        if($id == 4){
+            $data = OrderModel::whereDate('created_at',date('Y-m-d'))->orderBy('id','desc')->get();
         }
         $test = "";
         $ser = ['L','E','P'];
         $color = ['#FF33FF','#99FFFF','#FFFACD'];
         $count_data = count($data);
         foreach($data as $d => $dat){
+            $cus = CustomerModel::find($dat->cus_id);
+            $table = TableDetailModel::find($dat->table_id);
             if($count_data < 10){
                 $count_data = "000$count_data";
             }else if($count_data >= 10 && $count_data < 100){
@@ -290,10 +303,17 @@ class MenuController extends Controller
             $test .= "<td class='text-center'>$count_data</td>";
             $test .= "<td class='text-center'>".date('H:i',Strtotime($dat->created_at))."</td>";
             $test .= "<td class='text-center'>$dat->total_qty</td>";
-            $test .= "<td class='text-center'>$dat->cus_id</td>";
+            if($cus){
+                $test .= "<td class='text-center'>$cus->name</td>";
+            }else if($table){
+                $test .= "<td class='text-center'>$table->tb_name</td>";
+            }else{
+                $test .= "<td class='text-center'>-</td>";
+            }
             $test .= "<td class='text-center'>$dat->created_by</td>";
             $test .= "<td class='text-center'>M0000</td>";
-            $test .= "<td class='text-center'><input type='checkbox' disabled></td>";
+            $box = $dat->paid == 'y'?'checked':'';
+            $test .= "<td class='text-center'><input type='checkbox' $box disabled></td>";
             $test .= "</tr>";
             $count_data--;
         }
