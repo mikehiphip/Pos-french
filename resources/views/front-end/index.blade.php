@@ -357,7 +357,7 @@
                 <button class="btn6" type="button" onclick="SaveOrder()"><img src="frontend/images/icon index/zondicons_save-disk.svg"><br>F12Save</button>
                 <button class="btn7"><img src="frontend/images/icon index/Print.svg"><br>F6  Ticket</button>
                 <div class="btn-noactive"><img src="frontend/images/icon index/treat.svg"><br>F7 Treat</div>
-                <button class="btn9"><img src="frontend/images/icon index/Frame clash.svg"><br>F8 Cash</button>
+                <button class="btn9" type="button" onclick="payment_save()"><img src="frontend/images/icon index/Frame clash.svg"><br>F8 Cash</button>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn10 btn-primary" data-toggle="modal" data-target="#OPmodal"><img src="frontend/images/icon index/flat-color-icons_settings.svg"><br>Option</button>
                 <!-- Modal -->
@@ -981,6 +981,30 @@ function Service_data(t){
                        document.getElementById('show_service').innerHTML = data;
                     }
                 });
+}
+var active_data = '';
+function select_paid(act){
+    if(act){
+        $("#select_tr"+active_data).css("background-color",'#D3D3D3');
+    }else{
+        $("#select_tr"+active_data).css("background-color",'');
+    }
+    active_data = act;
+}
+function payment_save(){
+    $.ajax({
+            type: 'GET',
+            url:'{{url("/paid-data")}}/'+active_data,
+            success: function(data) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successful payment',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                window.location.reload();
+            }
+    });
 }
 
 </script>

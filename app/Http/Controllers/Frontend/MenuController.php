@@ -298,11 +298,11 @@ class MenuController extends Controller
             }
             $co = $dat->typ ==null?'':"style='background-color:".$color[$dat->typ].";'";
             $vices = $dat->typ ==null?'':$ser[$dat->typ];
-            $test .= "<tr>";
+            $test .= "<tr onclick='select_paid($dat->id)' id='select_tr$dat->id'>";
             $test .= "<td $co class='text-center'>$vices</td>";
-            $test .= "<td class='text-center'>$count_data</td>";
-            $test .= "<td class='text-center'>".date('H:i',Strtotime($dat->created_at))."</td>";
-            $test .= "<td class='text-center'>$dat->total_qty</td>";
+            $test .= "<td class='text-center' >$count_data</td>";
+            $test .= "<td class='text-center' >".date('H:i',Strtotime($dat->created_at))."</td>";
+            $test .= "<td class='text-center' >$dat->total_qty</td>";
             if($cus){
                 $test .= "<td class='text-center'>$cus->name</td>";
             }else if($table){
@@ -310,13 +310,19 @@ class MenuController extends Controller
             }else{
                 $test .= "<td class='text-center'>-</td>";
             }
-            $test .= "<td class='text-center'>$dat->created_by</td>";
-            $test .= "<td class='text-center'>M0000</td>";
+            $test .= "<td class='text-center' >$dat->created_by</td>";
+            $test .= "<td class='text-center' >M0000</td>";
             $box = $dat->paid == 'y'?'checked':'';
-            $test .= "<td class='text-center'><input type='checkbox' $box disabled></td>";
+            $test .= "<td class='text-center'><input type='checkbox' $box disabled ></td>";
             $test .= "</tr>";
             $count_data--;
         }
         return $test;
+    }
+    public function paid_data($id){
+        $data = OrderModel::find($id);
+        $data->paid = 'y';
+        $data->updated_at = date('Y-m-d H:i:s');
+        $data->save();
     }
 }

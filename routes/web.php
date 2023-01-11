@@ -52,6 +52,8 @@ Route::get("/note", [Frontend\MenuController::class, 'add_note']);
 Route::post("/save-menu", [Frontend\MenuController::class, 'insert']);
 Route::post("/order-save", [Frontend\MenuController::class, 'save_order']);
 Route::get("/service-data/{id}", [Frontend\MenuController::class, 'service_data']);
+Route::get("/paid-data/{id}", [Frontend\MenuController::class, 'paid_data']);
+
 
 
 
