@@ -16,7 +16,7 @@ class POS
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check()){
+        if(Auth::guard('employee')->check()){
             return $next($request);
         }
         return redirect('pos/login');

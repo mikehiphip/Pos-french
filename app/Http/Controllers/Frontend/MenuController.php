@@ -20,10 +20,7 @@ use App\Models\Backend\ZoneModel;
 use App\Models\Backend\OrderModel;
 use App\Models\Backend\OrderListModel;
 use App\Models\Backend\TableDetailModel;
-
-
-
-
+use App\Models\Backend\EmployeeInfoModel;
 
 class MenuController extends Controller
 {
@@ -125,6 +122,9 @@ class MenuController extends Controller
             'customer'  => $cus,
             'cus_data' => json_encode($cus),
         ]);
+    }
+    public function change_price(Request $request){
+        dd($request);
     }
     public function food_list(Request $request){
         
@@ -236,7 +236,7 @@ class MenuController extends Controller
                 $data->member = 'yes';
             }
             $data->typ = $request->type;
-            $data->created_by = Auth::guard('Member')->id();
+            $data->created_by = Auth::guard('employee')->id();
             $data->created_at = date('Y-m-d H:i:s');
             $data->updated_at = date('Y-m-d H:i:s');
             if($data->save()){
@@ -287,6 +287,7 @@ class MenuController extends Controller
         foreach($data as $d => $dat){
             $cus = CustomerModel::find($dat->cus_id);
             $table = TableDetailModel::find($dat->table_id);
+            $staff = EmployeeInfoModel::find($dat->created_by);
             if($count_data < 10){
                 $count_data = "000$count_data";
             }else if($count_data >= 10 && $count_data < 100){
@@ -310,7 +311,7 @@ class MenuController extends Controller
             }else{
                 $test .= "<td class='text-center'>-</td>";
             }
-            $test .= "<td class='text-center' >$dat->created_by</td>";
+            $test .= "<td class='text-center' >$staff->first_name</td>";
             $test .= "<td class='text-center' >M0000</td>";
             $box = $dat->paid == 'y'?'checked':'';
             $test .= "<td class='text-center'><input type='checkbox' $box disabled ></td>";

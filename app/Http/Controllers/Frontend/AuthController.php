@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Webpanel\LogsController;
 
 //=== Model Backend ===
-use App\Models\Backend\InfoModel;
+use App\Models\Backend\EmployeeInfoModel;
 
 //=====================
 
@@ -23,37 +23,26 @@ class AuthController extends Controller
     //=== Submit Auth ===
     public function getLogin()
     {
-        if (Auth::guard()->id() != null) {
-            return redirect('webpanel');
-        } else {
-            return view("$this->prefix.login", [
-                'css' => [""],
-                'prefix' => $this->prefix
-            ]);
-        }
+        return view("$this->prefix.login", [
+            'prefix' => $this->prefix
+        ]);
     }
     public function postLogin(Request $request)
     {
-        $username = $request->username;
-        $password = $request->password;
-
-        $remember = ($request->remember == 'on') ? true : false;
-        if (Auth::attempt(['email' => $username, 'password' => $password], $remember)) {
-            $member = User::find(Auth::guard()->id());
-            if ($member->status != "active") {
-                return redirect('webpanel\login')->with(['error' => 'ไม่สามารถใช้งานได้ กรุณาติดต่อผู้ดูแล !']);
-            } else {
-                return redirect('webpanel');
-            }
-        } else {
-            return redirect('webpanel\login')->with(['error' => 'ชื่อผู้ใช้งาน หรือรหัสผ่านผิด !']);
+        $username = $request->fname;
+        $password = $request->password;  
+        Auth::guard('employee')->attempt(['username'=>$username,'password'=>$password,'status'=>'active']);
+        if(Auth::guard('employee')->check()){
+            return redirect('/');
+        }else{
+            return back()->with(['error'=> true]);
         }
     }
 
     public function logOut()
     {
-        if (!Auth::logout()) {
-            return redirect("webpanel\login");
+        if (!Auth::guard('employee')->logout()) {
+            return redirect("pos\login");
         }
     }
 }

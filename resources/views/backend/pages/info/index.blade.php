@@ -132,6 +132,7 @@
                     {data: 'department',    title :'Department', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 3
                     {data: 'time_in',    title :'Start Work', formatter:"html", vertAlign:"middle", hozAlign: "center", width:'10%',responsive:2}, // 4
                     {data: 'time_out',    title :'Off Work', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'10%'}, // 5
+                    {data: 'status',    title :'Status', formatter:"html", vertAlign:"middle", align:"center",    width:'10%'}, // 4
                     {data: 'action',    title :'Action', formatter:"html", vertAlign:"middle",  hozAlign: "center",    width:'15%'}, // 6
                     ],
             });
@@ -156,6 +157,19 @@
             if (id.length > 0) {
                 destroy(id)
             }
+        }
+        function status(ids) {
+            const $this = $(this),
+                id = ids;
+            $.ajax({
+                type: 'get',
+                url: fullUrl + '/status/' + id,
+                success: function(res) {
+                    if (res == false) {
+                        $(this).prop('checked', false)
+                    }
+                }
+            });
         }
 
         function destroy(id) {

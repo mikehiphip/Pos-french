@@ -64,6 +64,7 @@ Route::group(['middleware' => ['Webpanel']], function () {
             Route::get('/{id}/edit', [Webpanel\InfoController::class, 'edit'])->where(['id' => '[0-9]+']);
             Route::post('/{id}/edit', [Webpanel\InfoController::class, 'update'])->where(['id' => '[0-9]+']);
             Route::get('/destroy/{id}', [Webpanel\InfoController::class, 'destroy']);
+            Route::get('/status/{id}', [Webpanel\InfoController::class, 'status'])->where(['id' => '[0-9]+']);
         });
         Route::prefix('department')->group(function () {
             Route::get('/', [Webpanel\DepartmentController::class, 'index']);

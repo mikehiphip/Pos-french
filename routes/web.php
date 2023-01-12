@@ -45,7 +45,6 @@ use App\Http\Controllers\Frontend as Frontend;
 Route::get('pos/login', [Frontend\AuthController::class, 'getLogin']);
 Route::post('pos/login', [Frontend\AuthController::class, 'postLogin']);
 Route::get('pos/logout', [Frontend\AuthController::class, 'logOut']);
-Route::get('member/logout', [Frontend\AuthController::class, 'logOut']);
 
 Route::group(['middleware' => ['POS']], function () {
     Route::get("/", [Frontend\MenuController::class, 'get_food']);
@@ -59,6 +58,7 @@ Route::group(['middleware' => ['POS']], function () {
     Route::post("/order-save", [Frontend\MenuController::class, 'save_order']);
     Route::get("/service-data/{id}", [Frontend\MenuController::class, 'service_data']);
     Route::get("/paid-data/{id}", [Frontend\MenuController::class, 'paid_data']);
+    Route::post("/change-price", [Frontend\MenuController::class, 'change_price']);
 });
 
 

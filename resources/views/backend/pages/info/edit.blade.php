@@ -64,7 +64,7 @@
                                     <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Password 
                                         <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required,input password for login</span> 
                                     </label>
-                                    <input type="text" id="password" name="password" class="form-control w-full" placeholder="" required value="{{$row->password}}">
+                                    <input type="text" id="password" name="password" class="form-control w-full" placeholder="" required >
                                 </div>
                             </div>
                             <div class="grid grid-cols-12 gap-6 mt-5 mb-3">

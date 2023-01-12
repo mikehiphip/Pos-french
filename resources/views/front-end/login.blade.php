@@ -2,19 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>@include("$prefix.inc_header")</head>
 
-<script src="js/bootstrap.min.js"></script>
+<script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
 
 <body>
 @include("$prefix.inc_topmenu")
+<center>
 <div class="container-fluid">
     <div class="wrap-pad">
         <div class="order-info">
             <div class="row">
                 <div class="col">
                     <div class="login-form">
-                        <form class="form-info">
+                        <form class="form-info" method="POST" action="{{url('pos/login')}}" >
+                        @csrf
                             <div class="img-login">
-                                <img src="frontend/images/icon index/flat-color-icons_businessman.svg" class="img-fluid">
+                                <img src="{{asset('frontend/images/icon index/flat-color-icons_businessman.svg')}}" class="img-fluid">
                                 <h3>LOGIN</h3>
                             </div>
                             
@@ -34,8 +36,13 @@
         </div>
     </div>
 </div>
+</center>
 
 @include("$prefix.inc_footer")
-
+@if(Session('error'))
+    <script>
+        alert('Username or Password is incorrect')
+    </script>
+@endif
 </body>
 </html>

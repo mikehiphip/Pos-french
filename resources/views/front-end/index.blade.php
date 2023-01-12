@@ -84,8 +84,7 @@
                                         <label for="text">Static</label><br>
                                         <input type="text" class="Static" placeholder="0" name="static" id="static_data"></input>
                                     </div>
-                                    <button class="f" type="button" data-toggle="modal" data-target="#customerModal" >Customer</button>
-                                    <button class="f" type="submit">Save<br>Custome</button>
+                                    <button class="f" type="submit">Save<br>Customer</button>
                                 </div>
                             </div>
                             <div class="N-Street">
@@ -169,6 +168,7 @@
                             </select>
                             <input type="text" class="Retrieve1 text-center" placeholder="0" id="delivery" name="charge"></input>
                             {{-- <button class="info1">+ / -</button> --}}
+                            <button class="info" type="button" data-toggle="modal" data-target="#customerModal" >Customer</button>
                             <button class="info" type="button">History</button>
                         </div>
                             </div>
@@ -184,10 +184,10 @@
                                     <a class="tomenu" href="{{url('menu')}}"><img src="frontend/images/icon index/bxs_food-menu.svg">MENU</a>
                                 </div>
                                 {{-- <button class="choosemenu-btn">F4 Choose<br>component</button> --}}
-                                {{-- <button class="choosemenu-btn">F3 Choose<br>component </button> --}}
-                                <button class="choosemenu-btn" onclick="CancelFree()">Cancel Free</button>
+                                <button class="choosemenu-btn" type="button" data-toggle="modal" data-target="#changepriceModal" onclick="ChangePrice()">Change<br>Unit Price </button>
+                                <button class="choosemenu-btn" onclick="CancelFree()" type="button">Cancel<br> Free</button>
                                 {{-- <button class="choosemenu-btn">Delete<br>Line</button> --}}
-                                <button class="choosemenu-btn" onclick="FreePirce()">Free ok</button>
+                                <button class="choosemenu-btn" onclick="FreePirce()" type="button">Free <br>ok</button>
                             </div>
                             <div class="all-choosemenu">
                                 <button class="choosemenu-btn" data-toggle="modal" onclick="get_note()" data-target="#keyboardModal" id="btn_note" disabled>Note<br>Line</button>
@@ -231,7 +231,7 @@
                                             <?php $total +=  $qty_num[$r][$d] * ($qty_price[$r][$d]*$discount); 
                                                 $ready += $qty_price[$r][$d]-($qty_price[$r][$d]*$discount);
                                             ?>
-                                            <tr onclick="check_active({{$count_r}},{{$r}},{{$d}})">
+                                            <tr onclick="check_active({{$count_r}},{{$r}},{{$d}},{{$dat}})">
                                                 <th scope="row"><input type="radio" name="click" id="ch{{$count_r}}" value="{{$count_r}}"> {{$count_r}}</th>
                                                 <td>{{$food_name[$r][$d]}}</td>
                                                 <input type="hidden" name="food_id[]" value="{{$row[$r][$d]}}">
@@ -353,7 +353,7 @@
                 <button class="btn2" onclick="change_modeButton(1)"><img src="frontend/images/icon index/new ord.svg"><br>New<br>Ord Take</button>
                 <button class="btn3" onclick="change_modeButton(2)"><img src="frontend/images/icon index/ic_baseline-table-restaurant.svg"><br>New<br>Ord On</button>
                 <div class="btn-noactive"><img src="frontend/images/icon index/fa6-solid_map-location-dot.svg"><br>Locate address</div>
-                <button class="btn5">Exit <img src="frontend/images/icon index/exit.svg"> </button>
+                <button class="btn5" type="button" onclick="window.location.replace('{{url("/pos/logout")}}')">Exit <img src="frontend/images/icon index/exit.svg"> </button>
                 <button class="btn6" type="button" onclick="SaveOrder()"><img src="frontend/images/icon index/zondicons_save-disk.svg"><br>F12Save</button>
                 <button class="btn7"><img src="frontend/images/icon index/Print.svg"><br>F6  Ticket</button>
                 <div class="btn-noactive"><img src="frontend/images/icon index/treat.svg"><br>F7 Treat</div>
@@ -601,6 +601,16 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="changepriceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+        <center><input type="text" id="change_price"></center>
+        <center><button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color:red;" onclick="SaveChangePrice()">OK</button></center>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 @include("$prefix.inc_footer")
@@ -616,6 +626,7 @@ echo "</script>";
     var active = '';
     var po_ar = '';
     var po_ad = '';
+    var po_dat = '';
    function check_discount(){
     // var pay = Number(document.getElementById('payment').value);
     var pay = 0;
@@ -696,13 +707,33 @@ echo "</script>";
     document.getElementById('payment').value = sum;
     $('#discount').removeAttr('disabled');
    }
-   function check_active(id,r,d){
+   function check_active(id,r,d,dat){
     document.getElementById('ch'+id).checked = true;
     active = id;
     po_ar = r;
     po_ad = d;
+    po_dat = dat;
     $('#btn_note').removeAttr('disabled');
    }
+   function ChangePrice(){
+    var qty_p = document.getElementById('price_qty'+active).value*1;
+    document.getElementById('change_price').value = qty_p;
+    }
+    function SaveChangePrice(){
+        $.ajax({
+        type: 'POST',
+        url:'{{url("/change-price")}}',
+        data: {
+            _token:'{{csrf_token()}}',
+            ar:po_ar,
+            ad:po_ad,
+            dat:po_dat,
+            price:document.getElementById('change_price').value,
+            },
+            success: function(data) {
+            }
+        });
+    }
    function FreePirce(){
     document.getElementById('free_p'+active).value = 0;
     document.getElementById('sum_qty'+active).innerHTML = 'free'; 
@@ -775,6 +806,7 @@ echo "</script>";
             }
         })
    }
+   
    function add_note(n){
     //
       var text = document.getElementById('note').value;
@@ -973,7 +1005,9 @@ function OrderSubmit(po){
         return false;
     }
 }
+var mood_ac = '';
 function Service_data(t){
+    mood_ac = t;
     $.ajax({
                     type: 'GET',
                     url:'{{url("/service-data")}}/'+t,
@@ -984,10 +1018,11 @@ function Service_data(t){
 }
 var active_data = '';
 function select_paid(act){
-    if(act){
-        $("#select_tr"+active_data).css("background-color",'#D3D3D3');
-    }else{
+    if(active_data){
         $("#select_tr"+active_data).css("background-color",'');
+    }
+    if(act){
+        $("#select_tr"+act).css("background-color",'#D3D3D3');
     }
     active_data = act;
 }
@@ -1000,9 +1035,9 @@ function payment_save(){
                     icon: 'success',
                     title: 'Successful payment',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 3000
                 })
-                window.location.reload();
+                Service_data(mood_ac);
             }
     });
 }

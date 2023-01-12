@@ -50,9 +50,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Moldes\Backend\User::class,
         ],
-        'Member' => [
+        'employee' => [
             'driver' => 'session',
-            'provider' => 'Member'
+            'provider' => 'employee',
         ],
     ],
 
@@ -78,9 +78,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'Member' => [
+        'employee' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Authuse\Member::class,
+            'model' => App\Models\Backend\EmployeeModel::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

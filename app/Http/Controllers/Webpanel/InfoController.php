@@ -61,9 +61,32 @@ class InfoController extends Controller
             <a href='javascript:void(0);' class='btn btn-sm btn-danger' onclick='deleteItem($row->in_id)' title='Delete'><i class='far fa-trash-alt'></i></a>
         ";
         })
-        ->rawColumns(['action','name'])
+        ->editColumn('status', function ($row) {
+            $status = "";
+            if($row->status == "active")
+            {
+                $status = "checked";
+            }
+            $data = "<div class='form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0'>
+                        <input id='status_change_$row->in_id' data-id='$row->in_id' onclick='status($row->in_id);' class='show-code form-check-input mr-0 ml-3' type='checkbox' $status>
+                    </div>";
+            return $data;
+        })
+        ->rawColumns(['action','name','status'])
         ->make(true);
     }
+
+    public function status($id = null)
+    {
+        $data = EmployeeInfoModel::find($id);
+        $data->status = ($data->status == 'inactive') ? 'active' : 'inactive';
+        if ($data->save()) {
+            return response()->json(true);
+        } else {
+            return response()->json(false);
+        }
+    }
+
     public function index(Request $request)
     {
         $menu_control = Helper::menu_active($this->menu_id);
