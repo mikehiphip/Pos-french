@@ -143,6 +143,8 @@ class InfoController extends Controller
                 $data = EmployeeInfoModel::find($id);
                 $data->updated_at = date('Y-m-d H:i:s');
             }
+            $data->username = $request->username;
+            $data->password = bcrypt($request->password);
             $data->de_id = $request->de_id;
             $data->emp_code = $request->emp_code;
             $data->first_name = $request->first_name;

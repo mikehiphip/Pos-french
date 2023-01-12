@@ -38,13 +38,13 @@
                             <!-- BEGIN: Form Layout -->
                             <div class="intro-y box p-5">
                                 <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
-                                    <div class="col-span-4 lg:col-span-6">
+                                    <div class="col-span-4 lg:col-span-3">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Employee ID 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please input employee ID</span> 
                                         </label>
                                         <input type="text" id="emp_code" name="emp_code" class="form-control w-full" placeholder="" required>
                                     </div>
-                                    <div class="col-span-4 lg:col-span-6">
+                                    <div class="col-span-4 lg:col-span-3">
                                         <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Department 
                                             <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, please select department</span> 
                                         </label>
@@ -54,6 +54,18 @@
                                             <option value="{{$de->id}}">{{$de->department}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="col-span-4 lg:col-span-3">
+                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Username 
+                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required, input username for login</span> 
+                                        </label>
+                                        <input type="text" id="username" name="username" class="form-control w-full" placeholder="" required>
+                                    </div>
+                                    <div class="col-span-4 lg:col-span-3">
+                                        <label for="validation-form-1" class="form-label w-full flex flex-col sm:flex-row text-primary"> Password 
+                                            <span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-slate-500">Required,input password for login</span> 
+                                        </label>
+                                        <input type="text" id="password" name="password" class="form-control w-full" placeholder="" required>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-12 gap-6 mt-5 mb-3">
@@ -146,7 +158,9 @@
             var last_name = $('#last_name').val();
             var emp_id = $('#emp_id').val();
             var de = $('#de_id').val();
-            if (name == "" || emp_id == "" || last_name == "" || de == "") {
+            var username = $('#username').val();
+            var password = $('#password').val();
+            if (name == "" || emp_id == "" || last_name == "" || de == ""||username = ""|password = "") {
                 toastr.error('Please fill out the information completely.');
                 return false;
             }

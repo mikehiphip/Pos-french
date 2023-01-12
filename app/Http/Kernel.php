@@ -66,5 +66,7 @@ class Kernel extends HttpKernel
         'Functions' => \App\Http\Middleware\Functions::class,
         'Member' => \App\Http\Middleware\Member::class,
         'Language' => \App\Http\Middleware\Language::class,
+        'POS' => \App\Http\Middleware\POS::class,
+        
     ];
 }
